@@ -22,6 +22,7 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
+import AdminCertificates from './pages/admin/AdminCertificates'
 
 function LoadingScreen() {
   return (
@@ -88,6 +89,7 @@ function AppRoutes() {
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
       <Route path="/admin/courses" element={<AdminRoute><AdminCourses /></AdminRoute>} />
       <Route path="/admin/scenarios" element={<AdminRoute><AdminScenarios /></AdminRoute>} />
+      <Route path="/admin/certificates" element={<AdminRoute><AdminCertificates /></AdminRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
