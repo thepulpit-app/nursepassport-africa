@@ -17,6 +17,8 @@ import SimSession from './pages/sim/SimSession'
 import CertificateList from './pages/certificates/CertificateList'
 import Profile from './pages/profile/Profile'
 import Billing from './pages/billing/Billing'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminUsers from './pages/admin/AdminUsers'
@@ -84,6 +86,8 @@ function AppRoutes() {
       <Route path="/certificates" element={<ProtectedRoute><CertificateList /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
