@@ -45,14 +45,14 @@ Contact: hello@nursepassportafrica.com`
 • Personalise your learning path based on your qualification and career goal
 • Deliver course content, quizzes, and ClinicalSim AI simulation sessions
 • Issue AMCC certificates upon course completion
-• Process subscription payments via Paystack
+• Process subscription payments via Payment Gateways
 • Send transactional emails (receipts, certificates, account notifications)
 • Improve the platform based on usage patterns
 • Communicate important updates about the service`
             },
             {
               title: '4. AI-Powered Clinical Simulation',
-              content: `Our ClinicalSim AI feature uses the Anthropic Claude API to evaluate your clinical responses to patient scenarios. Your responses are sent to Anthropic's API for processing and evaluation. We do not use your clinical responses to train AI models. Anthropic's privacy policy governs how they handle API data.
+              content: `Our ClinicalSim feature uses AI to evaluate your clinical responses to patient scenarios. Your responses are sent to Anthropic's API for processing and evaluation. We do not use your clinical responses to train AI models. Anthropic's privacy policy governs how they handle API data.
 
 ClinicalSim is an educational tool only. It is not a medical device and is not intended to replace clinical training, professional judgment, or regulatory certification requirements.`
             },
@@ -60,10 +60,7 @@ ClinicalSim is an educational tool only. It is not a medical device and is not i
               title: '5. Data Sharing',
               content: `We do not sell your personal data. We share data only with:
 
-• Supabase — our database and authentication provider (data stored securely)
 • Paystack — payment processing (PCI DSS compliant)
-• Anthropic — AI evaluation of simulation responses (API only)
-• Vercel — platform hosting and deployment
 • Google — if you choose to sign in with Google (name and email only)
 
 All third-party providers are bound by their own privacy policies and data protection agreements.`
