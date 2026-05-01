@@ -98,6 +98,15 @@ export default function SignUp() {
                 {loading ? 'Creating account...' : <><span>Create Free Account</span> <ArrowRight size={16} /></>}
               </button>
             </form>
+            <div style={{display:'flex',alignItems:'center',gap:'12px',margin:'20px 0'}}>
+  <div style={{flex:1,height:'1px',background:'#F1F5F9'}} />
+  <span style={{color:'#94A3B8',fontSize:'12px',fontWeight:'600'}}>OR</span>
+  <div style={{flex:1,height:'1px',background:'#F1F5F9'}} />
+</div>
+<button onClick={async()=>{const {supabase}=await import('../../lib/supabase');await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin+'/dashboard'}})}}
+  style={{width:'100%',padding:'13px',background:'white',border:'1.5px solid #E2E8F0',borderRadius:'12px',fontWeight:'700',fontSize:'14px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:'10px',color:'#0A2540'}}>
+  Continue with Google
+</button>
             <p style={{ textAlign: 'center', marginTop: '16px', color: '#94A3B8', fontSize: '12px', lineHeight: '1.5' }}>
               By creating an account you agree to AMCC's Terms of Service and Privacy Policy.
             </p>
