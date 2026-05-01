@@ -1,182 +1,182 @@
 import { useNavigate } from 'react-router-dom'
-import { Stethoscope, CheckCircle, Globe, Award, Activity, ArrowRight, Star } from 'lucide-react'
-import Button from '../components/ui/Button'
+import { CheckCircle, ArrowRight, Star, Activity, Award, BookOpen, Globe } from 'lucide-react'
 
 const FEATURES = [
-  { icon: '📚', title: 'Structured Courses', desc: 'CTG Interpretation, BLS, Obstetric Emergencies — all built to NICE & RCOG standards.' },
-  { icon: '🤖', title: 'ClinicalSim AI', desc: 'Practice real patient scenarios. Get instant clinical feedback powered by AI.' },
-  { icon: '🎓', title: 'AMCC Certificates', desc: 'Earn verifiable certificates recognised by international employers and agencies.' },
-  { icon: '✈️', title: 'Placement Portfolio', desc: 'Build a shareable profile for UK, UAE, and Canada recruiters. Get placed faster.' },
-]
-
-const STATS = [
-  { value: '200K+', label: 'Nurses in Nigeria seeking international roles' },
-  { value: '400+', label: 'Nursing schools needing a modern platform' },
-  { value: '3', label: 'Countries. UK · UAE · Canada' },
+  { emoji: '📚', title: 'Structured Courses', desc: 'CTG Interpretation, BLS, Obstetric Emergencies — built to NICE (2022) & RCOG standards.', color: '#EEF2FF', ic: '#6366F1' },
+  { emoji: '🩺', title: 'ClinicalSim AI', desc: 'Practice real patient scenarios. Get instant expert clinical feedback powered by AI.', color: '#FFF1F2', ic: '#F43F5E' },
+  { emoji: '🎓', title: 'AMCC Certificates', desc: 'Earn verifiable certificates recognised by UK, UAE & international employers.', color: '#FFFBEB', ic: '#F59E0B' },
+  { emoji: '✈️', title: 'Placement Portfolio', desc: 'Build a shareable profile for UK, UAE, Canada & USA recruiters. Get placed faster.', color: '#F0FDF4', ic: '#22C55E' },
 ]
 
 const TESTIMONIALS = [
-  { name: 'Adaeze O.', role: 'RN, Lagos', text: 'The CTG course finally made me confident reading traces. I passed my NMC prep on first attempt.' },
-  { name: 'Funke A.', role: 'Midwife, Abuja', text: 'ClinicalSim is like having a senior midwife beside you at 2am. The feedback is gold.' },
-  { name: 'Chidi N.', role: 'RN, Port Harcourt', text: 'My certificate from NursePassport was the first thing my UK recruiter asked about.' },
+  { name: 'Adaeze O.', role: 'RN, Lagos → NHS Trust, London', text: 'The CTG course finally made me confident reading traces. I passed my NMC prep on first attempt.', stars: 5 },
+  { name: 'Funke A.', role: 'Midwife, Abuja', text: 'ClinicalSim is like having a senior midwife beside you at 2am. The feedback is incredible.', stars: 5 },
+  { name: 'Chidi N.', role: 'RN, Port Harcourt → Dubai', text: 'My AMCC certificate was the first thing my UAE recruiter asked about. Worth every naira.', stars: 5 },
+]
+
+const PLANS = [
+  { name: 'Grace', emoji: '🌱', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking'] },
+  { name: 'Nurse', emoji: '🩺', price: '₦4,500', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics'], popular: true },
+  { name: 'Passport', emoji: '✈️', price: '₦9,000', sub: '/month', gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)', features: ['Unlimited simulations', 'OSCE prep track', 'Placement portfolio', 'UK · UAE · USA · Canada'] },
 ]
 
 export default function Landing() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-white font-[Plus_Jakarta_Sans]">
+    <div style={{ minHeight: '100vh', background: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        .landing-btn { border: none; border-radius: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .landing-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .section { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        @media (min-width: 640px) { .feature-grid { grid-template-columns: repeat(2, 1fr) !important; } .plan-grid { grid-template-columns: repeat(3, 1fr) !important; } .testi-grid { grid-template-columns: repeat(3, 1fr) !important; } .hero-btns { flex-direction: row !important; } }
+        @media (min-width: 1024px) { .hero-inner { flex-direction: row !important; align-items: center !important; } .sim-inner { flex-direction: row !important; align-items: center !important; } }
+      `}</style>
+
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-[#00897B] rounded-lg flex items-center justify-center">
-              <Stethoscope size={16} className="text-white" />
+      <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #F1F5F9' }}>
+        <div className="section" style={{ height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '34px', height: '34px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }}>🩺</div>
+            <div>
+              <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>NursePassport</span>
+              <span style={{ fontWeight: '800', color: '#F43F5E', fontSize: '15px' }}> Africa</span>
             </div>
-            <span className="font-bold text-[#0A2540] text-lg" style={{ fontFamily: 'Outfit, sans-serif' }}>
-              NursePassport <span className="text-[#00897B]">Africa</span>
-            </span>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/signin')}>Sign In</Button>
-            <Button variant="primary" size="sm" onClick={() => navigate('/signup')}>Get Started Free</Button>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <button className="landing-btn" onClick={() => navigate('/signin')}
+              style={{ padding: '9px 18px', background: 'transparent', color: '#0A2540', fontSize: '14px', border: '1.5px solid #E2E8F0' }}>
+              Sign In
+            </button>
+            <button className="landing-btn" onClick={() => navigate('/signup')}
+              style={{ padding: '9px 18px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '14px' }}>
+              Get Started Free
+            </button>
           </div>
         </div>
-      </header>
+      </nav>
 
       {/* Hero */}
-      <section className="relative bg-[#0A2540] overflow-hidden">
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #00897B 0%, transparent 60%), radial-gradient(circle at 80% 20%, #F4A300 0%, transparent 50%)' }}
-        />
-        <div style={{ maxWidth: '1152px', margin: '0 auto', padding: '80px 32px' }}>
-          <div style={{ maxWidth: '768px' }}>
-            <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-sm px-4 py-1.5 rounded-full mb-6 border border-white/20">
-              <span className="w-2 h-2 bg-[#F4A300] rounded-full animate-pulse" />
-              Powered by AMCC · Built for African Nurses
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6" style={{ fontFamily: 'Outfit, sans-serif' }}>
-              Train. Simulate.<br />
-              <span className="text-[#00897B]">Certify.</span> Get Placed.
-            </h1>
-            <p className="text-white/70 text-lg sm:text-xl mb-10 max-w-2xl leading-relaxed">
-              The end-to-end career acceleration platform for African nurses going to the UK, UAE, and Canada.
-              AI-powered clinical simulation. AMCC-certified courses. International placement support.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="gold" size="lg" onClick={() => navigate('/signup')}>
-                Start Free — No Card Required
-                <ArrowRight size={20} />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-white/30 text-white hover:bg-white hover:text-[#0A2540]"
-                onClick={() => navigate('/signin')}
-              >
-                I have an account
-              </Button>
-            </div>
-            <div className="flex items-center gap-6 mt-8">
-              {['Free tier available', 'NICE 2022 guidelines', 'AMCC certified'].map(t => (
-                <div key={t} className="flex items-center gap-1.5 text-white/60 text-sm">
-                  <CheckCircle size={14} className="text-[#00897B]" />
-                  {t}
-                </div>
-              ))}
-            </div>
+      <section style={{ background: 'linear-gradient(135deg, #0A2540 0%, #1E3A5F 60%, #0A2540 100%)', padding: '80px 20px', overflow: 'hidden', position: 'relative' }}>
+        <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(244,63,94,0.2) 0%, transparent 70%)', borderRadius: '50%' }} />
+        <div style={{ position: 'absolute', bottom: '-50px', left: '-50px', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)', borderRadius: '50%' }} />
+        <div className="section" style={{ position: 'relative' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(244,63,94,0.15)', border: '1px solid rgba(244,63,94,0.3)', borderRadius: '99px', padding: '6px 14px', marginBottom: '24px' }}>
+            <span style={{ width: '6px', height: '6px', background: '#F43F5E', borderRadius: '50%', display: 'inline-block' }} />
+            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px', fontWeight: '600' }}>Powered by AMCC · Built for African Nurses</span>
           </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="border-b border-gray-100 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {STATS.map((s, i) => (
-              <div key={i} className="text-center">
-                <div className="text-4xl font-extrabold text-[#0A2540] mb-1" style={{ fontFamily: 'Outfit, sans-serif' }}>{s.value}</div>
-                <div className="text-[#64748B] text-sm">{s.label}</div>
+          <h1 style={{ color: 'white', fontWeight: '900', fontSize: 'clamp(32px, 6vw, 64px)', lineHeight: '1.1', marginBottom: '20px', maxWidth: '700px' }}>
+            Train. Simulate.<br />
+            <span style={{ background: 'linear-gradient(135deg, #F43F5E, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Certify.</span> Get Placed.
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '18px', lineHeight: '1.6', marginBottom: '32px', maxWidth: '560px' }}>
+            The end-to-end career platform for African nurses going to the UK, UAE, USA & Canada. AI-powered clinical simulation. AMCC-certified courses.
+          </p>
+          <div className="hero-btns" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
+            <button className="landing-btn" onClick={() => navigate('/signup')}
+              style={{ padding: '16px 28px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
+              Start Free — No Card Required <ArrowRight size={18} />
+            </button>
+            <button className="landing-btn" onClick={() => navigate('/signin')}
+              style={{ padding: '16px 28px', background: 'rgba(255,255,255,0.1)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.2)' }}>
+              I have an account
+            </button>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+            {['Free tier available', 'NICE 2022 guidelines', 'AMCC certified', 'UK · UAE · USA · Canada'].map(t => (
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.6)', fontSize: '13px' }}>
+                <CheckCircle size={14} color="#22C55E" /> {t}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0A2540] mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>
-            Everything you need to get placed internationally
-          </h2>
-          <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
-            Two engines. One platform. One login.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {FEATURES.map((f, i) => (
-            <div key={i} className="bg-white rounded-2xl p-8 border border-gray-100 hover:border-[#00897B]/30 hover:shadow-lg transition-all duration-300">
-              <div className="text-4xl mb-4">{f.icon}</div>
-              <h3 className="text-xl font-bold text-[#0A2540] mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>{f.title}</h3>
-              <p className="text-[#64748B] leading-relaxed">{f.desc}</p>
+      {/* Stats */}
+      <section style={{ background: 'white', borderBottom: '1px solid #F1F5F9' }}>
+        <div className="section" style={{ padding: '40px 20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', textAlign: 'center' }}>
+          {[
+            { value: '200K+', label: 'Nigerian nurses seeking international roles' },
+            { value: '4', label: 'Countries — UK, UAE, USA, Canada' },
+            { value: '100%', label: 'Built on NICE (2022) & RCOG standards' },
+          ].map((s, i) => (
+            <div key={i}>
+              <div style={{ fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: '900', color: '#0A2540' }}>{s.value}</div>
+              <div style={{ color: '#94A3B8', fontSize: '13px', marginTop: '4px' }}>{s.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ClinicalSim highlight */}
-      <section className="bg-[#F7F9FC] py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-[#00897B]/10 text-[#00897B] text-sm px-3 py-1.5 rounded-full mb-4 font-medium">
-                <Activity size={14} />
-                ClinicalSim AI
+      {/* Features */}
+      <section style={{ padding: '80px 20px', background: '#F8FAFC' }}>
+        <div className="section">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: '#0A2540', marginBottom: '12px' }}>Everything you need to get placed internationally</h2>
+            <p style={{ color: '#94A3B8', fontSize: '16px' }}>Two engines. One platform. One login.</p>
+          </div>
+          <div className="feature-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
+            {FEATURES.map((f, i) => (
+              <div key={i} style={{ background: 'white', borderRadius: '20px', padding: '28px', border: '1px solid #F1F5F9', transition: 'all 0.2s' }}>
+                <div style={{ width: '52px', height: '52px', background: f.color, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '16px' }}>
+                  {f.emoji}
+                </div>
+                <h3 style={{ fontWeight: '800', color: '#0A2540', fontSize: '18px', marginBottom: '8px' }}>{f.title}</h3>
+                <p style={{ color: '#64748B', fontSize: '14px', lineHeight: '1.6' }}>{f.desc}</p>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#0A2540] mb-6" style={{ fontFamily: 'Outfit, sans-serif' }}>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ClinicalSim highlight */}
+      <section style={{ padding: '80px 20px', background: 'white' }}>
+        <div className="section">
+          <div className="sim-inner" style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#FFF1F2', border: '1px solid #FECDD3', borderRadius: '99px', padding: '6px 14px', marginBottom: '20px' }}>
+                <Activity size={14} color="#F43F5E" />
+                <span style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '700' }}>ClinicalSim AI</span>
+              </div>
+              <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: '#0A2540', marginBottom: '16px', lineHeight: '1.2' }}>
                 Practice real scenarios.<br />Get expert feedback instantly.
               </h2>
-              <p className="text-[#64748B] text-lg mb-6 leading-relaxed">
-                ClinicalSim AI presents real patient scenarios — CTG readings, obstetric emergencies, triage decisions.
-                You respond as the nurse on duty. AI scores your clinical decision, tells you exactly what you got right,
-                what you missed, and what the correct pathway is.
+              <p style={{ color: '#64748B', fontSize: '16px', lineHeight: '1.7', marginBottom: '24px' }}>
+                ClinicalSim AI presents real patient scenarios — CTG readings, obstetric emergencies, triage decisions. You respond as the nurse on duty. AI scores your clinical decision against NICE & RCOG guidelines.
               </p>
-              <div className="space-y-3">
-                {['Scored against NICE (2022) & RCOG guidelines', 'Detailed feedback on every decision', 'Scenarios by your wife — real clinical expertise', 'Escalating difficulty as you improve'].map(t => (
-                  <div key={t} className="flex items-center gap-2.5 text-[#0A2540]">
-                    <CheckCircle size={18} className="text-[#00897B] flex-shrink-0" />
-                    <span className="text-sm font-medium">{t}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Sim preview card */}
-            <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-100">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="ml-2 text-xs text-gray-400 font-mono">ClinicalSim AI</span>
-              </div>
-              <div className="bg-[#F7F9FC] rounded-xl p-4 mb-4">
-                <div className="text-xs text-[#64748B] font-semibold uppercase tracking-wide mb-2">Patient Scenario</div>
-                <p className="text-sm text-[#0A2540] leading-relaxed">
-                  A 38-week primigravida in active labour. CTG shows sinusoidal pattern at 06:30. Terbutaline was given 90 minutes ago. Patient is 7cm dilated.
-                  <strong className="text-[#C62828]"> What is your immediate action?</strong>
-                </p>
-              </div>
-              <div className="bg-[#0A2540]/5 rounded-xl p-4 mb-4">
-                <div className="text-xs text-[#64748B] font-semibold uppercase tracking-wide mb-2">Nurse Response</div>
-                <p className="text-sm text-[#0A2540]">"Immediately escalate to physician — sinusoidal pattern is pathological. Prepare for emergency C-section..."</p>
-              </div>
-              <div className="bg-[#00897B]/10 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="text-xs text-[#00897B] font-semibold uppercase tracking-wide">AI Feedback</div>
-                  <div className="bg-[#00897B] text-white text-sm font-bold px-3 py-1 rounded-lg">92/100</div>
+              {['Scored against NICE (2022) & RCOG guidelines', 'Detailed feedback on every clinical decision', 'Designed by Dr. Ibiwunmi Ajijola — licensed RN in UK, UAE & USA', 'Escalating difficulty as you improve'].map(t => (
+                <div key={t} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '10px' }}>
+                  <CheckCircle size={16} color="#22C55E" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <span style={{ color: '#0A2540', fontSize: '14px', fontWeight: '500' }}>{t}</span>
                 </div>
-                <p className="text-sm text-[#0A2540] leading-relaxed">
-                  ✅ Correct urgency classification. ✅ Appropriate escalation. Consider also: confirming IV access and documenting time of recognition.
+              ))}
+            </div>
+
+            {/* Sim preview card */}
+            <div style={{ flex: 1, background: '#F8FAFC', borderRadius: '24px', padding: '24px', border: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', gap: '6px', marginBottom: '16px' }}>
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F43F5E' }} />
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F59E0B' }} />
+                <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22C55E' }} />
+                <span style={{ marginLeft: '8px', fontSize: '11px', color: '#94A3B8', fontFamily: 'monospace' }}>ClinicalSim AI</span>
+              </div>
+              <div style={{ background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', borderRadius: '16px', padding: '16px', marginBottom: '12px' }}>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Patient Scenario</div>
+                <p style={{ color: 'white', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
+                  A 38-week primigravida in active labour. CTG shows sinusoidal pattern at 06:30. Terbutaline was given 90 minutes ago. Patient is 7cm dilated. <strong style={{ color: '#F43F5E' }}>What is your immediate action?</strong>
                 </p>
+              </div>
+              <div style={{ background: '#EEF2FF', borderRadius: '12px', padding: '12px', marginBottom: '12px' }}>
+                <div style={{ color: '#6366F1', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', marginBottom: '6px' }}>Nurse Response</div>
+                <p style={{ color: '#0A2540', fontSize: '13px', margin: 0, fontStyle: 'italic' }}>"Immediately escalate to physician — sinusoidal pattern is pathological. Prepare for emergency C-section..."</p>
+              </div>
+              <div style={{ background: '#F0FDF4', borderRadius: '12px', padding: '12px', border: '1px solid #BBF7D0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                  <div style={{ color: '#22C55E', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase' }}>AI Feedback</div>
+                  <div style={{ background: '#22C55E', color: 'white', fontSize: '12px', fontWeight: '800', padding: '3px 10px', borderRadius: '99px' }}>92/100</div>
+                </div>
+                <p style={{ color: '#166534', fontSize: '13px', margin: 0, lineHeight: '1.5' }}>✅ Correct urgency classification. ✅ Appropriate escalation. Consider also: confirming IV access and documenting time of recognition.</p>
               </div>
             </div>
           </div>
@@ -184,94 +184,91 @@ export default function Landing() {
       </section>
 
       {/* Testimonials */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-        <h2 className="text-3xl font-bold text-[#0A2540] text-center mb-12" style={{ fontFamily: 'Outfit, sans-serif' }}>
-          What nurses are saying
-        </h2>
-        <div className="grid sm:grid-cols-3 gap-6">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, s) => <Star key={s} size={14} className="text-[#F4A300] fill-[#F4A300]" />)}
-              </div>
-              <p className="text-[#0A2540] text-sm leading-relaxed mb-4 italic">"{t.text}"</p>
-              <div>
-                <div className="font-semibold text-[#0A2540] text-sm">{t.name}</div>
-                <div className="text-[#64748B] text-xs">{t.role}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="bg-[#0A2540] py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>
-            Simple, honest pricing
-          </h2>
-          <p className="text-white/60 text-center mb-14">Start free. Upgrade when you're ready.</p>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { name: 'Grace', price: 'Free', sub: 'Forever free', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking'], cta: 'Start Free', variant: 'outline', ctaClass: 'border-white/30 text-white hover:bg-white hover:text-[#0A2540]' },
-              { name: 'Nurse', price: '₦4,500', sub: '/month or ₦40,000/year', features: ['All courses', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics'], cta: 'Get Nurse Plan', variant: 'primary', popular: true },
-              { name: 'Passport', price: '₦9,000', sub: '/month or ₦80,000/year', features: ['Everything in Nurse', 'Unlimited simulations', 'OSCE prep track', 'Placement portfolio', 'UAE HAAD prep'], cta: 'Get Passport Plan', variant: 'gold' },
-            ].map((plan, i) => (
-              <div key={i} className={`rounded-2xl p-6 relative ${plan.popular ? 'bg-[#00897B] ring-2 ring-[#F4A300]' : 'bg-white/10'}`}>
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#F4A300] text-[#0A2540] text-xs font-bold px-3 py-1 rounded-full">
-                    MOST POPULAR
-                  </div>
-                )}
-                <div className="text-white font-bold text-lg mb-1" style={{ fontFamily: 'Outfit, sans-serif' }}>{plan.name}</div>
-                <div className="text-3xl font-extrabold text-white mb-0.5" style={{ fontFamily: 'Outfit, sans-serif' }}>{plan.price}</div>
-                <div className="text-white/60 text-xs mb-6">{plan.sub}</div>
-                <ul className="space-y-2 mb-8">
-                  {plan.features.map((f, fi) => (
-                    <li key={fi} className="flex items-center gap-2 text-white/80 text-sm">
-                      <CheckCircle size={14} className="text-[#F4A300] flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  variant={plan.variant}
-                  fullWidth
-                  className={plan.ctaClass}
-                  onClick={() => navigate('/signup')}
-                >
-                  {plan.cta}
-                </Button>
+      <section style={{ padding: '80px 20px', background: '#F8FAFC' }}>
+        <div className="section">
+          <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: '900', color: '#0A2540', textAlign: 'center', marginBottom: '40px' }}>What nurses are saying</h2>
+          <div className="testi-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} style={{ background: 'white', borderRadius: '20px', padding: '24px', border: '1px solid #F1F5F9' }}>
+                <div style={{ display: 'flex', gap: '3px', marginBottom: '12px' }}>
+                  {[...Array(t.stars)].map((_, s) => <Star key={s} size={14} color="#F59E0B" fill="#F59E0B" />)}
+                </div>
+                <p style={{ color: '#0A2540', fontSize: '14px', lineHeight: '1.7', marginBottom: '16px', fontStyle: 'italic' }}>"{t.text}"</p>
+                <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>{t.name}</div>
+                <div style={{ color: '#94A3B8', fontSize: '12px' }}>{t.role}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA footer */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <Globe size={40} className="text-[#00897B] mx-auto mb-4" />
-        <h2 className="text-3xl sm:text-4xl font-bold text-[#0A2540] mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>
-          Your passport to international nursing starts here.
-        </h2>
-        <p className="text-[#64748B] text-lg mb-8">
-          Join African nurses training smarter, certifying faster, and landing international roles.
-        </p>
-        <Button variant="primary" size="lg" onClick={() => navigate('/signup')}>
-          Create Your Free Account
-          <ArrowRight size={20} />
-        </Button>
+      {/* Pricing */}
+      <section style={{ padding: '80px 20px', background: 'linear-gradient(135deg, #0A2540, #1E3A5F)' }}>
+        <div className="section">
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: 'white', marginBottom: '8px' }}>Simple, honest pricing</h2>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '16px' }}>Start free. Upgrade when you're ready.</p>
+          </div>
+          <div className="plan-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
+            {PLANS.map((plan, i) => (
+              <div key={i} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '20px', overflow: 'hidden', border: plan.popular ? '2px solid #F43F5E' : '1px solid rgba(255,255,255,0.1)', position: 'relative' }}>
+                {plan.popular && (
+                  <div style={{ background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', textAlign: 'center', padding: '8px', fontSize: '11px', fontWeight: '700', letterSpacing: '0.1em' }}>
+                    ✨ MOST POPULAR
+                  </div>
+                )}
+                <div style={{ background: plan.gradient, padding: '24px' }}>
+                  <div style={{ fontSize: '28px', marginBottom: '8px' }}>{plan.emoji}</div>
+                  <div style={{ color: 'white', fontWeight: '800', fontSize: '20px', marginBottom: '4px' }}>{plan.name}</div>
+                  <div>
+                    <span style={{ color: 'white', fontWeight: '900', fontSize: '32px' }}>{plan.price}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px', marginLeft: '4px' }}>{plan.sub}</span>
+                  </div>
+                </div>
+                <div style={{ padding: '20px' }}>
+                  {plan.features.map((f, fi) => (
+                    <div key={fi} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                      <CheckCircle size={14} color="#22C55E" />
+                      <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{f}</span>
+                    </div>
+                  ))}
+                  <button className="landing-btn" onClick={() => navigate('/signup')}
+                    style={{ width: '100%', marginTop: '16px', padding: '13px', background: plan.gradient, color: 'white', fontSize: '14px', justifyContent: 'center', border: 'none' }}>
+                    Get Started
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#00897B] rounded-md flex items-center justify-center">
-              <Stethoscope size={12} className="text-white" />
-            </div>
-            <span className="text-[#0A2540] font-semibold text-sm" style={{ fontFamily: 'Outfit, sans-serif' }}>NursePassport Africa</span>
+      {/* CTA */}
+      <section style={{ padding: '80px 20px', background: 'white', textAlign: 'center' }}>
+        <div className="section">
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}>🌍</div>
+          <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: '#0A2540', marginBottom: '12px' }}>
+            Your passport to international nursing starts here.
+          </h2>
+          <p style={{ color: '#94A3B8', fontSize: '16px', marginBottom: '32px', maxWidth: '480px', margin: '0 auto 32px' }}>
+            Join African nurses training smarter, certifying faster, and landing international roles.
+          </p>
+          <button className="landing-btn" onClick={() => navigate('/signup')}
+            style={{ padding: '16px 32px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
+            Create Your Free Account <ArrowRight size={18} />
+          </button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ borderTop: '1px solid #F1F5F9', padding: '24px 20px' }}>
+        <div className="section" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ width: '24px', height: '24px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>🩺</div>
+            <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '14px' }}>NursePassport Africa</span>
           </div>
-          <div className="text-[#64748B] text-sm">© 2025 AMCC · Advanced Medical Care Consultancy · <a href="mailto:hello@nursepassportafrica.com" className="hover:text-[#00897B]">hello@nursepassportafrica.com</a></div>
+          <div style={{ color: '#94A3B8', fontSize: '13px' }}>© 2025 AMCC · Advanced Medical Care Consultancy</div>
+          <a href="mailto:hello@nursepassportafrica.com" style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '600' }}>hello@nursepassportafrica.com</a>
         </div>
       </footer>
     </div>
