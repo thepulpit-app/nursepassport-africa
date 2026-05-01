@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle, ArrowRight, Star, Activity, Award, BookOpen, Globe } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const FEATURES = [
   { emoji: '📚', title: 'Structured Courses', desc: 'CTG Interpretation, BLS, Obstetric Emergencies — built to NICE (2022) & RCOG standards.', color: '#EEF2FF', ic: '#6366F1' },
@@ -268,6 +269,8 @@ export default function Landing() {
             <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '14px' }}>NursePassport Africa</span>
           </div>
           <div style={{ color: '#94A3B8', fontSize: '13px' }}>© 2025 AMCC · Advanced Medical Care Consultancy</div>
+          <Link to="/privacy" style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '600', marginRight: '16px' }}>Privacy Policy</Link>
+<Link to="/terms" style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '600', marginRight: '16px' }}>Terms of Service</Link>
           <a href="mailto:hello@nursepassportafrica.com" style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '600' }}>hello@nursepassportafrica.com</a>
         </div>
       </footer>
