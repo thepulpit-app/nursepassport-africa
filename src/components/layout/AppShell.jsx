@@ -3,16 +3,26 @@ import MobileNav from './MobileNav'
 
 export default function AppShell({ children }) {
   return (
-    <div className="min-h-screen bg-[#F7F9FC]">
+    <div style={{ minHeight: '100vh', background: '#F7F9FC' }}>
       <Sidebar />
-      <div style={{ marginLeft: '256px' }}>
-        <main className="pb-20 lg:pb-0 min-h-screen">
-          <div style={{ maxWidth: '960px', margin: '0 auto', padding: '32px 24px' }}>
-            {children}
-          </div>
-        </main>
+      <div style={{ marginLeft: '0', paddingBottom: '80px' }}
+        className="lg-content">
+        <div style={{ maxWidth: '960px', margin: '0 auto', padding: '24px 16px' }}>
+          {children}
+        </div>
       </div>
       <MobileNav />
+      <style>{`
+        @media (min-width: 1024px) {
+          .lg-content {
+            margin-left: 256px !important;
+            padding-bottom: 0 !important;
+          }
+          .lg-content > div {
+            padding: 32px 32px !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
