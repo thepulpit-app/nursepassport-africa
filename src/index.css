@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
-
 :root {
   --navy: #0A2540;
   --navy-light: #0D3060;
@@ -18,14 +16,13 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   background-color: var(--off-white);
   color: var(--navy);
   -webkit-font-smoothing: antialiased;
 }
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: 'Outfit', sans-serif;
   font-weight: 700;
   color: var(--navy);
 }

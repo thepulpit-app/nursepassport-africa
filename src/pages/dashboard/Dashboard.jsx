@@ -67,7 +67,7 @@ export default function Dashboard() {
       <div className="mb-8 fade-up">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#0A2540]">
               {greeting}, {firstName} {GOAL_FLAGS[profile?.career_goal] || '👋'}
             </h1>
             <p className="text-[#64748B] mt-1">
@@ -136,8 +136,8 @@ export default function Dashboard() {
               <div className="bg-gradient-to-br from-[#0A2540] to-[#0D3060] rounded-2xl p-6 mb-4">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
-                    <div className="text-xs text-white/50 font-medium uppercase tracking-wide mb-1">Featured Course</div>
-                    <h3 className="text-white font-bold text-lg leading-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                    <div className="text-xs text-white/60 font-medium uppercase tracking-wide mb-1">Featured Course</div>
+                    <h3 style={{ color: 'white', fontWeight: 'bold', fontSize: '18px', lineHeight: '1.3', marginBottom: '4px' }}>
                       CTG Interpretation Masterclass
                     </h3>
                     <p className="text-white/60 text-sm mt-1">NICE (2022) · 4 modules · ~4.5 hours</p>

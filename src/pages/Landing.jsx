@@ -49,8 +49,8 @@ export default function Landing() {
         <div className="absolute inset-0 opacity-10"
           style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #00897B 0%, transparent 60%), radial-gradient(circle at 80% 20%, #F4A300 0%, transparent 50%)' }}
         />
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
+        <div style={{ maxWidth: '1152px', margin: '0 auto', padding: '80px 32px' }}>
+          <div style={{ maxWidth: '768px' }}>
             <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-sm px-4 py-1.5 rounded-full mb-6 border border-white/20">
               <span className="w-2 h-2 bg-[#F4A300] rounded-full animate-pulse" />
               Powered by AMCC · Built for African Nurses
