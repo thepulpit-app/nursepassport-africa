@@ -1,208 +1,229 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookOpen, Activity, Award, TrendingUp, ArrowRight, Zap, Clock } from 'lucide-react'
+import { BookOpen, Activity, Award, TrendingUp, Zap } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { supabase } from '../../lib/supabase'
 import AppShell from '../../components/layout/AppShell'
-import ProgressBar from '../../components/ui/ProgressBar'
-import Button from '../../components/ui/Button'
 
 export default function Dashboard() {
   const { profile, tier, isFoundingMember } = useAuth()
   const navigate = useNavigate()
   const [stats, setStats] = useState({ coursesStarted: 0, modulesCompleted: 0, simSessions: 0, certificates: 0 })
-  const [recentProgress, setRecentProgress] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    if (profile) loadStats()
-  }, [profile])
+  useEffect(() => { if (profile) loadStats() }, [profile])
 
   async function loadStats() {
     const [progressRes, simRes, certRes] = await Promise.all([
-      supabase.from('user_progress').select('*').eq('user_id', profile.id),
+      supabase.from('user_progress').select('course_id, status').eq('user_id', profile.id),
       supabase.from('sim_sessions').select('id').eq('user_id', profile.id),
       supabase.from('certificates').select('id').eq('user_id', profile.id),
     ])
     const progress = progressRes.data || []
-    const completed = progress.filter(p => p.status === 'completed')
-    const courseIds = [...new Set(progress.map(p => p.course_id))]
     setStats({
-      coursesStarted: courseIds.length,
-      modulesCompleted: completed.length,
+      coursesStarted: [...new Set(progress.map(p => p.course_id))].length,
+      modulesCompleted: progress.filter(p => p.status === 'completed').length,
       simSessions: simRes.data?.length || 0,
       certificates: certRes.data?.length || 0,
     })
-    if (progress.length > 0) {
-      const recent = progress.slice(-3).reverse()
-      const enriched = await Promise.all(recent.map(async (p) => {
-        const { data: mod } = await supabase.from('modules').select('title, course_id').eq('id', p.module_id).single()
-        const { data: course } = mod ? await supabase.from('courses').select('title, slug').eq('id', mod.course_id).single() : { data: null }
-        return { ...p, module_title: mod?.title, course_title: course?.title, course_slug: course?.slug }
-      }))
-      setRecentProgress(enriched)
-    }
     setLoading(false)
   }
 
-  const GOAL_FLAGS = { UK: '🇬🇧', UAE: '🇦🇪', Canada: '🇨🇦', USA: '🇺🇸', Nigeria: '🇳🇬' }
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
   const firstName = profile?.full_name?.split(' ')[0] || 'Nurse'
-
-  const STAT_CARDS = [
-    { icon: BookOpen, label: 'Courses Started', value: stats.coursesStarted, color: 'bg-blue-50 text-blue-600', onClick: () => navigate('/courses') },
-    { icon: TrendingUp, label: 'Modules Completed', value: stats.modulesCompleted, color: 'bg-green-50 text-green-600', onClick: () => navigate('/courses') },
-    { icon: Activity, label: 'Sim Sessions', value: stats.simSessions, color: 'bg-purple-50 text-purple-600', onClick: () => navigate('/simulate') },
-    { icon: Award, label: 'Certificates', value: stats.certificates, color: 'bg-yellow-50 text-yellow-600', onClick: () => navigate('/certificates') },
-  ]
+  const GOAL_FLAGS = { UK: '🇬🇧', UAE: '🇦🇪', Canada: '🇨🇦', USA: '🇺🇸', Nigeria: '🇳🇬' }
+  const used = profile?.sim_sessions_used || 0
+  const limit = tier === 'passport' ? Infinity : tier === 'nurse' ? 20 : 3
+  const remaining = limit === Infinity ? '∞' : Math.max(0, limit - used)
 
   return (
     <AppShell>
-      <div style={{ marginBottom: '32px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#0A2540', marginBottom: '4px', lineHeight: '1.2' }}>
-              {greeting}, {firstName}! {GOAL_FLAGS[profile?.career_goal] || '👋'}
+      <style>{`
+        .db-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+        .db-main { display: flex; flex-direction: column; gap: 16px; }
+        .db-row { display: flex; flex-direction: column; gap: 16px; }
+        .stat-card { background: white; border-radius: 16px; padding: 16px 14px; border: 1px solid #EEF2FF; cursor: pointer; }
+        .stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .stat-value { font-size: 26px; font-weight: 800; color: #0A2540; line-height: 1; }
+        .stat-label { font-size: 11px; color: #94A3B8; font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+        .hero-card { border-radius: 20px; padding: 22px; color: white; }
+        .hero-card h3 { color: white; font-size: 17px; font-weight: 800; margin: 0 0 4px; line-height: 1.3; }
+        .hero-card p { color: rgba(255,255,255,0.75); font-size: 12px; margin: 0; }
+        .pbar-bg { background: rgba(255,255,255,0.25); border-radius: 99px; height: 5px; overflow: hidden; margin: 14px 0; }
+        .pbar-fill { background: white; height: 100%; border-radius: 99px; }
+        .white-btn { background: white; border: none; border-radius: 12px; padding: 11px 20px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; }
+        .outline-btn { background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.4); border-radius: 12px; padding: 11px 20px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; color: white; }
+        .info-card { background: white; border-radius: 16px; padding: 18px; border: 1px solid #F1F5F9; }
+        .info-card h4 { font-size: 13px; font-weight: 700; color: #0A2540; margin: 0 0 12px; }
+        .badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 99px; }
+        @media (min-width: 768px) {
+          .db-stats { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+          .db-row { flex-direction: row; }
+          .db-row > * { flex: 1; }
+        }
+      `}</style>
+
+      {/* Header */}
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
+          <div>
+            <h1 style={{ fontSize: '22px', fontWeight: '800', color: '#0A2540', lineHeight: '1.2', margin: '0 0 2px' }}>
+              {greeting}, {firstName}! {GOAL_FLAGS[profile?.career_goal] || '✨'}
             </h1>
-            <p style={{ color: '#64748B', fontSize: '14px' }}>
-              {profile?.career_goal ? `Training for ${profile.career_goal} · ` : ''}{profile?.qualification || 'Nurse'}
+            <p style={{ color: '#94A3B8', fontSize: '13px', margin: 0 }}>
+              {profile?.qualification || 'Nurse'}{profile?.career_goal ? ` · ${profile.career_goal} Track` : ''}
             </p>
           </div>
           {isFoundingMember && (
-            <div style={{ flexShrink: 0, background: 'rgba(244,163,0,0.1)', border: '1px solid rgba(244,163,0,0.3)', borderRadius: '12px', padding: '8px 12px', textAlign: 'center' }}>
-              <div style={{ fontSize: '20px' }}>⭐</div>
-              <div style={{ fontSize: '11px', fontWeight: '700', color: '#0A2540' }}>Founding</div>
-              <div style={{ fontSize: '11px', color: '#64748B' }}>Member</div>
+            <div style={{ background: 'linear-gradient(135deg, #F59E0B, #F97316)', borderRadius: '12px', padding: '8px 12px', textAlign: 'center', flexShrink: 0, minWidth: '64px' }}>
+              <div style={{ fontSize: '18px', lineHeight: 1 }}>⭐</div>
+              <div style={{ fontSize: '9px', fontWeight: '700', color: 'white', marginTop: '2px', lineHeight: '1.2' }}>Founding<br/>Member</div>
             </div>
           )}
         </div>
       </div>
 
+      {/* Upgrade banner */}
       {tier === 'free' && (
-        <div style={{ background: 'linear-gradient(135deg, #0A2540, #0D3060)', borderRadius: '16px', padding: '20px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '40px', height: '40px', background: '#F4A300', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Zap size={18} color="#0A2540" />
+        <div style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)', borderRadius: '16px', padding: '16px 18px', marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '34px', height: '34px', background: 'rgba(255,255,255,0.2)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Zap size={16} color="white" />
             </div>
             <div>
-              <div style={{ color: 'white', fontWeight: '600', fontSize: '14px' }}>Unlock your full learning path</div>
-              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px' }}>Upgrade to access all courses, unlimited certificates and ClinicalSim AI</div>
+              <div style={{ color: 'white', fontWeight: '700', fontSize: '13px' }}>Unlock full access</div>
+              <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '11px' }}>All courses · AI simulation · Certificates</div>
             </div>
           </div>
-          <Button variant="gold" size="sm" onClick={() => navigate('/billing')}>Upgrade</Button>
+          <button onClick={() => navigate('/billing')}
+            style={{ background: 'white', color: '#7C3AED', border: 'none', borderRadius: '10px', padding: '8px 14px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', flexShrink: 0 }}>
+            Upgrade
+          </button>
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '32px' }}>
-        {STAT_CARDS.map(({ icon: Icon, label, value, color, onClick }) => (
-          <button key={label} onClick={onClick}
-            style={{ background: 'white', borderRadius: '16px', padding: '20px', border: '1px solid #f1f5f9', cursor: 'pointer', textAlign: 'left' }}>
-            <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center`} style={{ marginBottom: '12px' }}>
-              <Icon size={18} />
+      {/* Stats */}
+      <div className="db-stats">
+        {[
+          { icon: BookOpen, label: 'Courses', value: stats.coursesStarted, bg: '#EEF2FF', ic: '#6366F1', path: '/courses' },
+          { icon: TrendingUp, label: 'Modules Done', value: stats.modulesCompleted, bg: '#F0FDF4', ic: '#22C55E', path: '/courses' },
+          { icon: Activity, label: 'Simulations', value: stats.simSessions, bg: '#FFF1F2', ic: '#F43F5E', path: '/simulate' },
+          { icon: Award, label: 'Certificates', value: stats.certificates, bg: '#FFFBEB', ic: '#F59E0B', path: '/certificates' },
+        ].map(({ icon: Icon, label, value, bg, ic, path }) => (
+          <div key={label} className="stat-card" onClick={() => navigate(path)}>
+            <div className="stat-icon" style={{ background: bg }}>
+              <Icon size={17} color={ic} />
             </div>
-            <div style={{ fontSize: '28px', fontWeight: '800', color: '#0A2540', marginBottom: '2px' }}>
-              {loading ? <div className="skeleton" style={{ height: '32px', width: '48px' }} /> : value}
-            </div>
-            <div style={{ fontSize: '12px', color: '#64748B', fontWeight: '500' }}>{label}</div>
-          </button>
+            <div className="stat-value">{loading ? '—' : value}</div>
+            <div className="stat-label">{label}</div>
+          </div>
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
-        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #f1f5f9', overflow: 'hidden' }}>
-          <div style={{ padding: '20px 24px', borderBottom: '1px solid #f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h2 style={{ fontWeight: '700', color: '#0A2540', fontSize: '16px' }}>Continue Learning</h2>
-            <button onClick={() => navigate('/courses')} style={{ fontSize: '13px', color: '#00897B', fontWeight: '600', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              All courses <ArrowRight size={14} />
-            </button>
+      {/* CTG Course Hero */}
+      <div className="hero-card" style={{ background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #9333EA 100%)', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+          <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.65)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em' }}>🏆 Flagship Course</div>
+          <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>NICE 2022</span>
+        </div>
+        <h3>CTG Interpretation Masterclass</h3>
+        <p>4 modules · ~4.5 hours · RCOG aligned</p>
+        <div className="pbar-bg">
+          <div className="pbar-fill" style={{ width: '0%' }} />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: '11px' }}>0 of 4 modules complete</span>
+          <button className="white-btn" style={{ width: 'auto', color: '#7C3AED', padding: '9px 18px' }}
+            onClick={() => navigate('/courses/ctg-interpretation-masterclass')}>
+            Start Course →
+          </button>
+        </div>
+      </div>
+
+      {/* ClinicalSim + Sessions row */}
+      <div className="db-row" style={{ marginBottom: '16px' }}>
+        {/* ClinicalSim */}
+        <div className="hero-card" style={{ background: 'linear-gradient(135deg, #F43F5E 0%, #EC4899 60%, #DB2777 100%)' }}>
+          <div style={{ fontSize: '28px', marginBottom: '6px' }}>🩺</div>
+          <h3 style={{ fontSize: '16px' }}>ClinicalSim AI</h3>
+          <p style={{ marginBottom: '12px' }}>Practice real patient scenarios. Get instant expert clinical feedback.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>
+              {tier === 'passport' ? 'Unlimited sessions' : `${remaining} sessions remaining`}
+            </span>
+            <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+              {tier.toUpperCase()}
+            </span>
           </div>
-          <div style={{ padding: '24px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #0A2540, #0D3060)', borderRadius: '16px', padding: '24px', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', marginBottom: '16px' }}>
-                <div>
-                  <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px' }}>Featured Course</div>
-                  <h3 style={{ color: 'white', fontWeight: '700', fontSize: '18px', lineHeight: '1.3', marginBottom: '4px' }}>CTG Interpretation Masterclass</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px' }}>NICE (2022) · 4 modules · ~4.5 hours</p>
-                </div>
-                <div style={{ background: '#00897B', color: 'white', fontSize: '11px', padding: '4px 10px', borderRadius: '20px', fontWeight: '500', flexShrink: 0 }}>Flagship</div>
-              </div>
-              <ProgressBar value={0} max={4} color="teal" height="sm" showPercent={false} />
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px' }}>0 of 4 modules complete</span>
-                <Button variant="gold" size="sm" onClick={() => navigate('/courses/ctg-interpretation-masterclass')}>Start Course</Button>
-              </div>
-            </div>
-            {recentProgress.length > 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {recentProgress.map((p, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', borderRadius: '12px', cursor: 'pointer' }}
-                    onClick={() => navigate(`/courses/${p.course_slug}/${p.module_id}`)}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: p.status === 'completed' ? '#dcfce7' : '#dbeafe', color: p.status === 'completed' ? '#16a34a' : '#2563eb', fontSize: '13px', fontWeight: '700' }}>
-                      {p.status === 'completed' ? '✓' : <Clock size={14} />}
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '13px', fontWeight: '500', color: '#0A2540', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.module_title}</div>
-                      <div style={{ fontSize: '12px', color: '#64748B' }}>{p.course_title}</div>
-                    </div>
-                    <div style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '20px', fontWeight: '500', background: p.status === 'completed' ? '#dcfce7' : '#dbeafe', color: p.status === 'completed' ? '#16a34a' : '#2563eb' }}>
-                      {p.status === 'completed' ? 'Done' : 'In Progress'}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                <BookOpen size={32} color="#e2e8f0" style={{ margin: '0 auto 8px' }} />
-                <p style={{ color: '#64748B', fontSize: '13px' }}>Start a course to track your progress</p>
-              </div>
-            )}
-          </div>
+          <button className="white-btn" style={{ color: '#F43F5E' }}
+            onClick={() => navigate('/simulate')}>
+            Start a Simulation →
+          </button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ background: 'linear-gradient(135deg, #00897B, #00796B)', borderRadius: '16px', padding: '24px' }}>
-            <Activity size={28} color="rgba(255,255,255,0.8)" style={{ marginBottom: '12px' }} />
-            <h3 style={{ fontWeight: '700', fontSize: '18px', marginBottom: '4px', color: 'white' }}>ClinicalSim AI</h3>
-            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', marginBottom: '16px' }}>Practice real patient scenarios. Get instant clinical feedback.</p>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>
-              {tier === 'free' ? `${3 - (profile?.sim_sessions_used || 0)} free sessions remaining` : 'Sessions available'}
-            </div>
-            <button onClick={() => navigate('/simulate')}
-              style={{ width: '100%', padding: '10px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', background: 'transparent', color: 'white', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>
-              Start a Simulation
+        {/* Sessions counter */}
+        <div className="info-card">
+          <h4>Sim Sessions This Month</h4>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
+            <span style={{ fontSize: '32px', fontWeight: '800', color: '#0A2540', lineHeight: 1 }}>{used}</span>
+            <span style={{ fontSize: '13px', color: '#94A3B8', fontWeight: '600' }}>
+              / {limit === Infinity ? '∞' : limit}
+            </span>
+          </div>
+          <div style={{ background: '#F1F5F9', borderRadius: '99px', height: '8px', overflow: 'hidden', marginBottom: '8px' }}>
+            <div style={{
+              background: 'linear-gradient(90deg, #F43F5E, #EC4899)',
+              height: '100%',
+              borderRadius: '99px',
+              width: limit === Infinity ? '30%' : `${Math.min(100, (used / limit) * 100)}%`,
+              transition: 'width 0.5s'
+            }} />
+          </div>
+          <div style={{ fontSize: '11px', color: '#94A3B8' }}>
+            {tier === 'passport' ? 'Unlimited — Passport plan' :
+             tier === 'nurse' ? `${remaining} remaining this month` :
+             `${remaining} free sessions left`}
+          </div>
+          {tier !== 'passport' && (
+            <button onClick={() => navigate('/billing')}
+              style={{ marginTop: '12px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', border: 'none', borderRadius: '10px', padding: '9px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', width: '100%' }}>
+              Get more sessions →
             </button>
-          </div>
+          )}
+        </div>
+      </div>
 
-          <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #f1f5f9', padding: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <h3 style={{ fontWeight: '700', color: '#0A2540', fontSize: '14px' }}>Sim Sessions</h3>
-              <span style={{ fontSize: '12px', color: '#64748B' }}>This month</span>
-            </div>
-            <ProgressBar value={profile?.sim_sessions_used || 0} max={tier === 'free' ? 3 : tier === 'nurse' ? 20 : 999} color={tier === 'passport' ? 'gold' : 'teal'} showPercent={false} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px' }}>
-              <span style={{ fontSize: '12px', color: '#64748B' }}>{profile?.sim_sessions_used || 0} used</span>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: '#0A2540' }}>{tier === 'passport' ? 'Unlimited' : `${tier === 'free' ? 3 : 20} total`}</span>
-            </div>
-            {tier === 'free' && (
-              <button onClick={() => navigate('/billing')} style={{ marginTop: '12px', fontSize: '12px', color: '#00897B', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '500', width: '100%', textAlign: 'center' }}>
-                Upgrade for 20 sessions/month →
-              </button>
-            )}
-          </div>
-
-          {profile?.career_goal && (
-            <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #f1f5f9', padding: '20px' }}>
-              <h3 style={{ fontWeight: '700', color: '#0A2540', fontSize: '14px', marginBottom: '12px' }}>Your Goal</h3>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ fontSize: '32px' }}>{GOAL_FLAGS[profile.career_goal]}</div>
-                <div>
-                  <div style={{ fontWeight: '600', color: '#0A2540', fontSize: '16px' }}>{profile.career_goal}</div>
-                  <div style={{ fontSize: '12px', color: '#64748B' }}>Your target destination</div>
-                </div>
+      {/* Goal + Quick links row */}
+      <div className="db-row">
+        {profile?.career_goal && (
+          <div style={{ background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>Your Career Goal</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '40px', lineHeight: 1 }}>{GOAL_FLAGS[profile.career_goal]}</div>
+              <div>
+                <div style={{ color: 'white', fontWeight: '800', fontSize: '22px', lineHeight: 1 }}>{profile.career_goal}</div>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '12px', marginTop: '2px' }}>Target destination</div>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {[
+            { emoji: '📚', label: 'Browse Courses', sub: '4 available', path: '/courses', bg: '#EEF2FF', border: '#C7D2FE', color: '#4F46E5' },
+            { emoji: '🎓', label: 'My Certificates', sub: `${stats.certificates} earned`, path: '/certificates', bg: '#FFFBEB', border: '#FDE68A', color: '#D97706' },
+          ].map(item => (
+            <div key={item.label} onClick={() => navigate(item.path)}
+              style={{ background: item.bg, border: `1.5px solid ${item.border}`, borderRadius: '14px', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+              <div style={{ fontSize: '22px' }}>{item.emoji}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>{item.label}</div>
+                <div style={{ color: '#94A3B8', fontSize: '11px' }}>{item.sub}</div>
+              </div>
+              <div style={{ color: item.color, fontWeight: '700', fontSize: '16px' }}>›</div>
+            </div>
+          ))}
         </div>
       </div>
     </AppShell>
