@@ -1,61 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Activity, Lock, ChevronRight, Zap, Target, Brain } from 'lucide-react'
+import { Activity, Lock, ChevronRight, Star } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import { TIER_LIMITS } from '../../lib/paystack'
 import AppShell from '../../components/layout/AppShell'
-import Button from '../../components/ui/Button'
-import ProgressBar from '../../components/ui/ProgressBar'
 
-const DIFFICULTY_COLORS = {
-  beginner:     'bg-green-100 text-green-700',
-  intermediate: 'bg-yellow-100 text-yellow-700',
-  advanced:     'bg-red-100 text-red-700',
+const DIFFICULTY_STYLES = {
+  beginner:     { bg: '#F0FDF4', color: '#16A34A', border: '#BBF7D0', label: 'Beginner' },
+  intermediate: { bg: '#FFFBEB', color: '#D97706', border: '#FDE68A', label: 'Intermediate' },
+  advanced:     { bg: '#FFF1F2', color: '#F43F5E', border: '#FECDD3', label: 'Advanced' },
 }
 
-const CATEGORY_LABELS = {
-  ctg: 'CTG Interpretation',
-  obstetric_emergency: 'Obstetric Emergency',
-  bls: 'Basic Life Support',
-  neonatal: 'Neonatal',
-}
-
-// Seed scenarios for when DB is empty
 const SEED_SCENARIOS = [
-  {
-    id: 'seed-1',
-    title: 'The Sinusoidal Pattern — When to Act',
-    category: 'ctg',
-    difficulty: 'advanced',
-    tier_required: 'nurse',
-    patient_brief: 'A 38-week multigravida in active labour. Terbutaline given 90 mins ago for hyperstimulation. Patient is 7cm dilated. CTG at 06:30 shows sinusoidal pattern, baseline 130bpm. You are the midwife on duty.',
+  { id: 'seed-1', title: 'The Sinusoidal Pattern — When to Act', category: 'ctg', difficulty: 'advanced', tier_required: 'nurse',
+    patient_brief: 'A 38-week multigravida in active labour. Terbutaline given 90 mins ago. 7cm dilated. CTG shows sinusoidal pattern, baseline 130bpm.',
     scoring_rubric: '{"immediate_escalation":40,"urgency_classification":30,"documentation":15,"patient_communication":15}',
-    correct_actions: '["Immediately call physician/registrar","Classify as pathological — sinusoidal is Category 3","Prepare for emergency C-section","Ensure IV access patent","Document time of recognition"]',
-    teaching_points: 'Sinusoidal CTG is always pathological under NICE (2022). Associated with severe fetal anaemia including fetomaternal haemorrhage. Action is immediate — do not wait for scheduled review.',
-  },
-  {
-    id: 'seed-2',
-    title: 'Late Decelerations — Recognising UTI',
-    category: 'ctg',
-    difficulty: 'intermediate',
-    tier_required: 'free',
-    patient_brief: 'A 36-week primigravida in early labour, 4cm dilated. CTG shows late decelerations starting 30 seconds after each contraction peak, returning to baseline slowly. Baseline rate 145bpm, variability 10bpm. No accelerations in last 40 minutes.',
+    correct_actions: '["Immediately call physician","Classify as pathological","Prepare for emergency C-section","Ensure IV access","Document time"]',
+    teaching_points: 'Sinusoidal CTG is always pathological under NICE (2022). Associated with severe fetal anaemia.' },
+  { id: 'seed-2', title: 'Late Decelerations — Recognising Uteroplacental Insufficiency', category: 'ctg', difficulty: 'intermediate', tier_required: 'free',
+    patient_brief: 'A 36-week primigravida, 4cm dilated. CTG shows late decelerations starting 30 seconds after each contraction peak. Baseline 145bpm, variability 10bpm.',
     scoring_rubric: '{"correct_classification":35,"escalation":35,"documentation":15,"positioning":15}',
-    correct_actions: '["Classify as suspicious/pathological — late decelerations indicate uteroplacental insufficiency","Call senior midwife or obstetrician","Change maternal position to left lateral","Give IV fluids","Administer O2 if prescribed","Document every 15 minutes"]',
-    teaching_points: 'Late decelerations begin after the peak of a contraction and indicate uteroplacental insufficiency. They are never normal. Under NICE, even a single late deceleration in a suspicious CTG warrants escalation.',
-  },
-  {
-    id: 'seed-3',
-    title: 'Normal CTG — Confirming Reassurance',
-    category: 'ctg',
-    difficulty: 'beginner',
-    tier_required: 'free',
-    patient_brief: 'A 39-week primigravida 3 hours into spontaneous labour. CTG shows: Baseline 140bpm. Variability 12bpm. Two accelerations in last 20 minutes. No decelerations. Contractions every 4 minutes.',
-    scoring_rubric: '{"correct_classification":50,"appropriate_documentation":30,"action":20}',
-    correct_actions: '["Classify as normal/reassuring CTG","Document findings clearly with time","Continue routine monitoring every 15-30 minutes","No escalation required","Reassure patient"]',
-    teaching_points: 'A normal CTG has: Baseline 110-160bpm, variability 5-25bpm, accelerations present, no decelerations. Confidence in identifying a normal CTG is as clinically important as identifying pathology.',
-  },
+    correct_actions: '["Classify as suspicious/pathological","Call senior midwife","Change to left lateral","Give IV fluids","Document"]',
+    teaching_points: 'Late decelerations begin after the contraction peak and indicate uteroplacental insufficiency. Never normal.' },
+  { id: 'seed-3', title: 'Normal CTG — Confirming Reassurance', category: 'ctg', difficulty: 'beginner', tier_required: 'free',
+    patient_brief: 'A 39-week primigravida, 3 hours into labour. CTG: Baseline 140bpm, variability 12bpm, 2 accelerations in 20 mins, no decelerations.',
+    scoring_rubric: '{"correct_classification":50,"documentation":30,"action":20}',
+    correct_actions: '["Classify as normal/reassuring","Document clearly","Continue routine monitoring","No escalation","Reassure patient"]',
+    teaching_points: 'Normal CTG: 110-160bpm baseline, 5-25bpm variability, accelerations present, no decelerations.' },
 ]
 
 export default function SimHome() {
@@ -80,123 +52,126 @@ export default function SimHome() {
   const limit = TIER_LIMITS[tier]?.sim_sessions || 3
   const used = profile?.sim_sessions_used || 0
   const remaining = limit === Infinity ? Infinity : Math.max(0, limit - used)
-  const hasSessionsLeft = remaining > 0
-
-  const avgScore = sessions.length > 0
-    ? Math.round(sessions.reduce((a, s) => a + (s.score || 0), 0) / sessions.length)
-    : null
+  const avgScore = sessions.length > 0 ? Math.round(sessions.reduce((a, s) => a + (s.score || 0), 0) / sessions.length) : null
 
   return (
     <AppShell>
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>ClinicalSim AI</h1>
-        <p className="text-[#64748B] mt-1">Practice real patient scenarios. Get expert clinical feedback instantly.</p>
-      </div>
+      <style>{`
+        .sim-hero { background: linear-gradient(135deg, #F43F5E, #EC4899); border-radius: 20px; padding: 22px; color: white; margin-bottom: 20px; }
+        .sim-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .sim-stat { background: white; border-radius: 14px; padding: 14px; text-align: center; border: 1px solid #F1F5F9; }
+        .scenario-card { background: white; border-radius: 16px; border: 1px solid #F1F5F9; padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s; margin-bottom: 10px; }
+        .scenario-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+        .session-row { background: white; border-radius: 12px; border: 1px solid #F1F5F9; padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .pbar-bg { background: rgba(255,255,255,0.25); border-radius: 99px; height: 5px; overflow: hidden; margin: 10px 0; }
+        .pbar-fill { background: white; height: 100%; border-radius: 99px; }
+      `}</style>
 
-      {/* Stats bar */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-extrabold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>{sessions.length}</div>
-          <div className="text-xs text-[#64748B] font-medium">Sessions Done</div>
+      {/* Hero */}
+      <div className="sim-hero">
+        <div style={{ fontSize: '32px', marginBottom: '8px' }}>🩺</div>
+        <h1 style={{ color: 'white', fontSize: '22px', fontWeight: '800', margin: '0 0 6px' }}>ClinicalSim AI</h1>
+        <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px', margin: '0 0 14px', lineHeight: 1.5 }}>
+          Practice real patient scenarios. Get expert clinical feedback powered by AI trained on NICE & RCOG guidelines.
+        </p>
+        <div className="pbar-bg">
+          <div className="pbar-fill" style={{ width: limit === Infinity ? '30%' : `${Math.min(100, (used / limit) * 100)}%` }} />
         </div>
-        <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-extrabold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>{avgScore !== null ? `${avgScore}%` : '—'}</div>
-          <div className="text-xs text-[#64748B] font-medium">Avg Score</div>
-        </div>
-        <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-extrabold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>
-            {remaining === Infinity ? '∞' : remaining}
-          </div>
-          <div className="text-xs text-[#64748B] font-medium">Sessions Left</div>
-        </div>
-      </div>
-
-      {/* Session usage */}
-      {tier !== 'passport' && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-6">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-[#0A2540]">Monthly sessions</span>
-            <span className="text-xs text-[#64748B]">{used} / {limit} used</span>
-          </div>
-          <ProgressBar value={used} max={limit} color={remaining === 0 ? 'gold' : 'teal'} height="sm" showPercent={false} />
-          {remaining === 0 && (
-            <div className="mt-3 flex items-center justify-between">
-              <p className="text-xs text-[#F57C00]">Session limit reached this month</p>
-              <button onClick={() => navigate('/billing')} className="text-xs text-[#00897B] font-semibold hover:underline">Upgrade →</button>
-            </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '12px' }}>
+            {limit === Infinity ? 'Unlimited sessions' : `${remaining} of ${limit} sessions remaining`}
+          </span>
+          {tier !== 'passport' && (
+            <button onClick={() => navigate('/billing')}
+              style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.4)', color: 'white', borderRadius: '8px', padding: '5px 12px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>
+              Get More
+            </button>
           )}
         </div>
-      )}
+      </div>
+
+      {/* Stats */}
+      <div className="sim-stats">
+        <div className="sim-stat">
+          <div style={{ fontSize: '22px', fontWeight: '800', color: '#0A2540' }}>{sessions.length}</div>
+          <div style={{ fontSize: '11px', color: '#94A3B8', fontWeight: '600', marginTop: '2px' }}>SESSIONS</div>
+        </div>
+        <div className="sim-stat">
+          <div style={{ fontSize: '22px', fontWeight: '800', color: avgScore !== null ? (avgScore >= 70 ? '#22C55E' : '#F59E0B') : '#94A3B8' }}>
+            {avgScore !== null ? `${avgScore}%` : '—'}
+          </div>
+          <div style={{ fontSize: '11px', color: '#94A3B8', fontWeight: '600', marginTop: '2px' }}>AVG SCORE</div>
+        </div>
+        <div className="sim-stat">
+          <div style={{ fontSize: '22px', fontWeight: '800', color: '#7C3AED' }}>
+            {remaining === Infinity ? '∞' : remaining}
+          </div>
+          <div style={{ fontSize: '11px', color: '#94A3B8', fontWeight: '600', marginTop: '2px' }}>LEFT</div>
+        </div>
+      </div>
 
       {/* Scenarios */}
-      <h2 className="text-lg font-bold text-[#0A2540] mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>Available Scenarios</h2>
-      <div className="space-y-3 mb-8">
-        {(loading ? Array(3).fill(null) : scenarios).map((scenario, i) => {
-          if (!scenario) return <div key={i} className="skeleton h-24 rounded-2xl" />
-          const locked = !hasSessionsLeft || (scenario.tier_required !== 'free' && tier === 'free')
-          const bestSession = sessions.find(s => s.scenario_id === scenario.id)
+      <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#0A2540', margin: '0 0 14px' }}>Available Scenarios</h2>
 
-          return (
-            <div key={scenario.id}
-              onClick={() => !locked && navigate(`/simulate/${scenario.id}`, { state: { scenario } })}
-              className={`bg-white rounded-2xl border border-gray-100 p-5 flex items-center gap-4 transition-all
-                ${locked ? 'opacity-70' : 'cursor-pointer hover:border-[#00897B]/30 hover:shadow-md'}`}>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0
-                ${locked ? 'bg-gray-100' : 'bg-[#00897B]/10'}`}>
-                {locked ? <Lock size={18} className="text-gray-400" /> : <Activity size={18} className="text-[#00897B]" />}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="font-semibold text-[#0A2540] text-sm leading-snug">{scenario.title}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-[#64748B]">{CATEGORY_LABELS[scenario.category] || scenario.category}</span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${DIFFICULTY_COLORS[scenario.difficulty]}`}>
-                        {scenario.difficulty}
-                      </span>
-                    </div>
-                  </div>
-                  {bestSession && (
-                    <div className={`text-sm font-bold flex-shrink-0 ${bestSession.score >= 70 ? 'text-[#00897B]' : 'text-[#F57C00]'}`}>
-                      {bestSession.score}%
-                    </div>
-                  )}
-                </div>
-              </div>
-              {!locked && <ChevronRight size={16} className="text-[#64748B] flex-shrink-0" />}
-              {locked && scenario.tier_required !== 'free' && tier === 'free' && (
-                <Button variant="gold" size="sm" onClick={(e) => { e.stopPropagation(); navigate('/billing') }}>
-                  Upgrade
-                </Button>
-              )}
+      {(loading ? Array(3).fill(null) : scenarios).map((scenario, i) => {
+        if (!scenario) return <div key={i} style={{ height: '80px', background: '#F1F5F9', borderRadius: '16px', marginBottom: '10px' }} />
+        const locked = remaining === 0 || (scenario.tier_required !== 'free' && tier === 'free')
+        const diff = DIFFICULTY_STYLES[scenario.difficulty] || DIFFICULTY_STYLES.beginner
+        const bestSession = sessions.find(s => s.scenario_id === scenario.id)
+
+        return (
+          <div key={scenario.id} className="scenario-card"
+            style={{ opacity: locked ? 0.7 : 1 }}
+            onClick={() => !locked && navigate(`/simulate/${scenario.id}`, { state: { scenario } })}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: locked ? '#F1F5F9' : 'linear-gradient(135deg, #F43F5E, #EC4899)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              {locked ? <Lock size={18} color="#94A3B8" /> : <Activity size={18} color="white" />}
             </div>
-          )
-        })}
-      </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px', marginBottom: '4px', lineHeight: '1.3' }}>{scenario.title}</div>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                <span style={{ fontSize: '10px', fontWeight: '700', padding: '2px 7px', borderRadius: '99px', background: diff.bg, color: diff.color, border: `1px solid ${diff.border}` }}>
+                  {diff.label}
+                </span>
+                {bestSession && (
+                  <span style={{ fontSize: '11px', fontWeight: '700', color: bestSession.score >= 70 ? '#22C55E' : '#F59E0B' }}>
+                    Best: {bestSession.score}%
+                  </span>
+                )}
+              </div>
+            </div>
+            {locked && scenario.tier_required !== 'free' && tier === 'free' ? (
+              <button style={{ background: '#F59E0B', color: 'white', border: 'none', borderRadius: '8px', padding: '6px 12px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', flexShrink: 0 }}
+                onClick={(e) => { e.stopPropagation(); navigate('/billing') }}>
+                Upgrade
+              </button>
+            ) : !locked ? (
+              <ChevronRight size={18} color="#CBD5E1" style={{ flexShrink: 0 }} />
+            ) : null}
+          </div>
+        )
+      })}
 
       {/* Recent sessions */}
       {sessions.length > 0 && (
-        <div>
-          <h2 className="text-lg font-bold text-[#0A2540] mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>Recent Sessions</h2>
-          <div className="space-y-2">
-            {sessions.map((s, i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-100 p-4 flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0
-                  ${s.score >= 70 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
-                  {s.score}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-[#0A2540] truncate">{s.sim_scenarios?.title || 'Scenario'}</div>
-                  <div className="text-xs text-[#64748B]">{new Date(s.created_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'short' })}</div>
-                </div>
-                <div className={`text-xs px-2 py-0.5 rounded-full font-medium ${s.score >= 70 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
-                  {s.score >= 70 ? 'Passed' : 'Review'}
-                </div>
+        <>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#0A2540', margin: '24px 0 14px' }}>Recent Sessions</h2>
+          {sessions.map((s, i) => (
+            <div key={i} className="session-row">
+              <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: s.score >= 70 ? '#F0FDF4' : '#FFFBEB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <span style={{ fontSize: '14px', fontWeight: '800', color: s.score >= 70 ? '#22C55E' : '#F59E0B' }}>{s.score}</span>
               </div>
-            ))}
-          </div>
-        </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '13px', fontWeight: '600', color: '#0A2540', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {s.sim_scenarios?.title || 'Scenario'}
+                </div>
+                <div style={{ fontSize: '11px', color: '#94A3B8' }}>{new Date(s.created_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'short' })}</div>
+              </div>
+              <div style={{ fontSize: '11px', fontWeight: '700', padding: '4px 10px', borderRadius: '99px', background: s.score >= 70 ? '#F0FDF4' : '#FFFBEB', color: s.score >= 70 ? '#22C55E' : '#F59E0B', flexShrink: 0 }}>
+                {s.score >= 70 ? '✓ Passed' : 'Review'}
+              </div>
+            </div>
+          ))}
+        </>
       )}
     </AppShell>
   )

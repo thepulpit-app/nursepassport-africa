@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Award, Download, Share2, ExternalLink } from 'lucide-react'
+import { Award, Download, Share2 } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
-import Button from '../../components/ui/Button'
 
 export default function CertificateList() {
   const { profile } = useAuth()
@@ -13,81 +12,84 @@ export default function CertificateList() {
   useEffect(() => { loadCerts() }, [profile])
 
   async function loadCerts() {
-    const { data } = await supabase.from('certificates')
-      .select('*, courses(title, slug)')
-      .eq('user_id', profile.id)
-      .order('issued_at', { ascending: false })
+    const { data } = await supabase.from('certificates').select('*, courses(title)').eq('user_id', profile.id).order('issued_at', { ascending: false })
     setCerts(data || [])
     setLoading(false)
   }
 
   return (
     <AppShell>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>My Certificates</h1>
-        <p className="text-[#64748B] mt-1">Your verified AMCC clinical certifications</p>
+      <style>{`
+        .cert-card { border-radius: 20px; overflow: hidden; background: white; border: 1px solid #F1F5F9; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .cert-header { background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 20px; }
+        .cert-body { padding: 16px 20px 20px; }
+        .cert-btn { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; border-radius: 10px; font-weight: '700'; font-size: 13px; cursor: pointer; border: none; flex: 1; font-weight: 700; }
+      `}</style>
+
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Certificates</h1>
+        <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>Your verified AMCC clinical certifications</p>
       </div>
 
       {loading ? (
-        <div className="space-y-4">{[1, 2].map(i => <div key={i} className="skeleton h-32 rounded-2xl" />)}</div>
+        <div style={{ height: '200px', background: '#F1F5F9', borderRadius: '20px' }} />
       ) : certs.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 p-16 text-center">
-          <Award size={48} className="text-gray-200 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-[#0A2540] mb-2" style={{ fontFamily: 'Outfit, sans-serif' }}>No certificates yet</h2>
-          <p className="text-[#64748B] text-sm max-w-xs mx-auto">Complete all modules in a course and pass the assessment to earn your AMCC certificate.</p>
+        <div style={{ background: 'white', borderRadius: '20px', border: '1px solid #F1F5F9', padding: '48px 24px', textAlign: 'center' }}>
+          <div style={{ width: '64px', height: '64px', background: '#EEF2FF', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <Award size={28} color="#6366F1" />
+          </div>
+          <h2 style={{ fontSize: '18px', fontWeight: '800', color: '#0A2540', margin: '0 0 8px' }}>No certificates yet</h2>
+          <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0, maxWidth: '260px', marginLeft: 'auto', marginRight: 'auto', lineHeight: '1.5' }}>
+            Complete all modules in a course and pass the assessment to earn your AMCC certificate.
+          </p>
         </div>
       ) : (
-        <div className="grid sm:grid-cols-2 gap-5">
-          {certs.map((cert) => (
-            <div key={cert.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
-              {/* Certificate header */}
-              <div className="bg-gradient-to-br from-[#0A2540] to-[#0D3060] p-6">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-[#F4A300] text-xs font-semibold uppercase tracking-wide mb-1">AMCC Certificate</div>
-                    <h3 className="text-white font-bold text-lg leading-snug" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                      {cert.courses?.title || 'Course Certificate'}
-                    </h3>
-                    <div className="text-white/60 text-sm mt-1">{profile?.full_name}</div>
+        certs.map((cert) => (
+          <div key={cert.id} className="cert-card">
+            <div className="cert-header">
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ color: '#F59E0B', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '6px' }}>
+                    🏆 AMCC Certificate
                   </div>
-                  <div className="w-12 h-12 bg-[#F4A300]/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Award size={24} className="text-[#F4A300]" />
-                  </div>
+                  <h3 style={{ color: 'white', fontWeight: '800', fontSize: '16px', margin: '0 0 4px', lineHeight: '1.3' }}>
+                    {cert.courses?.title || 'Course Certificate'}
+                  </h3>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>{profile?.full_name}</div>
                 </div>
-              </div>
-
-              {/* Certificate details */}
-              <div className="p-5">
-                <div className="flex items-center justify-between text-sm mb-4">
-                  <div>
-                    <div className="text-[#64748B] text-xs">Certificate ID</div>
-                    <div className="font-mono font-semibold text-[#0A2540] text-sm">{cert.certificate_number}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[#64748B] text-xs">Issued</div>
-                    <div className="font-semibold text-[#0A2540] text-sm">
-                      {new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  {cert.pdf_url && (
-                    <Button variant="primary" size="sm" onClick={() => window.open(cert.pdf_url, '_blank')}>
-                      <Download size={14} /> Download PDF
-                    </Button>
-                  )}
-                  <Button variant="outline" size="sm" onClick={() => {
-                    navigator.clipboard.writeText(`${window.location.origin}/verify/${cert.certificate_number}`)
-                    alert('Verification link copied!')
-                  }}>
-                    <Share2 size={14} /> Share
-                  </Button>
+                <div style={{ width: '44px', height: '44px', background: 'rgba(255,255,255,0.15)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Award size={22} color="white" />
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+            <div className="cert-body">
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div>
+                  <div style={{ fontSize: '11px', color: '#94A3B8', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '3px' }}>Certificate ID</div>
+                  <div style={{ fontFamily: 'monospace', fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>{cert.certificate_number}</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: '11px', color: '#94A3B8', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '3px' }}>Issued</div>
+                  <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>
+                    {new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </div>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                {cert.pdf_url && (
+                  <button className="cert-btn" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', color: 'white' }}
+                    onClick={() => window.open(cert.pdf_url, '_blank')}>
+                    <Download size={14} /> Download PDF
+                  </button>
+                )}
+                <button className="cert-btn" style={{ background: '#EEF2FF', color: '#6366F1' }}
+                  onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/verify/${cert.certificate_number}`); alert('Link copied!') }}>
+                  <Share2 size={14} /> Share
+                </button>
+              </div>
+            </div>
+          </div>
+        ))
       )}
     </AppShell>
   )

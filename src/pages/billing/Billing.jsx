@@ -1,30 +1,33 @@
 import { useState } from 'react'
-import { CheckCircle, Zap, Star, Crown } from 'lucide-react'
+import { CheckCircle, Lock } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { PLANS, initializePaystackPayment } from '../../lib/paystack'
 import AppShell from '../../components/layout/AppShell'
-import Button from '../../components/ui/Button'
 import toast from 'react-hot-toast'
 
 const PLAN_DETAILS = [
   {
-    key: 'free', name: 'Grace', icon: '🌱', color: 'border-gray-200',
+    key: 'free', name: 'Grace', emoji: '🌱',
+    gradient: 'linear-gradient(135deg, #64748B, #475569)',
     monthlyPrice: 0, annualPrice: 0,
     features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking', 'Community access'],
-    locked: ['Full course access', 'AMCC certificates', 'Unlimited modules', 'OSCE prep'],
+    locked: ['Full course access', 'AMCC certificates', 'ClinicalSim AI (unlimited)', 'OSCE prep'],
   },
   {
-    key: 'nurse', name: 'Nurse', icon: '🩺', color: 'border-[#00897B]', popular: true,
+    key: 'nurse', name: 'Nurse', emoji: '🩺',
+    gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
     monthlyPlan: 'nurse_monthly', annualPlan: 'nurse_annual',
     monthlyPrice: 4500, annualPrice: 40000,
-    features: ['Everything in Free', 'All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics', 'CTG Masterclass access', 'BLS & Obstetric Emergencies'],
-    locked: ['OSCE prep track', 'Placement portfolio', 'UAE HAAD prep'],
+    popular: true,
+    features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics', 'CTG Masterclass', 'BLS & Obstetric Emergencies'],
+    locked: ['OSCE prep track', 'Placement portfolio', 'UAE HAAD prep', 'USA NCLEX prep'],
   },
   {
-    key: 'passport', name: 'Passport', icon: '✈️', color: 'border-[#F4A300]',
+    key: 'passport', name: 'Passport', emoji: '✈️',
+    gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)',
     monthlyPlan: 'passport_monthly', annualPlan: 'passport_annual',
     monthlyPrice: 9000, annualPrice: 80000,
-    features: ['Everything in Nurse', 'Unlimited sim sessions', 'OSCE prep track', 'Placement portfolio', 'UAE HAAD prep track', 'UK NMC prep track', 'USA NCLEX-RN prep track', 'Canada prep — coming soon', 'Priority support'],
+    features: ['Everything in Nurse', 'Unlimited sim sessions', 'OSCE prep track', 'Placement portfolio', 'UAE HAAD prep track', 'UK NMC prep track', 'USA NCLEX-RN prep', 'Canada prep (coming soon)', 'Priority support'],
     locked: [],
   },
 ]
@@ -38,132 +41,130 @@ export default function Billing() {
     const planKey = billing === 'monthly' ? plan.monthlyPlan : plan.annualPlan
     const planDetails = PLANS[planKey]
     if (!planDetails) return
-
     setLoading(plan.key)
     initializePaystackPayment({
       email: user.email,
       planCode: planDetails.code,
       userId: user.id,
-      onSuccess: (response) => {
-        toast.success(`Successfully subscribed to ${plan.name} plan!`)
-        setLoading(null)
-        window.location.reload()
-      },
-      onClose: () => {
-        setLoading(null)
-        toast.error('Payment cancelled')
-      }
+      onSuccess: () => { toast.success(`Welcome to ${plan.name}!`); setLoading(null); window.location.reload() },
+      onClose: () => { setLoading(null); toast.error('Payment cancelled') }
     })
   }
 
-  const annualSavings = { nurse: Math.round(((4500 * 12 - 40000) / (4500 * 12)) * 100), passport: Math.round(((9000 * 12 - 80000) / (9000 * 12)) * 100) }
+  const savings = { nurse: Math.round(((4500 * 12 - 40000) / (4500 * 12)) * 100), passport: Math.round(((9000 * 12 - 80000) / (9000 * 12)) * 100) }
 
   return (
     <AppShell>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>Plans & Billing</h1>
-        <p className="text-[#64748B] mt-1">
-          Current plan: <span className="font-semibold text-[#0A2540] capitalize">{tier}</span>
-          {profile?.is_founding_member && <span className="ml-2 text-[#F4A300] font-semibold">⭐ Founding Member</span>}
+      <style>{`
+        .plan-card { border-radius: 20px; overflow: hidden; background: white; border: 1px solid #F1F5F9; margin-bottom: 16px; }
+        .plan-header { padding: 20px; }
+        .plan-body { padding: 16px 20px 20px; }
+        .feature-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #0A2540; padding: 4px 0; }
+        .upgrade-btn { width: 100%; padding: 14px; border-radius: 12px; border: none; font-weight: 700; font-size: 15px; cursor: pointer; }
+        .toggle-btn { padding: 8px 20px; border-radius: 99px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; }
+      `}</style>
+
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Plans & Billing</h1>
+        <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>
+          Current plan: <strong style={{ color: '#0A2540' }}>{tier}</strong>
+          {profile?.is_founding_member && <span style={{ color: '#F59E0B', marginLeft: '6px' }}>⭐ Founding Member</span>}
         </p>
       </div>
 
-      {/* Billing toggle */}
-      <div className="flex items-center justify-center gap-3 mb-8">
-        <button onClick={() => setBilling('monthly')}
-          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${billing === 'monthly' ? 'bg-[#0A2540] text-white' : 'text-[#64748B] hover:text-[#0A2540]'}`}>
+      {/* Toggle */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', background: '#F8FAFC', borderRadius: '99px', padding: '4px', marginBottom: '24px', width: 'fit-content', margin: '0 auto 24px' }}>
+        <button className="toggle-btn" onClick={() => setBilling('monthly')}
+          style={{ background: billing === 'monthly' ? '#0A2540' : 'transparent', color: billing === 'monthly' ? 'white' : '#64748B' }}>
           Monthly
         </button>
-        <button onClick={() => setBilling('annual')}
-          className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${billing === 'annual' ? 'bg-[#0A2540] text-white' : 'text-[#64748B] hover:text-[#0A2540]'}`}>
+        <button className="toggle-btn" onClick={() => setBilling('annual')}
+          style={{ background: billing === 'annual' ? '#0A2540' : 'transparent', color: billing === 'annual' ? 'white' : '#64748B', display: 'flex', alignItems: 'center', gap: '6px' }}>
           Annual
-          <span className="bg-[#F4A300] text-[#0A2540] text-xs px-2 py-0.5 rounded-full font-bold">Save up to {annualSavings.passport}%</span>
+          <span style={{ background: '#F43F5E', color: 'white', fontSize: '10px', fontWeight: '700', padding: '2px 6px', borderRadius: '99px' }}>
+            Save up to {savings.passport}%
+          </span>
         </button>
       </div>
 
-      {/* Plans */}
-      <div className="grid sm:grid-cols-3 gap-5 mb-8">
-        {PLAN_DETAILS.map((plan) => {
-          const isCurrent = tier === plan.key
-          const price = billing === 'annual' ? plan.annualPrice : plan.monthlyPrice
-          const isUpgrade = ['free', 'nurse', 'passport'].indexOf(plan.key) > ['free', 'nurse', 'passport'].indexOf(tier)
+      {PLAN_DETAILS.map((plan) => {
+        const isCurrent = tier === plan.key
+        const isUpgrade = ['free', 'nurse', 'passport'].indexOf(plan.key) > ['free', 'nurse', 'passport'].indexOf(tier)
+        const price = billing === 'annual' ? plan.annualPrice : plan.monthlyPrice
 
-          return (
-            <div key={plan.key}
-              className={`bg-white rounded-2xl border-2 ${plan.color} overflow-hidden relative transition-all ${plan.popular ? 'shadow-lg scale-[1.02]' : ''}`}>
-              {plan.popular && (
-                <div className="bg-[#00897B] text-white text-xs font-bold text-center py-1.5 tracking-wide">
-                  ✨ MOST POPULAR
+        return (
+          <div key={plan.key} className="plan-card" style={{ border: plan.popular ? '2px solid #7C3AED' : '1px solid #F1F5F9' }}>
+            {plan.popular && (
+              <div style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', color: 'white', textAlign: 'center', padding: '8px', fontSize: '11px', fontWeight: '700', letterSpacing: '0.1em' }}>
+                ✨ MOST POPULAR
+              </div>
+            )}
+            <div className="plan-header" style={{ background: plan.gradient }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontSize: '28px', marginBottom: '6px' }}>{plan.emoji}</div>
+                  <div style={{ color: 'white', fontWeight: '800', fontSize: '20px', marginBottom: '2px' }}>{plan.name}</div>
+                  {price > 0 ? (
+                    <div>
+                      <span style={{ color: 'white', fontWeight: '800', fontSize: '28px' }}>₦{price.toLocaleString()}</span>
+                      <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', marginLeft: '4px' }}>
+                        {billing === 'annual' ? '/year' : '/month'}
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ color: 'white', fontWeight: '800', fontSize: '28px' }}>Free</div>
+                  )}
                 </div>
-              )}
-              <div className="p-6">
-                <div className="text-3xl mb-2">{plan.icon}</div>
-                <h3 className="text-xl font-bold text-[#0A2540] mb-1" style={{ fontFamily: 'Outfit, sans-serif' }}>{plan.name}</h3>
-
-                {price === 0 ? (
-                  <div className="text-3xl font-extrabold text-[#0A2540] mb-0.5" style={{ fontFamily: 'Outfit, sans-serif' }}>Free</div>
-                ) : (
-                  <div>
-                    <div className="text-3xl font-extrabold text-[#0A2540]" style={{ fontFamily: 'Outfit, sans-serif' }}>
-                      ₦{price.toLocaleString()}
-                    </div>
-                    <div className="text-[#64748B] text-xs">
-                      {billing === 'annual' ? '/year' : '/month'}
-                      {billing === 'annual' && plan.key !== 'free' && (
-                        <span className="ml-2 text-[#00897B] font-semibold">Save {annualSavings[plan.key]}%</span>
-                      )}
-                    </div>
+                {isCurrent && (
+                  <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '99px', padding: '6px 14px', color: 'white', fontSize: '12px', fontWeight: '700' }}>
+                    Current ✓
                   </div>
                 )}
-
-                <div className="my-5 border-t border-gray-100" />
-
-                <ul className="space-y-2 mb-6">
-                  {plan.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm">
-                      <CheckCircle size={15} className="text-[#00897B] flex-shrink-0 mt-0.5" />
-                      <span className="text-[#0A2540]">{f}</span>
-                    </li>
-                  ))}
-                  {plan.locked.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm opacity-40">
-                      <CheckCircle size={15} className="text-gray-300 flex-shrink-0 mt-0.5" />
-                      <span className="text-[#64748B] line-through">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {isCurrent ? (
-                  <div className="w-full py-3 rounded-xl bg-gray-100 text-[#64748B] text-sm font-semibold text-center">
-                    Current Plan ✓
-                  </div>
-                ) : isUpgrade ? (
-                  <Button
-                    variant={plan.key === 'passport' ? 'gold' : 'primary'}
-                    fullWidth
-                    loading={loading === plan.key}
-                    onClick={() => handleUpgrade(plan)}
-                  >
-                    Upgrade to {plan.name}
-                  </Button>
-                ) : (
-                  <div className="w-full py-3 rounded-xl bg-gray-50 text-[#64748B] text-sm font-semibold text-center">
-                    Downgrade
+                {billing === 'annual' && plan.key !== 'free' && (
+                  <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '99px', padding: '6px 14px', color: 'white', fontSize: '11px', fontWeight: '700' }}>
+                    Save {savings[plan.key]}%
                   </div>
                 )}
               </div>
             </div>
-          )
-        })}
-      </div>
+            <div className="plan-body">
+              <div style={{ marginBottom: '16px' }}>
+                {plan.features.map((f, i) => (
+                  <div key={i} className="feature-item">
+                    <CheckCircle size={14} color="#22C55E" style={{ flexShrink: 0 }} /> {f}
+                  </div>
+                ))}
+                {plan.locked.map((f, i) => (
+                  <div key={i} className="feature-item" style={{ opacity: 0.4 }}>
+                    <Lock size={14} color="#94A3B8" style={{ flexShrink: 0 }} />
+                    <span style={{ textDecoration: 'line-through', color: '#94A3B8' }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              {isCurrent ? (
+                <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
+                  Your Current Plan
+                </div>
+              ) : isUpgrade ? (
+                <button className="upgrade-btn" style={{ background: plan.gradient, color: 'white' }}
+                  disabled={loading === plan.key}
+                  onClick={() => handleUpgrade(plan)}>
+                  {loading === plan.key ? 'Processing...' : `Upgrade to ${plan.name}`}
+                </button>
+              ) : (
+                <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
+                  Downgrade
+                </div>
+              )}
+            </div>
+          </div>
+        )
+      })}
 
-      {/* Security note */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
-        <p className="text-[#64748B] text-sm">
-          🔒 Payments secured by <strong>Paystack</strong> · Cancel anytime · Instant access on upgrade
-        </p>
-        <p className="text-xs text-[#64748B] mt-2">
-          Questions? Email <a href="mailto:hello@nursepassportafrica.com" className="text-[#00897B] hover:underline">hello@nursepassportafrica.com</a>
+      <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '16px', textAlign: 'center' }}>
+        <p style={{ color: '#94A3B8', fontSize: '13px', margin: '0 0 4px' }}>🔒 Payments secured by Paystack · Cancel anytime</p>
+        <p style={{ color: '#94A3B8', fontSize: '12px', margin: 0 }}>
+          Questions? <a href="mailto:hello@nursepassportafrica.com" style={{ color: '#6366F1', fontWeight: '600' }}>hello@nursepassportafrica.com</a>
         </p>
       </div>
     </AppShell>
