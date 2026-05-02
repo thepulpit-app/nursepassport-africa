@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, Stethoscope } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const NAV = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Dashboard' },
@@ -16,14 +17,14 @@ const BOTTOM_NAV = [
 
 export default function Sidebar() {
   const { profile, tier, isFoundingMember, signOut } = useAuth()
+  const { theme } = useTheme()
   const navigate = useNavigate()
 
   const TIER_BADGE = {
-    free:     { label: 'Free',     bg: 'bg-gray-100 text-gray-600' },
-    nurse:    { label: 'Nurse',    bg: 'bg-[#0A2540] text-white' },
-    passport: { label: 'Passport', bg: 'bg-[#F4A300] text-[#0A2540]' },
+    free:     { label: 'Free',     bg: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' },
+    nurse:    { label: 'Nurse',    bg: theme.secondary, color: 'white' },
+    passport: { label: 'Passport', bg: '#F4A300', color: '#0A2540' },
   }
-
   const badge = TIER_BADGE[tier] || TIER_BADGE.free
 
   async function handleSignOut() {
@@ -32,37 +33,38 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 bg-[#0A2540] min-h-screen fixed left-0 top-0 z-30">
+    <aside className="hidden lg:flex flex-col w-64 min-h-screen fixed left-0 top-0 z-30"
+      style={{ background: theme.gradient }}>
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#00897B] rounded-xl flex items-center justify-center">
-            <Stethoscope size={18} className="text-white" />
+      <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ width: '34px', height: '34px', background: 'rgba(255,255,255,0.15)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>
+            🩺
           </div>
           <div>
-            <div className="font-bold text-white text-sm leading-tight" style={{ fontFamily: 'Outfit, sans-serif' }}>
-              NursePassport
-            </div>
-            <div className="text-white/50 text-xs">Africa</div>
+            <div style={{ color: 'white', fontWeight: '800', fontSize: '13px', lineHeight: 1 }}>NursePassport</div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', marginTop: '2px' }}>Africa</div>
           </div>
         </div>
       </div>
 
-      {/* User info */}
-      <div className="px-4 py-4 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#00897B] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+      {/* User */}
+      <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ width: '38px', height: '38px', borderRadius: '12px', background: theme.secondary, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '800', fontSize: '15px', flexShrink: 0 }}>
             {profile?.full_name?.[0]?.toUpperCase() || 'N'}
           </div>
-          <div className="min-w-0">
-            <div className="text-white font-semibold text-sm truncate">{profile?.full_name || 'Nurse'}</div>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${badge.bg}`}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ color: 'white', fontWeight: '700', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {profile?.full_name || 'Nurse'}
+            </div>
+            <div style={{ display: 'flex', gap: '6px', marginTop: '3px' }}>
+              <span style={{ fontSize: '10px', fontWeight: '700', padding: '2px 8px', borderRadius: '99px', background: badge.bg, color: badge.color }}>
                 {badge.label}
               </span>
               {isFoundingMember && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-[#F4A300]/20 text-[#F4A300] font-medium">
-                  Founding
+                <span style={{ fontSize: '10px', fontWeight: '700', padding: '2px 8px', borderRadius: '99px', background: 'rgba(244,163,0,0.2)', color: '#F4A300' }}>
+                  ⭐ Founding
                 </span>
               )}
             </div>
@@ -70,50 +72,37 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Main nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      {/* Nav */}
+      <nav style={{ flex: 1, padding: '10px 8px', overflowY: 'auto' }}>
         {NAV.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-               ${isActive
-                 ? 'bg-[#00897B] text-white shadow-lg shadow-[#00897B]/30'
-                 : 'text-white/70 hover:text-white hover:bg-white/10'
-               }`
-            }
-          >
-            <Icon size={18} />
+          <NavLink key={to} to={to}
+            style={({ isActive }) => ({
+              display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', marginBottom: '4px', textDecoration: 'none', fontSize: '13px', fontWeight: '600', transition: 'all 0.2s',
+              background: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
+              color: isActive ? 'white' : 'rgba(255,255,255,0.65)',
+            })}>
+            <Icon size={17} />
             {label}
           </NavLink>
         ))}
       </nav>
 
-      {/* Bottom nav */}
-      <div className="px-3 pb-4 border-t border-white/10 pt-4 space-y-1">
+      {/* Bottom */}
+      <div style={{ padding: '8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
         {BOTTOM_NAV.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-               ${isActive
-                 ? 'bg-white/10 text-white'
-                 : 'text-white/60 hover:text-white hover:bg-white/10'
-               }`
-            }
-          >
-            <Icon size={18} />
+          <NavLink key={to} to={to}
+            style={({ isActive }) => ({
+              display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', marginBottom: '4px', textDecoration: 'none', fontSize: '13px', fontWeight: '600',
+              background: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
+              color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
+            })}>
+            <Icon size={17} />
             {label}
           </NavLink>
         ))}
-        <button
-          onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-red-400 hover:bg-red-500/10 transition-all"
-        >
-          <LogOut size={18} />
-          Sign Out
+        <button onClick={handleSignOut}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '13px', fontWeight: '600' }}>
+          <LogOut size={17} /> Sign Out
         </button>
       </div>
     </aside>

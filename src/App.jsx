@@ -17,14 +17,11 @@ import SimSession from './pages/sim/SimSession'
 import CertificateList from './pages/certificates/CertificateList'
 import Profile from './pages/profile/Profile'
 import Billing from './pages/billing/Billing'
-import Privacy from './pages/Privacy'
-import Terms from './pages/Terms'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
-import AdminCertificates from './pages/admin/AdminCertificates'
 
 function LoadingScreen() {
   return (
@@ -86,14 +83,11 @@ function AppRoutes() {
       <Route path="/certificates" element={<ProtectedRoute><CertificateList /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
       <Route path="/admin/courses" element={<AdminRoute><AdminCourses /></AdminRoute>} />
       <Route path="/admin/scenarios" element={<AdminRoute><AdminScenarios /></AdminRoute>} />
-      <Route path="/admin/certificates" element={<AdminRoute><AdminCertificates /></AdminRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
