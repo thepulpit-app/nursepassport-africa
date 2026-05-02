@@ -102,11 +102,5 @@ export function ThemeProvider({ children }) {
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext)
-  return {
-    theme: context?.theme || DEFAULT_THEME,
-    themeName: context?.themeName || 'ocean',
-    setTheme: context?.setTheme || (() => {}),
-    themes: context?.themes || THEMES,
-  }
+  return useContext(ThemeContext)
 }
