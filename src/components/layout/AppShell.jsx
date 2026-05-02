@@ -4,6 +4,7 @@ import { useTheme } from '../../contexts/ThemeContext'
 
 export default function AppShell({ children }) {
   const { theme } = useTheme()
+  console.log('Current theme:', theme?.name)
 
   return (
     <div style={{ minHeight: '100vh', background: theme?.bg || '#F7F9FC' }}>
