@@ -1,12 +1,14 @@
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
+import { useTheme } from '../../contexts/ThemeContext'
 
 export default function AppShell({ children }) {
+  const { theme } = useTheme()
+
   return (
-    <div style={{ minHeight: '100vh', background: '#F7F9FC' }}>
+    <div style={{ minHeight: '100vh', background: theme?.bg || '#F7F9FC' }}>
       <Sidebar />
-      <div style={{ marginLeft: '0', paddingBottom: '80px' }}
-        className="lg-content">
+      <div style={{ marginLeft: '0', paddingBottom: '80px' }} className="lg-content">
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '24px 16px' }}>
           {children}
         </div>
