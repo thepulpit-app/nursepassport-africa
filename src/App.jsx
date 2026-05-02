@@ -22,6 +22,7 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 function LoadingScreen() {
   return (
@@ -95,7 +96,8 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
         <Toaster position="top-center" toastOptions={{
