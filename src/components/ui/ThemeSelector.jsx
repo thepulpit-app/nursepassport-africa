@@ -10,7 +10,7 @@ export default function ThemeSelector() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
         {Object.entries(THEMES).map(([key, t]) => (
-          <button key={key} onClick={() => setTheme(key)}
+          <button key={key} onClick={() => { console.log('Theme clicked:', key); setTheme(key); }}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '12px 8px', borderRadius: '12px', border: `2px solid ${themeName === key ? t.secondary : '#F1F5F9'}`, background: themeName === key ? `${t.secondary}15` : 'white', cursor: 'pointer', transition: 'all 0.2s' }}>
             <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: t.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }}>
               {t.emoji}
