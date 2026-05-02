@@ -4,7 +4,7 @@ import { Save, ChevronRight } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
-import ThemeSelector from '../../components/ui/Themeselector'
+import ThemeSelector from '../../components/ui/ThemeSelector'
 
 const QUALIFICATIONS = ['RN', 'RM', 'RN/RM', 'Nursing Student', 'Healthcare Assistant']
 const GOALS = [
