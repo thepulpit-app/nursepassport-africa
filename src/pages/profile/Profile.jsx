@@ -4,6 +4,7 @@ import { Save, ChevronRight } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
+import ThemeSelector from '../../components/ui/ThemeSelector'
 
 const QUALIFICATIONS = ['RN', 'RM', 'RN/RM', 'Nursing Student', 'Healthcare Assistant']
 const GOALS = [
@@ -132,6 +133,11 @@ export default function Profile() {
         </button>
       </div>
 
+{/* Theme */}
+<div className="profile-section">
+  <h2 style={{ fontSize: '15px', fontWeight: '800', color: '#0A2540', margin: '0 0 16px' }}>Appearance</h2>
+  <ThemeSelector />
+</div>
       {/* Account actions */}
       <div className="profile-section">
         <h2 style={{ fontSize: '15px', fontWeight: '800', color: '#0A2540', margin: '0 0 12px' }}>Account</h2>
