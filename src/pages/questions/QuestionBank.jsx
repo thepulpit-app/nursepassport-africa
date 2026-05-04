@@ -137,9 +137,35 @@ export default function QuestionBank() {
           })}
         </div>
 
-        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '16px' }}>
-          <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '14px', marginBottom: '6px' }}>📚 Coming Soon</div>
-          <div style={{ color: '#94A3B8', fontSize: '13px', lineHeight: '1.6' }}>Timed mock exams · Performance analytics · Weak area identification · OSCE questions</div>
+        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <div style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>✈️ Passport Features</div>
+            {tier !== 'passport' && (
+              <button onClick={() => navigate('/billing')}
+                style={{ background: '#F59E0B', color: '#0A2540', border: 'none', borderRadius: '8px', padding: '5px 12px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}>
+                Upgrade
+              </button>
+            )}
+          </div>
+          {[
+            { emoji: '⏱️', label: 'Timed Mock Exams', sub: '75 or 145 questions — real NCLEX/NMC format' },
+            { emoji: '📊', label: 'Performance Analytics', sub: 'Track weak areas by category' },
+            { emoji: '🎯', label: 'Weak Area Identification', sub: 'AI-powered study recommendations' },
+            { emoji: '🏥', label: 'OSCE Questions', sub: 'Clinical skills and communication stations' },
+          ].map((item, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: i < 3 ? '1px solid #F8FAFC' : 'none', opacity: tier !== 'passport' ? 0.6 : 1 }}>
+              <div style={{ fontSize: '22px', width: '36px', textAlign: 'center' }}>{item.emoji}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>{item.label}</div>
+                <div style={{ color: '#94A3B8', fontSize: '11px' }}>{item.sub}</div>
+              </div>
+              {tier !== 'passport' ? (
+                <span style={{ fontSize: '10px', fontWeight: '700', padding: '3px 8px', borderRadius: '99px', background: '#FFF7ED', color: '#F59E0B' }}>Passport</span>
+              ) : (
+                <span style={{ fontSize: '10px', fontWeight: '700', padding: '3px 8px', borderRadius: '99px', background: '#F0FDF4', color: '#22C55E' }}>Active</span>
+              )}
+            </div>
+          ))}
         </div>
       </AppShell>
     )
