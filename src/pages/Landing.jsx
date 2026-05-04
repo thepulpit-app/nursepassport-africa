@@ -27,9 +27,9 @@ export default function Landing() {
   const [founderCount, setFounderCount] = useState(null)
 
   useEffect(() => {
-    supabase.from('profiles').select('id', { count: 'exact' }).then(({ count }) => {
-      setFounderCount(count || 0)
-    })
+    supabase.rpc('get_user_count').then(({ data }) => {
+  setFounderCount(data || 0)
+})
   }, [])
 
   const spotsRemaining = Math.max(0, 100 - (founderCount || 0))
