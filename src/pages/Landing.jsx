@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
 import { CheckCircle, ArrowRight, Star, Activity, Award, BookOpen, Globe } from 'lucide-react'
 
 const FEATURES = [
@@ -22,6 +24,16 @@ const PLANS = [
 
 export default function Landing() {
   const navigate = useNavigate()
+  const [founderCount, setFounderCount] = useState(null)
+
+  useEffect(() => {
+    supabase.from('profiles').select('id', { count: 'exact' }).then(({ count }) => {
+      setFounderCount(count || 0)
+    })
+  }, [])
+
+  const spotsRemaining = Math.max(0, 100 - (founderCount || 0))
+  const isFull = spotsRemaining === 0
 
   return (
     <div style={{ minHeight: '100vh', background: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -66,6 +78,17 @@ export default function Landing() {
             <span style={{ width: '6px', height: '6px', background: '#F43F5E', borderRadius: '50%', display: 'inline-block' }} />
             <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px', fontWeight: '600' }}>Powered by AMCC · Built for African Nurses</span>
           </div>
+          {!isFull && founderCount !== null && (
+  <div style={{ background: 'linear-gradient(135deg, rgba(244,163,0,0.2), rgba(244,163,0,0.1))', border: '1px solid rgba(244,163,0,0.4)', borderRadius: '14px', padding: '12px 20px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+    <span style={{ fontSize: '20px' }}>⭐</span>
+    <div>
+      <div style={{ color: '#F4A300', fontWeight: '800', fontSize: '14px' }}>Founding Member Offer — 50% off for 2 months</div>
+      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
+        Only <strong style={{ color: '#F4A300' }}>{spotsRemaining} of 100 spots</strong> remaining · First 100 nurses get half price
+      </div>
+    </div>
+  </div>
+)}
           <h1 style={{ color: 'white', fontWeight: '900', fontSize: 'clamp(32px, 6vw, 64px)', lineHeight: '1.1', marginBottom: '20px', maxWidth: '700px' }}>
             Train. Simulate.<br />
             <span style={{ background: 'linear-gradient(135deg, #F43F5E, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Certify.</span> Get Placed.
