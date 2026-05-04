@@ -8,8 +8,8 @@ import { supabase } from './lib/supabase'
 import Landing from './pages/Landing'
 import SignUp from './pages/auth/SignUp'
 import SignIn from './pages/auth/SignIn'
-import ForgotPassword from './pages/auth/ForgotPassword'
 import Onboarding from './pages/Onboarding'
+import ForgotPassword from './pages/auth/ForgotPassword'
 import Dashboard from './pages/dashboard/Dashboard'
 import CourseList from './pages/courses/CourseList'
 import CourseDetail from './pages/courses/CourseDetail'
@@ -17,10 +17,10 @@ import ModulePlayer from './pages/courses/ModulePlayer'
 import SimHome from './pages/sim/SimHome'
 import SimSession from './pages/sim/SimSession'
 import CertificateList from './pages/certificates/CertificateList'
-import VerifyCertificate from './pages/VerifyCertificate'
 import Profile from './pages/profile/Profile'
 import Billing from './pages/billing/Billing'
 import Privacy from './pages/Privacy'
+import VerifyCertificate from './pages/VerifyCertificate'
 import Terms from './pages/Terms'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -28,6 +28,8 @@ import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
 import AdminCertificates from './pages/admin/AdminCertificates'
+import QuestionBank from './pages/questions/QuestionBank'
+import Referral from './pages/referral/Referral'
 
 function LoadingScreen() {
   return (
@@ -77,8 +79,8 @@ function AppRoutes() {
       <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
       <Route path="/signup" element={<PublicRoute><SignUp /></PublicRoute>} />
       <Route path="/signin" element={<PublicRoute><SignIn /></PublicRoute>} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/courses" element={<ProtectedRoute><CourseList /></ProtectedRoute>} />
       <Route path="/courses/:slug" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
@@ -86,9 +88,11 @@ function AppRoutes() {
       <Route path="/simulate" element={<ProtectedRoute><SimHome /></ProtectedRoute>} />
       <Route path="/simulate/:scenarioId" element={<ProtectedRoute><SimSession /></ProtectedRoute>} />
       <Route path="/certificates" element={<ProtectedRoute><CertificateList /></ProtectedRoute>} />
-      <Route path="/verify/:certificateNumber" element={<VerifyCertificate />} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+      <Route path="/verify/:certificateNumber" element={<VerifyCertificate />} />
+      <Route path="/questions" element={<ProtectedRoute><QuestionBank /></ProtectedRoute>} />
+      <Route path="/referral" element={<ProtectedRoute><Referral /></ProtectedRoute>} />
       <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/admin" element={<AdminLogin />} />

@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, Stethoscope } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -8,6 +8,8 @@ const NAV = [
   { to: '/courses',      icon: BookOpen,         label: 'Courses' },
   { to: '/simulate',     icon: Activity,         label: 'ClinicalSim AI' },
   { to: '/certificates', icon: Award,            label: 'Certificates' },
+  { to: '/questions',    icon: FileQuestion,     label: 'Question Banks' },
+  { to: '/referral',     icon: Gift,             label: 'Refer & Earn' },
 ]
 
 const BOTTOM_NAV = [
@@ -15,7 +17,7 @@ const BOTTOM_NAV = [
   { to: '/billing', icon: CreditCard, label: 'Billing' },
 ]
 
-const DEFAULT_THEME = { secondary: '#00897B', gradient: 'linear-gradient(135deg, #0A2540, #1E3A5F)' }
+const DEFAULT_THEME = { secondary: "#00897B", gradient: "linear-gradient(135deg, #0A2540, #1E3A5F)" }
 
 export default function Sidebar() {
   const { profile, tier, isFoundingMember, signOut } = useAuth()
@@ -38,7 +40,6 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen fixed left-0 top-0 z-30"
       style={{ background: theme.gradient }}>
-
       {/* Logo */}
       <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
