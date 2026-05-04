@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { checkAndIssueCertificate } from '../../lib/certificates'
 import { ArrowLeft, PlayCircle, BookOpen, HelpCircle, CheckCircle, ChevronRight, Trophy } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
@@ -122,8 +123,14 @@ export default function ModulePlayer() {
     setQuizScore(score)
     setQuizSubmitted(true)
     await upsertProgress({ quiz_passed: passed, quiz_score: score, quiz_attempts: (progress?.quiz_attempts || 0) + 1, status: passed ? 'completed' : 'in_progress', completed_at: passed ? new Date().toISOString() : null })
-    if (passed) toast.success('🎉 Module complete!')
-    else toast.error(`${score}% — need 70% to pass. Try again!`)
+    if (passed) {
+      toast.success('🎉 Module complete!')
+      // Check if all modules done and issue certificate
+      if (courseData?.id) {
+        const certNumber = await checkAndIssueCertificate(profile.id, courseData.id)
+        if (certNumber) toast.success(`🏆 Certificate issued: ${certNumber}`, { duration: 6000 })
+      }
+    } else toast.error(`${score}% — need 70% to pass. Try again!`)
   }
 
   const stepDone = (key) => (key === 'video' && progress?.video_watched) || (key === 'reading' && progress?.reading_done) || (key === 'quiz' && progress?.quiz_passed)
