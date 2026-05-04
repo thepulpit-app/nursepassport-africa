@@ -1,13 +1,11 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, ClipboardList, Gift } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User } from 'lucide-react'
 
 const NAV = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Home' },
   { to: '/courses',      icon: BookOpen,         label: 'Courses' },
   { to: '/simulate',     icon: Activity,         label: 'Simulate' },
   { to: '/certificates', icon: Award,            label: 'Certs' },
-  { to: '/questions',    icon: ClipboardList,    label: 'Questions' },
-  { to: '/referral',     icon: Gift,             label: 'Refer' },
   { to: '/profile',      icon: User,             label: 'Profile' },
 ]
 
@@ -20,21 +18,15 @@ export default function MobileNav() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all min-w-0
-               ${isActive
-                 ? 'text-[#00897B]'
-                 : 'text-gray-400 hover:text-[#0A2540]'
-               }`
+              `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all ${
+                isActive
+                  ? 'text-indigo-600 bg-indigo-50'
+                  : 'text-gray-400 hover:text-gray-600'
+              }`
             }
           >
-            {({ isActive }) => (
-              <>
-                <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-[#00897B]/10' : ''}`}>
-                  <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
-                </div>
-                <span className="text-[10px] font-semibold">{label}</span>
-              </>
-            )}
+            <Icon size={20} />
+            <span className="text-xs font-semibold">{label}</span>
           </NavLink>
         ))}
       </div>
