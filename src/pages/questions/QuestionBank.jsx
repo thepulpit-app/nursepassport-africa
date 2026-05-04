@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle, XCircle, Lock, RotateCcw } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
@@ -17,34 +17,41 @@ const SEED_QUESTIONS = {
   nclex: [
     { id: 'n1', question_text: 'A nurse is caring for a client with increased intracranial pressure. Which position should the nurse maintain?', option_a: 'Trendelenburg position', option_b: 'Head of bed elevated 30-45 degrees', option_c: 'Flat supine position', option_d: 'Left lateral position', correct_option: 'b', explanation: 'Elevating the head of bed 30-45 degrees promotes venous drainage from the brain, reducing ICP.' },
     { id: 'n2', question_text: 'A client is prescribed digoxin 0.125mg daily. The apical pulse is 52 bpm. What should the nurse do?', option_a: 'Administer the medication as prescribed', option_b: 'Hold the medication and notify the physician', option_c: 'Administer half the dose', option_d: 'Administer and monitor closely', correct_option: 'b', explanation: 'Digoxin should be withheld if apical pulse is below 60 bpm. Bradycardia is a sign of digoxin toxicity.' },
-    { id: 'n3', question_text: 'Which food should a client on warfarin therapy avoid in large amounts?', option_a: 'Citrus fruits', option_b: 'Leafy green vegetables', option_c: 'Dairy products', option_d: 'Red meat', correct_option: 'b', explanation: 'Leafy green vegetables are high in Vitamin K, which antagonises warfarin. Sudden large increases reduce anticoagulant effectiveness.' },
-    { id: 'n4', question_text: 'Which postoperative finding requires immediate nursing intervention?', option_a: 'Blood pressure 118/76 mmHg', option_b: 'Oxygen saturation 99%', option_c: 'Urine output 20mL over 2 hours', option_d: 'Pain score of 4/10', correct_option: 'c', explanation: 'Urine output less than 30mL/hour indicates oliguria and possible renal compromise requiring immediate intervention.' },
-    { id: 'n5', question_text: 'What is the preferred IM injection site for large volume injections in adults?', option_a: 'Deltoid muscle', option_b: 'Vastus lateralis', option_c: 'Ventrogluteal site', option_d: 'Dorsogluteal site', correct_option: 'c', explanation: 'The ventrogluteal site is preferred — free from major blood vessels and nerves with a large muscle mass.' },
+    { id: 'n3', question_text: 'Which food should a client on warfarin therapy avoid in large amounts?', option_a: 'Citrus fruits', option_b: 'Leafy green vegetables', option_c: 'Dairy products', option_d: 'Red meat', correct_option: 'b', explanation: 'Leafy green vegetables are high in Vitamin K, which antagonises warfarin.' },
+    { id: 'n4', question_text: 'Which postoperative finding requires immediate nursing intervention?', option_a: 'Blood pressure 118/76 mmHg', option_b: 'Oxygen saturation 99%', option_c: 'Urine output 20mL over 2 hours', option_d: 'Pain score of 4/10', correct_option: 'c', explanation: 'Urine output less than 30mL/hour indicates oliguria requiring immediate intervention.' },
+    { id: 'n5', question_text: 'What is the preferred IM injection site for large volume injections in adults?', option_a: 'Deltoid muscle', option_b: 'Vastus lateralis', option_c: 'Ventrogluteal site', option_d: 'Dorsogluteal site', correct_option: 'c', explanation: 'The ventrogluteal site is preferred — free from major blood vessels and nerves.' },
   ],
   nmc_cbt: [
-    { id: 'uk1', question_text: 'A patient states they have a new allergy before medication administration. What should the nurse do first?', option_a: 'Administer the medication as previously prescribed', option_b: 'Document the allergy and withhold the medication pending review', option_c: 'Ask another nurse to administer it', option_d: 'Give a reduced dose', correct_option: 'b', explanation: 'Patient safety is paramount. Document the allergy, withhold medication, and contact the prescriber.' },
-    { id: 'uk2', question_text: 'Under the NMC Code, a nurse must always:', option_a: 'Follow instructions from senior nurses without question', option_b: 'Prioritise people, practise effectively, preserve safety, and promote professionalism', option_c: 'Adhere to ward protocols above patient preferences', option_d: 'Report only serious incidents to management', correct_option: 'b', explanation: 'The four themes of the NMC Code are: Prioritise people, Practise effectively, Preserve safety, Promote professionalism.' },
-    { id: 'uk3', question_text: 'A competent patient refuses a life-saving blood transfusion on religious grounds. The nurse should:', option_a: 'Administer the transfusion to save the patient\'s life', option_b: 'Contact next of kin to override the decision', option_c: 'Respect the patient\'s decision and document it clearly', option_d: 'Ask the doctor to convince the patient', correct_option: 'c', explanation: 'A competent adult has the absolute right to refuse treatment. The nurse must respect this decision and document clearly.' },
-    { id: 'uk4', question_text: 'What is the minimum duration for the WHO 6-step hand hygiene technique with soap and water?', option_a: '10-15 seconds', option_b: '20-30 seconds', option_c: '40-60 seconds', option_d: '2 minutes', correct_option: 'c', explanation: 'WHO recommends 40-60 seconds with soap and water, or 20-30 seconds with alcohol-based handrub.' },
-    { id: 'uk5', question_text: 'A patient is prescribed 500mg. Tablets available are 250mg each. How many tablets?', option_a: '1 tablet', option_b: '1.5 tablets', option_c: '2 tablets', option_d: '2.5 tablets', correct_option: 'c', explanation: 'Required ÷ Available = 500mg ÷ 250mg = 2 tablets.' },
+    { id: 'uk1', question_text: 'A patient states they have a new allergy before medication. What should the nurse do first?', option_a: 'Administer as previously prescribed', option_b: 'Document the allergy and withhold pending review', option_c: 'Ask another nurse to administer it', option_d: 'Give a reduced dose', correct_option: 'b', explanation: 'Document the allergy, withhold medication, and contact the prescriber.' },
+    { id: 'uk2', question_text: 'Under the NMC Code, a nurse must always:', option_a: 'Follow senior nurses without question', option_b: 'Prioritise people, practise effectively, preserve safety, and promote professionalism', option_c: 'Follow ward protocols above patient preferences', option_d: 'Report only serious incidents', correct_option: 'b', explanation: 'The four themes of the NMC Code: Prioritise people, Practise effectively, Preserve safety, Promote professionalism.' },
+    { id: 'uk3', question_text: 'A competent patient refuses a life-saving transfusion. The nurse should:', option_a: 'Administer to save the life', option_b: 'Contact next of kin to override', option_c: 'Respect the decision and document clearly', option_d: 'Ask the doctor to convince the patient', correct_option: 'c', explanation: 'A competent adult has the absolute right to refuse treatment.' },
+    { id: 'uk4', question_text: 'WHO hand hygiene with soap and water minimum duration:', option_a: '10-15 seconds', option_b: '20-30 seconds', option_c: '40-60 seconds', option_d: '2 minutes', correct_option: 'c', explanation: 'WHO recommends 40-60 seconds with soap and water.' },
+    { id: 'uk5', question_text: 'Required dose 500mg, tablets 250mg each. How many tablets?', option_a: '1', option_b: '1.5', option_c: '2', option_d: '2.5', correct_option: 'c', explanation: '500 divided by 250 = 2 tablets.' },
   ],
   haad: [
-    { id: 'h1', question_text: 'Which authority regulates healthcare professionals in Abu Dhabi?', option_a: 'Dubai Health Authority (DHA)', option_b: 'Health Authority Abu Dhabi (HAAD)', option_c: 'Ministry of Health and Prevention (MOHAP)', option_d: 'Joint Commission International (JCI)', correct_option: 'b', explanation: 'HAAD regulates healthcare professionals in Abu Dhabi. DHA regulates Dubai, MOHAP covers remaining emirates.' },
-    { id: 'h2', question_text: 'A patient has chest pain, diaphoresis, nausea radiating to left arm. Priority action?', option_a: 'Administer oral pain relief', option_b: 'Obtain a 12-lead ECG and call the emergency team immediately', option_c: 'Reassure and monitor', option_d: 'Position the patient flat', correct_option: 'b', explanation: 'Classic MI symptoms require immediate ECG and emergency team activation. Time-to-treatment is critical.' },
-    { id: 'h3', question_text: 'A diabetic Muslim patient refuses insulin injections during Ramadan. The nurse should:', option_a: 'Respect the fast completely and withhold insulin', option_b: 'Consult the physician and involve religious scholars to discuss medical exemptions', option_c: 'Force the injection as medically necessary', option_d: 'Document refusal and take no further action', correct_option: 'b', explanation: 'Cultural sensitivity is key. Islamic scholars generally permit injections for medical necessity. Multidisciplinary approach is appropriate.' },
-    { id: 'h4', question_text: 'In UAE healthcare, informed consent must be obtained:', option_a: 'Only for surgical procedures', option_b: 'For all invasive procedures and treatments', option_c: 'Only when requested by the patient', option_d: 'By the hospital administrator only', correct_option: 'b', explanation: 'UAE law requires informed consent for all invasive procedures and treatments. Patients have the right to understand and agree to their treatment plan.' },
-    { id: 'h5', question_text: 'The DHA exam is required for nurses wishing to practice in:', option_a: 'Abu Dhabi', option_b: 'Sharjah', option_c: 'Dubai', option_d: 'Ajman', correct_option: 'c', explanation: 'The Dubai Health Authority (DHA) license is required for healthcare professionals practicing in Dubai specifically.' },
+    { id: 'h1', question_text: 'Which authority regulates healthcare in Abu Dhabi?', option_a: 'DHA', option_b: 'HAAD', option_c: 'MOHAP', option_d: 'JCI', correct_option: 'b', explanation: 'HAAD regulates Abu Dhabi. DHA regulates Dubai.' },
+    { id: 'h2', question_text: 'Classic MI presentation priority action?', option_a: 'Oral pain relief', option_b: '12-lead ECG and emergency team', option_c: 'Reassure and monitor', option_d: 'Position flat', correct_option: 'b', explanation: 'Immediate ECG and emergency team activation is critical in suspected MI.' },
+    { id: 'h3', question_text: 'Diabetic Muslim refuses insulin during Ramadan. Nurse should:', option_a: 'Withhold insulin completely', option_b: 'Consult physician and religious scholars', option_c: 'Force injection', option_d: 'Document and take no action', correct_option: 'b', explanation: 'Multidisciplinary approach with cultural sensitivity.' },
+    { id: 'h4', question_text: 'UAE informed consent must be obtained for:', option_a: 'Surgery only', option_b: 'All invasive procedures and treatments', option_c: 'Only when patient requests', option_d: 'By administrator only', correct_option: 'b', explanation: 'UAE law requires informed consent for all invasive procedures.' },
+    { id: 'h5', question_text: 'DHA exam is required to practice in:', option_a: 'Abu Dhabi', option_b: 'Sharjah', option_c: 'Dubai', option_d: 'Ajman', correct_option: 'c', explanation: 'DHA license is required for Dubai.' },
   ],
   nmbn: [
-    { id: 'ng1', question_text: 'The Nigeria Midwives Service Scheme (MSS) was primarily designed to:', option_a: 'Train specialist nurses in tertiary hospitals', option_b: 'Deploy midwives to rural primary health centres to reduce maternal mortality', option_c: 'Provide scholarships for nursing students abroad', option_d: 'Regulate private nursing practice', correct_option: 'b', explanation: 'The MSS deployed trained midwives to primary health centres in rural Nigeria to address shortage of skilled birth attendants.' },
-    { id: 'ng2', question_text: 'Recommended birth-to-first-breastfeed interval per Nigeria Nutrition Policy:', option_a: '30 minutes', option_b: '1 hour', option_c: '2 hours', option_d: '6 hours', correct_option: 'b', explanation: 'WHO and Nigeria recommend initiating breastfeeding within 1 hour of birth to take advantage of colostrum.' },
-    { id: 'ng3', question_text: 'The National Health Insurance Scheme (NHIS) was established under:', option_a: 'National Health Act 2014', option_b: 'NHIS Act Cap N42 LFN 2004', option_c: 'Medical and Dental Practitioners Act', option_d: 'Nursing and Midwifery Act', correct_option: 'b', explanation: 'The NHIS was established under the NHIS Act Cap N42 LFN 2004 to provide accessible and affordable healthcare.' },
-    { id: 'ng4', question_text: 'The NMBN is responsible for:', option_a: 'Licensing medical doctors in Nigeria', option_b: 'Regulating nursing and midwifery practice in Nigeria', option_c: 'Managing hospital administration', option_d: 'Distributing pharmaceuticals', correct_option: 'b', explanation: 'The Nursing and Midwifery Council of Nigeria (NMCN/NMBN) regulates nursing and midwifery practice and education in Nigeria.' },
-    { id: 'ng5', question_text: 'Malaria prevention in Nigeria primarily relies on:', option_a: 'Vaccination only', option_b: 'Insecticide-treated nets (ITNs) and indoor residual spraying (IRS)', option_c: 'Antibiotics prophylaxis', option_d: 'Water purification only', correct_option: 'b', explanation: 'ITNs and IRS are the primary vector control interventions for malaria prevention in Nigeria alongside intermittent preventive treatment.' },
+    { id: 'ng1', question_text: 'MSS was designed to:', option_a: 'Train specialist nurses', option_b: 'Deploy midwives to rural PHCs to reduce maternal mortality', option_c: 'Provide scholarships abroad', option_d: 'Regulate private practice', correct_option: 'b', explanation: 'MSS deployed midwives to rural primary health centres.' },
+    { id: 'ng2', question_text: 'Recommended birth-to-first-breastfeed interval:', option_a: '30 minutes', option_b: '1 hour', option_c: '2 hours', option_d: '6 hours', correct_option: 'b', explanation: 'WHO and Nigeria recommend breastfeeding within 1 hour of birth.' },
+    { id: 'ng3', question_text: 'NHIS established under:', option_a: 'National Health Act 2014', option_b: 'NHIS Act Cap N42 LFN 2004', option_c: 'Medical Practitioners Act', option_d: 'Nursing Act', correct_option: 'b', explanation: 'NHIS Act Cap N42 LFN 2004.' },
+    { id: 'ng4', question_text: 'NMBN is responsible for:', option_a: 'Licensing doctors', option_b: 'Regulating nursing and midwifery in Nigeria', option_c: 'Managing hospitals', option_d: 'Distributing pharmaceuticals', correct_option: 'b', explanation: 'NMCN/NMBN regulates nursing and midwifery practice in Nigeria.' },
+    { id: 'ng5', question_text: 'Primary malaria prevention in Nigeria:', option_a: 'Vaccination only', option_b: 'ITNs and IRS', option_c: 'Antibiotics prophylaxis', option_d: 'Water purification only', correct_option: 'b', explanation: 'ITNs and IRS are primary malaria prevention interventions.' },
   ],
 }
 
 const FREE_LIMIT = 5
+
+const PASSPORT_FEATURES = [
+  { emoji: '⏱️', label: 'Timed Mock Exams', sub: '75 or 145 questions — real NCLEX/NMC format', path: '/mock-exam?track=nclex' },
+  { emoji: '📊', label: 'Performance Analytics', sub: 'Track weak areas by category', path: '/analytics' },
+  { emoji: '🎯', label: 'Weak Area Identification', sub: 'AI-powered study recommendations', path: '/analytics' },
+  { emoji: '🏥', label: 'OSCE Questions', sub: 'Clinical skills and communication stations', path: '/osce' },
+]
 
 export default function QuestionBank() {
   const { profile, tier } = useAuth()
@@ -69,14 +76,7 @@ export default function QuestionBank() {
     setAnswers({})
     setSubmitted(false)
     setSessionScore(null)
-
-    const { data } = await supabase
-      .from('question_banks')
-      .select('*')
-      .eq('track', track.key)
-      .eq('is_published', true)
-      .limit(tier === 'free' ? FREE_LIMIT : 50)
-
+    const { data } = await supabase.from('question_banks').select('*').eq('track', track.key).eq('is_published', true).limit(tier === 'free' ? FREE_LIMIT : 50)
     const questionList = data?.length ? data : SEED_QUESTIONS[track.key] || []
     const limited = tier === 'free' ? questionList.slice(0, FREE_LIMIT) : questionList
     setQuestions(limited)
@@ -107,8 +107,7 @@ export default function QuestionBank() {
               <div style={{ color: 'white', fontWeight: '700', fontSize: '14px' }}>Free plan — {FREE_LIMIT} questions per track</div>
               <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '12px' }}>Upgrade to Nurse for full access</div>
             </div>
-            <button onClick={() => navigate('/billing')}
-              style={{ background: '#F4A300', color: '#0A2540', border: 'none', borderRadius: '8px', padding: '6px 14px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}>
+            <button onClick={() => navigate('/billing')} style={{ background: '#F4A300', color: '#0A2540', border: 'none', borderRadius: '8px', padding: '6px 14px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}>
               Upgrade
             </button>
           </div>
@@ -137,9 +136,30 @@ export default function QuestionBank() {
           })}
         </div>
 
-        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '16px' }}>
-          <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '14px', marginBottom: '6px' }}>📚 Coming Soon</div>
-          <div style={{ color: '#94A3B8', fontSize: '13px', lineHeight: '1.6' }}>Timed mock exams · Performance analytics · Weak area identification · OSCE questions</div>
+        <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <div style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>✈️ Passport Features</div>
+            {tier !== 'passport' && (
+              <button onClick={() => navigate('/billing')} style={{ background: '#F59E0B', color: '#0A2540', border: 'none', borderRadius: '8px', padding: '5px 12px', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}>
+                Upgrade
+              </button>
+            )}
+          </div>
+          {PASSPORT_FEATURES.map((item, i) => (
+            <div key={i} onClick={() => tier === 'passport' ? navigate(item.path) : navigate('/billing')}
+              style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0', borderBottom: i < PASSPORT_FEATURES.length - 1 ? '1px solid #F8FAFC' : 'none', opacity: tier !== 'passport' ? 0.6 : 1, cursor: 'pointer' }}>
+              <div style={{ fontSize: '22px', width: '36px', textAlign: 'center' }}>{item.emoji}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: '700', color: '#0A2540', fontSize: '13px' }}>{item.label}</div>
+                <div style={{ color: '#94A3B8', fontSize: '11px' }}>{item.sub}</div>
+              </div>
+              {tier !== 'passport' ? (
+                <span style={{ fontSize: '10px', fontWeight: '700', padding: '3px 8px', borderRadius: '99px', background: '#FFF7ED', color: '#F59E0B' }}>Passport</span>
+              ) : (
+                <span style={{ fontSize: '12px', color: '#CBD5E1', fontWeight: '700' }}>→</span>
+              )}
+            </div>
+          ))}
         </div>
       </AppShell>
     )
@@ -150,10 +170,7 @@ export default function QuestionBank() {
       <style>{`.q-opt { width:100%; display:flex; align-items:center; gap:12px; padding:14px; border-radius:12px; border:1.5px solid #E2E8F0; background:white; cursor:pointer; transition:all 0.2s; margin-bottom:8px; text-align:left; }`}</style>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-        <button onClick={() => setActiveTrack(null)}
-          style={{ background: 'white', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '8px 14px', fontWeight: '600', fontSize: '13px', cursor: 'pointer', color: '#64748B' }}>
-          ← Back
-        </button>
+        <button onClick={() => setActiveTrack(null)} style={{ background: 'white', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '8px 14px', fontWeight: '600', fontSize: '13px', cursor: 'pointer', color: '#64748B' }}>← Back</button>
         <div>
           <h1 style={{ fontSize: '18px', fontWeight: '800', color: '#0A2540', margin: 0 }}>{activeTrack.flag} {activeTrack.label}</h1>
           <div style={{ color: '#94A3B8', fontSize: '12px' }}>{questions.length} questions · {activeTrack.sub}</div>
@@ -207,8 +224,7 @@ export default function QuestionBank() {
             <div style={{ background: 'linear-gradient(135deg,#0A2540,#1E3A5F)', borderRadius: '16px', padding: '20px', marginTop: '16px', textAlign: 'center' }}>
               <div style={{ color: 'white', fontWeight: '800', fontSize: '16px', marginBottom: '6px' }}>Want more questions?</div>
               <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', marginBottom: '14px' }}>Upgrade to Nurse for 50 questions per session</div>
-              <button onClick={() => navigate('/billing')}
-                style={{ background: '#F4A300', color: '#0A2540', border: 'none', borderRadius: '10px', padding: '10px 24px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>
+              <button onClick={() => navigate('/billing')} style={{ background: '#F4A300', color: '#0A2540', border: 'none', borderRadius: '10px', padding: '10px 24px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>
                 Upgrade Now
               </button>
             </div>
