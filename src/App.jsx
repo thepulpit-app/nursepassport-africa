@@ -22,6 +22,12 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
+import QuestionBank from './pages/questions/QuestionBank'
+import MockExam from './pages/questions/MockExam'
+import Analytics from './pages/questions/Analytics'
+import OSCEQuestions from './pages/questions/OSCEQuestions'
+import Referral from './pages/referral/Referral'
+import AdminQuizQuestions from './pages/admin/AdminQuizQuestions'
 
 function LoadingScreen() {
   return (
@@ -83,6 +89,12 @@ function AppRoutes() {
       <Route path="/certificates" element={<ProtectedRoute><CertificateList /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+      <Route path="/questions" element={<ProtectedRoute><QuestionBank /></ProtectedRoute>} />
+<Route path="/mock-exam" element={<ProtectedRoute><MockExam /></ProtectedRoute>} />
+<Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+<Route path="/osce" element={<ProtectedRoute><OSCEQuestions /></ProtectedRoute>} />
+<Route path="/referral" element={<ProtectedRoute><Referral /></ProtectedRoute>} />
+<Route path="/admin/quiz-questions" element={<AdminRoute><AdminQuizQuestions /></AdminRoute>} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
