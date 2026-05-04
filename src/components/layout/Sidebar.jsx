@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, Stethoscope } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -15,9 +15,12 @@ const BOTTOM_NAV = [
   { to: '/billing', icon: CreditCard, label: 'Billing' },
 ]
 
+const DEFAULT_THEME = { secondary: '#00897B', gradient: 'linear-gradient(135deg, #0A2540, #1E3A5F)' }
+
 export default function Sidebar() {
   const { profile, tier, isFoundingMember, signOut } = useAuth()
-  const { theme } = useTheme()
+  const { theme: rawTheme } = useTheme()
+  const theme = rawTheme || DEFAULT_THEME
   const navigate = useNavigate()
 
   const TIER_BADGE = {
@@ -35,12 +38,11 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen fixed left-0 top-0 z-30"
       style={{ background: theme.gradient }}>
+
       {/* Logo */}
       <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ width: '34px', height: '34px', background: 'rgba(255,255,255,0.15)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>
-            🩺
-          </div>
+          <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '34px', height: '34px', borderRadius: '10px' }} />
           <div>
             <div style={{ color: 'white', fontWeight: '800', fontSize: '13px', lineHeight: 1 }}>NursePassport</div>
             <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '10px', marginTop: '2px' }}>Africa</div>
