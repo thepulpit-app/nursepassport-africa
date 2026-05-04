@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, Stethoscope } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -8,7 +8,7 @@ const NAV = [
   { to: '/courses',      icon: BookOpen,         label: 'Courses' },
   { to: '/simulate',     icon: Activity,         label: 'ClinicalSim AI' },
   { to: '/certificates', icon: Award,            label: 'Certificates' },
-  { to: '/questions',    icon: FileQuestion,     label: 'Question Banks' },
+ { to: '/questions',    icon: ClipboardList,    label: 'Question Banks' },
   { to: '/referral',     icon: Gift,             label: 'Refer & Earn' },
 ]
 

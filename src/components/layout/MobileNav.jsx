@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, FileQuestion, Gift } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, ClipboardList, Gift } from 'lucide-react'
 
 const NAV = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Home' },
   { to: '/courses',      icon: BookOpen,         label: 'Courses' },
   { to: '/simulate',     icon: Activity,         label: 'Simulate' },
   { to: '/certificates', icon: Award,            label: 'Certs' },
-  { to: '/questions',    icon: FileQuestion,     label: 'Questions' },
+  { to: '/questions',    icon: ClipboardList,    label: 'Questions' },
   { to: '/referral',     icon: Gift,             label: 'Refer' },
   { to: '/profile',      icon: User,             label: 'Profile' },
 ]
