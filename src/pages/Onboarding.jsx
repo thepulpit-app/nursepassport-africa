@@ -207,7 +207,7 @@ export default function Onboarding() {
                 <div style={{ color: '#64748B', fontSize: '12px', lineHeight: '1.5' }}>You're among the first 50 nurses on NursePassport Africa. Your feedback will shape this platform.</div>
               </div>
 
-              <button onClick={() => navigate('/dashboard')}
+              <button onClick={() => navigate(profile?.qualification === 'Nursing Student' ? '/student-registration' : '/dashboard')}
                 style={{ width: '100%', padding: '14px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: '700', fontSize: '15px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 Go to My Dashboard <ChevronRight size={16} />
               </button>

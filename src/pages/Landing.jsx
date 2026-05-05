@@ -17,7 +17,7 @@ const TESTIMONIALS = [
 ]
 
 const PLANS = [
-  { name: 'Student', emoji: '🎓', price: '₦1750', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'], student: true },
+  { name: 'Student', emoji: '🎓', price: '₦750', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'], student: true },
   { name: 'Grace', emoji: '🌱', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking'] },
   { name: 'Nurse', emoji: '🩺', price: '₦4,500', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics'], popular: true },
   { name: 'Passport', emoji: '✈️', price: '₦9,000', sub: '/month', gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)', features: ['Unlimited simulations', 'OSCE prep track', 'Placement portfolio', 'UK · UAE · USA · Canada'] },
@@ -245,7 +245,7 @@ export default function Landing() {
                       <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{f}</span>
                     </div>
                   ))}
-                  <button className="landing-btn" onClick={() => navigate(plan.student ? '/student-registration' : '/signup')}
+                  <button className="landing-btn" onClick={() => navigate(plan.student ? '/signup?student=true' : '/signup')}
                     style={{ width: '100%', marginTop: '16px', padding: '13px', background: plan.gradient, color: 'white', fontSize: '14px', justifyContent: 'center', border: 'none' }}>
                     {plan.student ? 'Register as Student' : 'Get Started'}
                   </button>
