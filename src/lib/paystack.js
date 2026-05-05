@@ -1,34 +1,25 @@
-export const PLANS = {
-  nurse_monthly:   { code: 'NURSE_MONTHLY',   amount: 4500,  label: 'Nurse — Monthly',  interval: 'monthly' },
-  nurse_annual:    { code: 'NURSE_ANNUAL',     amount: 40000, label: 'Nurse — Annual',   interval: 'annually' },
-  passport_monthly:{ code: 'PASSPORT_MONTHLY', amount: 9000,  label: 'Passport — Monthly', interval: 'monthly' },
-  passport_annual: { code: 'PASSPORT_ANNUAL',  amount: 80000, label: 'Passport — Annual', interval: 'annually' },
+export const PAYMENT_PAGES = {
+  nurse_monthly:   { code: '2072090', url: 'https://paystack.shop/pay/nurse-monthly',   label: 'Nurse Monthly',   amount: 4500 },
+  nurse_annual:    { code: '2072151', url: 'https://paystack.shop/pay/nurse-annual',    label: 'Nurse Annual',    amount: 40000 },
+  passport_monthly:{ code: '2072152', url: 'https://paystack.shop/pay/passport-monthly',label: 'Passport Monthly',amount: 9000 },
+  passport_annual: { code: '2072154', url: 'https://paystack.shop/pay/passport-annual', label: 'Passport Annual', amount: 80000 },
+  student_monthly: { code: '2072156', url: 'https://paystack.shop/pay/student-monthly', label: 'Student Monthly', amount: 1750 },
 }
 
 export const TIER_LIMITS = {
-  free:     { sim_sessions: 3,  label: 'Free' },
-  nurse:    { sim_sessions: 20, label: 'Nurse' },
-  passport: { sim_sessions: Infinity, label: 'Passport' },
+  free:     { sim_sessions: 3,        courses: true, question_banks: true },
+  student:  { sim_sessions: 0,        courses: true, question_banks: false },
+  nurse:    { sim_sessions: 20,       courses: true, question_banks: true },
+  passport: { sim_sessions: Infinity, courses: true, question_banks: true },
 }
 
-export function initializePaystackPayment({ email, planCode, userId, onSuccess, onClose }) {
-  if (!window.PaystackPop) {
-    console.error('Paystack script not loaded')
-    return
-  }
-  const handler = window.PaystackPop.setup({
-    key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+export function getPaymentUrl(pageKey, email, userId) {
+  const page = PAYMENT_PAGES[pageKey]
+  if (!page) return null
+  // Pass metadata via URL params so webhook can identify the user
+  const params = new URLSearchParams({
     email,
-    plan: planCode,
-    metadata: {
-      custom_fields: [{
-        display_name: 'User ID',
-        variable_name: 'user_id',
-        value: userId
-      }]
-    },
-    callback: (response) => onSuccess(response),
-    onClose
+    metadata: JSON.stringify({ userId, plan: pageKey }),
   })
-  handler.openIframe()
+  return `${page.url}?${params.toString()}`
 }

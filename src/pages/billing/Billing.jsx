@@ -2,25 +2,25 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle, Lock } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { PLANS, initializePaystackPayment } from '../../lib/paystack'
+import { getPaymentUrl } from '../../lib/paystack'
 import AppShell from '../../components/layout/AppShell'
-import toast from 'react-hot-toast'
 
 const PLAN_DETAILS = [
   {
     key: 'student', name: 'Student', emoji: '🎓',
     gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
-    monthlyPrice: 1750, annualPrice: 7000,
+    monthlyPrice: 1750, annualPrice: null,
+    monthlyPlan: 'student_monthly',
     student: true,
-    features: ['All courses and modules', 'Module assessments', 'AMCC certificates', '50% student discount'],
-    locked: ['ClinicalSim AI', 'Question Banks', 'OSCE prep', 'Placement portfolio'],
+    features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'],
+    locked: ['ClinicalSim AI', 'Question Banks', 'OSCE prep'],
   },
   {
     key: 'free', name: 'Grace', emoji: '🌱',
     gradient: 'linear-gradient(135deg, #64748B, #475569)',
     monthlyPrice: 0, annualPrice: 0,
     features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking', 'Community access'],
-    locked: ['Full course access', 'AMCC certificates', 'ClinicalSim AI (unlimited)', 'OSCE prep'],
+    locked: ['Full course access', 'AMCC certificates', 'ClinicalSim AI', 'OSCE prep'],
   },
   {
     key: 'nurse', name: 'Nurse', emoji: '🩺',
@@ -28,15 +28,15 @@ const PLAN_DETAILS = [
     monthlyPlan: 'nurse_monthly', annualPlan: 'nurse_annual',
     monthlyPrice: 4500, annualPrice: 40000,
     popular: true,
-    features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics', 'CTG Masterclass', 'BLS & Obstetric Emergencies'],
-    locked: ['OSCE prep track', 'Placement portfolio', 'UAE HAAD prep', 'USA NCLEX prep'],
+    features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics', 'CTG Masterclass', 'Question Banks'],
+    locked: ['OSCE prep track', 'Placement portfolio', 'Unlimited simulations'],
   },
   {
     key: 'passport', name: 'Passport', emoji: '✈️',
     gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)',
     monthlyPlan: 'passport_monthly', annualPlan: 'passport_annual',
     monthlyPrice: 9000, annualPrice: 80000,
-    features: ['Everything in Nurse', 'Unlimited sim sessions', 'OSCE prep track', 'Placement portfolio', 'UAE HAAD prep track', 'UK NMC prep track', 'USA NCLEX-RN prep', 'Canada prep (coming soon)', 'Priority support'],
+    features: ['Everything in Nurse', 'Unlimited simulations', 'OSCE prep track', 'Mock exams', 'Performance analytics', 'Placement portfolio', 'UK · UAE · USA · Canada'],
     locked: [],
   },
 ]
@@ -45,23 +45,18 @@ export default function Billing() {
   const { user, profile, tier } = useAuth()
   const navigate = useNavigate()
   const [billing, setBilling] = useState('monthly')
-  const [loading, setLoading] = useState(null)
 
   function handleUpgrade(plan) {
-    const planKey = billing === 'monthly' ? plan.monthlyPlan : plan.annualPlan
-    const planDetails = PLANS[planKey]
-    if (!planDetails) return
-    setLoading(plan.key)
-    initializePaystackPayment({
-      email: user.email,
-      planCode: planDetails.code,
-      userId: user.id,
-      onSuccess: () => { toast.success(`Welcome to ${plan.name}!`); setLoading(null); window.location.reload() },
-      onClose: () => { setLoading(null); toast.error('Payment cancelled') }
-    })
+    const pageKey = billing === 'annual' && plan.annualPlan ? plan.annualPlan : plan.monthlyPlan
+    if (!pageKey) return
+    const url = getPaymentUrl(pageKey, user.email, user.id)
+    if (url) window.location.href = url
   }
 
-  const savings = { nurse: Math.round(((4500 * 12 - 40000) / (4500 * 12)) * 100), passport: Math.round(((9000 * 12 - 80000) / (9000 * 12)) * 100) }
+  const savings = {
+    nurse: Math.round(((4500 * 12 - 40000) / (4500 * 12)) * 100),
+    passport: Math.round(((9000 * 12 - 80000) / (9000 * 12)) * 100)
+  }
 
   return (
     <AppShell>
@@ -77,7 +72,7 @@ export default function Billing() {
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Plans & Billing</h1>
         <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>
-          Current plan: <strong style={{ color: '#0A2540' }}>{tier}</strong>
+          Current plan: <strong style={{ color: '#0A2540', textTransform: 'capitalize' }}>{tier}</strong>
           {profile?.is_founding_member && <span style={{ color: '#F59E0B', marginLeft: '6px' }}>⭐ Founding Member</span>}
         </p>
       </div>
@@ -99,8 +94,8 @@ export default function Billing() {
 
       {PLAN_DETAILS.map((plan) => {
         const isCurrent = tier === plan.key
-        const isUpgrade = ['free', 'nurse', 'passport'].indexOf(plan.key) > ['free', 'nurse', 'passport'].indexOf(tier)
-        const price = billing === 'annual' ? plan.annualPrice : plan.monthlyPrice
+        const isUpgrade = ['free', 'student', 'nurse', 'passport'].indexOf(plan.key) > ['free', 'student', 'nurse', 'passport'].indexOf(tier)
+        const price = billing === 'annual' && plan.annualPrice ? plan.annualPrice : plan.monthlyPrice
 
         return (
           <div key={plan.key} className="plan-card" style={{ border: plan.popular ? '2px solid #7C3AED' : '1px solid #F1F5F9' }}>
@@ -118,7 +113,7 @@ export default function Billing() {
                     <div>
                       <span style={{ color: 'white', fontWeight: '800', fontSize: '28px' }}>₦{price.toLocaleString()}</span>
                       <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px', marginLeft: '4px' }}>
-                        {billing === 'annual' ? '/year' : '/month'}
+                        {billing === 'annual' && plan.annualPrice ? '/year' : '/month'}
                       </span>
                     </div>
                   ) : (
@@ -130,7 +125,7 @@ export default function Billing() {
                     Current ✓
                   </div>
                 )}
-                {billing === 'annual' && plan.key !== 'free' && (
+                {billing === 'annual' && plan.annualPrice && savings[plan.key] && (
                   <div style={{ background: 'rgba(255,255,255,0.2)', borderRadius: '99px', padding: '6px 14px', color: 'white', fontSize: '11px', fontWeight: '700' }}>
                     Save {savings[plan.key]}%
                   </div>
@@ -160,11 +155,14 @@ export default function Billing() {
                   onClick={() => navigate('/student-registration')}>
                   Register as Student
                 </button>
+              ) : plan.key === 'free' ? (
+                <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
+                  Free Plan
+                </div>
               ) : isUpgrade ? (
                 <button className="upgrade-btn" style={{ background: plan.gradient, color: 'white' }}
-                  disabled={loading === plan.key}
                   onClick={() => handleUpgrade(plan)}>
-                  {loading === plan.key ? 'Processing...' : `Upgrade to ${plan.name}`}
+                  Upgrade to {plan.name}
                 </button>
               ) : (
                 <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
