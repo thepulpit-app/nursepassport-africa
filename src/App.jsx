@@ -23,6 +23,7 @@ import AdminUsers from './pages/admin/AdminUsers'
 import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
 import StudentRegistration from './pages/student/StudentRegistration'
+import Referral from './pages/referral/Referral'
 
 function LoadingScreen() {
   return (
