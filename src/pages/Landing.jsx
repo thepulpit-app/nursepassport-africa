@@ -17,6 +17,7 @@ const TESTIMONIALS = [
 ]
 
 const PLANS = [
+  { name: 'Student', emoji: '🎓', price: '₦1750', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'], student: true },
   { name: 'Grace', emoji: '🌱', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking'] },
   { name: 'Nurse', emoji: '🩺', price: '₦4,500', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics'], popular: true },
   { name: 'Passport', emoji: '✈️', price: '₦9,000', sub: '/month', gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)', features: ['Unlimited simulations', 'OSCE prep track', 'Placement portfolio', 'UK · UAE · USA · Canada'] },
@@ -27,9 +28,9 @@ export default function Landing() {
   const [founderCount, setFounderCount] = useState(null)
 
   useEffect(() => {
-    supabase.rpc('get_user_count').then(({ data }) => {
-  setFounderCount(data || 0)
-})
+    supabase.from('profiles').select('id', { count: 'exact' }).then(({ count }) => {
+      setFounderCount(count || 0)
+    })
   }, [])
 
   const spotsRemaining = Math.max(0, 100 - (founderCount || 0))
@@ -50,7 +51,7 @@ export default function Landing() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #F1F5F9' }}>
         <div className="section" style={{ height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '34px', height: '34px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }}>🩺</div>
+            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '34px', height: '34px', borderRadius: '10px' }} />
             <div>
               <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>NursePassport</span>
               <span style={{ fontWeight: '800', color: '#F43F5E', fontSize: '15px' }}> Africa</span>
@@ -78,17 +79,6 @@ export default function Landing() {
             <span style={{ width: '6px', height: '6px', background: '#F43F5E', borderRadius: '50%', display: 'inline-block' }} />
             <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px', fontWeight: '600' }}>Powered by AMCC · Built for African Nurses</span>
           </div>
-          {!isFull && founderCount !== null && (
-  <div style={{ background: 'linear-gradient(135deg, rgba(244,163,0,0.2), rgba(244,163,0,0.1))', border: '1px solid rgba(244,163,0,0.4)', borderRadius: '14px', padding: '12px 20px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-    <span style={{ fontSize: '20px' }}>⭐</span>
-    <div>
-      <div style={{ color: '#F4A300', fontWeight: '800', fontSize: '14px' }}>Founding Member Offer — 50% off for 2 months</div>
-      <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
-        Only <strong style={{ color: '#F4A300' }}>{spotsRemaining} of 100 spots</strong> remaining · First 100 nurses get half price
-      </div>
-    </div>
-  </div>
-)}
           <h1 style={{ color: 'white', fontWeight: '900', fontSize: 'clamp(32px, 6vw, 64px)', lineHeight: '1.1', marginBottom: '20px', maxWidth: '700px' }}>
             Train. Simulate.<br />
             <span style={{ background: 'linear-gradient(135deg, #F43F5E, #EC4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Certify.</span> Get Placed.
@@ -255,9 +245,9 @@ export default function Landing() {
                       <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{f}</span>
                     </div>
                   ))}
-                  <button className="landing-btn" onClick={() => navigate('/signup')}
+                  <button className="landing-btn" onClick={() => navigate(plan.student ? '/student-registration' : '/signup')}
                     style={{ width: '100%', marginTop: '16px', padding: '13px', background: plan.gradient, color: 'white', fontSize: '14px', justifyContent: 'center', border: 'none' }}>
-                    Get Started
+                    {plan.student ? 'Register as Student' : 'Get Started'}
                   </button>
                 </div>
               </div>
