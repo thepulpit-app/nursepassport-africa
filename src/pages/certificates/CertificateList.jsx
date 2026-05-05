@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
-import logoSrc from '/icons/icon-128.png'
+
 
 export default function CertificateList() {
   const { profile } = useAuth()
@@ -35,7 +35,12 @@ export default function CertificateList() {
       const sig2Name = platformSettings?.signatory2_name || 'NursePassport Africa'
       const sig2Title = platformSettings?.signatory2_title || '${sig2Title}'
       const sig2Url = platformSettings?.signatory2_signature_url || ''
-      // Logo is imported directly — works in blob context
+      let logoSrc = ''
+      try {
+        const r = await fetch(window.location.origin + '/icons/icon-128.png')
+        const b = await r.blob()
+        logoSrc = await new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(b) })
+      } catch(e) { logoSrc = '' }
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
       const verifyUrl = `https://www.nursepassportafrica.com/verify/${cert.certificate_number}`
