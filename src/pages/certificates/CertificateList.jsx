@@ -44,31 +44,35 @@ export default function CertificateList() {
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600;700&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { width: 1123px; height: 794px; font-family: 'Inter', sans-serif; background: white; display: flex; align-items: center; justify-content: center; }
-  .cert { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px; background: white; }
-  .border-outer { position: absolute; inset: 12px; border: 3px solid #0A2540; border-radius: 4px; }
-  .border-inner { position: absolute; inset: 20px; border: 1px solid #00897B; border-radius: 2px; }
-  .watermark { position: absolute; opacity: 0.04; font-size: 180px; font-weight: 900; color: #0A2540; font-family: 'Playfair Display', serif; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; }
-  .logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-  .logo-box { width: 52px; height: 52px; background: #0A2540; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+  html, body { width: 297mm; height: 210mm; }
+  body { font-family: 'Inter', sans-serif; background: white; display: flex; align-items: center; justify-content: center; }
+  .cert { width: 297mm; height: 210mm; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 28px 56px 32px; background: white; }
+  .border-outer { position: absolute; inset: 10px; border: 3px solid #0A2540; border-radius: 4px; pointer-events: none; }
+  .border-inner { position: absolute; inset: 18px; border: 1px solid #00897B; border-radius: 2px; pointer-events: none; }
+  .watermark { position: absolute; opacity: 0.04; font-size: 200px; font-weight: 900; color: #0A2540; font-family: 'Playfair Display', serif; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; }
+  .top { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; padding-top: 8px; }
+  .logo-box { width: 52px; height: 52px; background: #0A2540; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
   .brand-name { font-size: 22px; font-weight: 800; color: #0A2540; }
-  .brand-sub { font-size: 12px; color: #64748B; }
-  .divider { width: 100px; height: 3px; background: linear-gradient(90deg, #0A2540, #00897B); margin: 14px auto; border-radius: 99px; }
-  .cert-label { font-size: 13px; color: #94A3B8; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 32px; }
-  .nurse-name { font-family: 'Playfair Display', serif; font-size: 52px; color: #0A2540; font-style: italic; border-bottom: 2px solid #00897B; padding-bottom: 12px; margin-bottom: 20px; }
-  .completion-text { font-size: 15px; color: #64748B; margin-bottom: 10px; }
-  .course-name { font-size: 24px; font-weight: 800; color: #0A2540; margin-bottom: 6px; }
-  .standards { font-size: 13px; color: #94A3B8; margin-bottom: 40px; }
-  .footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; }
-  .sig { text-align: center; }
-  .sig-line { width: 160px; height: 1px; background: #0A2540; margin: 0 auto 8px; }
+  .brand-sub { font-size: 11px; color: #64748B; margin-top: 2px; }
+  .divider { width: 80px; height: 3px; background: linear-gradient(90deg, #0A2540, #00897B); margin: 10px auto; border-radius: 99px; }
+  .middle { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .cert-label { font-size: 11px; color: #94A3B8; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 10px; }
+  .certify-text { font-size: 14px; color: #64748B; margin-bottom: 8px; }
+  .nurse-name { font-family: 'Playfair Display', serif; font-size: 58px; color: #0A2540; font-style: italic; border-bottom: 2px solid #00897B; padding-bottom: 8px; margin-bottom: 12px; line-height: 1.1; }
+  .completed-text { font-size: 14px; color: #64748B; margin-bottom: 8px; }
+  .course-name { font-size: 26px; font-weight: 800; color: #0A2540; margin-bottom: 5px; }
+  .standards { font-size: 12px; color: #94A3B8; }
+  .footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; padding-bottom: 6px; }
+  .sig { text-align: center; min-width: 180px; }
+  .sig-img { height: 50px; object-fit: contain; margin-bottom: 4px; }
+  .sig-line { width: 180px; height: 1px; background: #0A2540; margin: 0 auto 6px; }
   .sig-name { font-size: 13px; font-weight: 700; color: #0A2540; }
-  .sig-title { font-size: 11px; color: #64748B; }
+  .sig-title { font-size: 11px; color: #64748B; margin-top: 2px; }
   .cert-meta { text-align: center; }
-  .cert-num { font-family: monospace; font-size: 13px; font-weight: 700; color: #4F46E5; }
-  .badge { background: #0A2540; color: white; padding: 5px 14px; border-radius: 99px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; display: inline-block; margin: 8px 0; }
+  .cert-num { font-family: monospace; font-size: 12px; font-weight: 700; color: #4F46E5; margin-bottom: 6px; }
+  .badge { background: #0A2540; color: white; padding: 5px 16px; border-radius: 99px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; display: inline-block; margin-bottom: 6px; }
   .date { font-size: 11px; color: #94A3B8; }
-  @media print { body { margin: 0; } }
+  @media print { html, body { width: 297mm; height: 210mm; margin: 0; } @page { size: A4 landscape; margin: 0; } }
 </style>
 </head>
 <body>
@@ -76,37 +80,41 @@ export default function CertificateList() {
   <div class="border-outer"></div>
   <div class="border-inner"></div>
   <div class="watermark">AMCC</div>
-  <div style="text-align:center;position:relative">
-    <div class="logo-row" style="justify-content:center">
-      <div class="logo-box"><img src="${logoUrl}" alt="NursePassport" style="width:40px;height:40px;border-radius:8px;" /></div>
-      <div>
-        <div class="brand-name">NursePassport Africa</div>
-        <div class="brand-sub">Powered by AMCC · Advanced Medical Care Consultancy</div>
-      </div>
+  <div class="top">
+    <div class="logo-box">
+      <img src="https://www.nursepassportafrica.com/icons/icon-128.png" alt="NursePassport" style="width:52px;height:52px;object-fit:cover;" />
     </div>
+    <div>
+      <div class="brand-name">NursePassport Africa</div>
+      <div class="brand-sub">Powered by AMCC · Advanced Medical Care Consultancy</div>
+    </div>
+  </div>
+  <div class="middle">
     <div class="divider"></div>
     <div class="cert-label">Certificate of Completion</div>
-    <div class="completion-text">This is to certify that</div>
+    <div class="certify-text">This is to certify that</div>
     <div class="nurse-name">${profile.full_name}</div>
-    <div class="completion-text">has successfully completed</div>
+    <div class="completed-text">has successfully completed</div>
     <div class="course-name">${cert.courses?.title || 'AMCC Course'}</div>
     <div class="standards">Aligned to NICE (2022) & RCOG Standards · With Distinction</div>
-    <div class="footer">
-      <div class="sig">
-        <div class="sig-line"></div>
-        <div class="sig-name">${sig1Name}</div>
-        <div class="sig-title">${sig1Title}</div>
-      </div>
-      <div class="cert-meta">
-        <div class="cert-num">${cert.certificate_number}</div>
-        <div class="badge">AMCC CERTIFIED</div>
-        <div class="date">${issueDate}</div>
-      </div>
-      <div class="sig">
-        <div class="sig-line"></div>
-        <div class="sig-name">${sig2Name}</div>
-        <div class="sig-title">${sig2Title}</div>
-      </div>
+  </div>
+  <div class="footer">
+    <div class="sig">
+      ${sig1Url ? `<img src="${sig1Url}" class="sig-img" alt="signature" />` : ''}
+      <div class="sig-line"></div>
+      <div class="sig-name">${sig1Name}</div>
+      <div class="sig-title">${sig1Title}</div>
+    </div>
+    <div class="cert-meta">
+      <div class="cert-num">${cert.certificate_number}</div>
+      <div class="badge">AMCC CERTIFIED</div>
+      <div class="date">${issueDate}</div>
+    </div>
+    <div class="sig">
+      ${sig2Url ? `<img src="${sig2Url}" class="sig-img" alt="signature" />` : ''}
+      <div class="sig-line"></div>
+      <div class="sig-name">${sig2Name}</div>
+      <div class="sig-title">${sig2Title}</div>
     </div>
   </div>
 </div>
