@@ -29,13 +29,13 @@ export default function CertificateList() {
     try {
       // Fetch signatory settings
       const { data: platformSettings } = await supabase.from('platform_settings').select('*').eq('id', 1).single()
-      const sig1Name = platformSettings?.signatory1_name || '${sig1Name}'
-      const sig1Title = platformSettings?.signatory1_title || '${sig1Title}'
+      const sig1Name = platformSettings?.signatory1_name || 'Dr. Ibiwunmi Ajijola'
+      const sig1Title = platformSettings?.signatory1_title || 'Clinical Director, AMCC'
       const sig1Url = platformSettings?.signatory1_signature_url || ''
       const sig2Name = platformSettings?.signatory2_name || 'NursePassport Africa'
-      const sig2Title = platformSettings?.signatory2_title || '${sig2Title}'
+      const sig2Title = platformSettings?.signatory2_title || 'Director, NursePassport Africa'
       const sig2Url = platformSettings?.signatory2_signature_url || ''
-      // logoSrc is imported at top of file
+      const logoSrc = platformSettings?.logo_url || ''
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
       const verifyUrl = `https://www.nursepassportafrica.com/verify/${cert.certificate_number}`
