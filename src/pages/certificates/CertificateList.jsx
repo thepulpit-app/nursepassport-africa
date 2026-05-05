@@ -26,6 +26,15 @@ export default function CertificateList() {
   async function handleDownload(cert) {
     setDownloading(cert.id)
     try {
+      // Fetch signatory settings
+      const { data: platformSettings } = await supabase.from('platform_settings').select('*').eq('id', 1).single()
+      const sig1Name = platformSettings?.signatory1_name || '${sig1Name}'
+      const sig1Title = platformSettings?.signatory1_title || '${sig1Title}'
+      const sig1Url = platformSettings?.signatory1_signature_url || ''
+      const sig2Name = platformSettings?.signatory2_name || 'NursePassport Africa'
+      const sig2Title = platformSettings?.signatory2_title || '${sig2Title}'
+      const sig2Url = platformSettings?.signatory2_signature_url || ''
+      const logoUrl = window.location.origin + '/icons/icon-128.png'
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
       const certHTML = `<!DOCTYPE html>
@@ -69,7 +78,7 @@ export default function CertificateList() {
   <div class="watermark">AMCC</div>
   <div style="text-align:center;position:relative">
     <div class="logo-row" style="justify-content:center">
-      <div class="logo-box">🩺</div>
+      <div class="logo-box"><img src="${logoUrl}" alt="NursePassport" style="width:40px;height:40px;border-radius:8px;" /></div>
       <div>
         <div class="brand-name">NursePassport Africa</div>
         <div class="brand-sub">Powered by AMCC · Advanced Medical Care Consultancy</div>
@@ -85,8 +94,8 @@ export default function CertificateList() {
     <div class="footer">
       <div class="sig">
         <div class="sig-line"></div>
-        <div class="sig-name">Dr. Ibiwunmi Ajijola</div>
-        <div class="sig-title">Clinical Director, AMCC</div>
+        <div class="sig-name">${sig1Name}</div>
+        <div class="sig-title">${sig1Title}</div>
       </div>
       <div class="cert-meta">
         <div class="cert-num">${cert.certificate_number}</div>
@@ -95,8 +104,8 @@ export default function CertificateList() {
       </div>
       <div class="sig">
         <div class="sig-line"></div>
-        <div class="sig-name">Tope Ajijola</div>
-        <div class="sig-title">Director, NursePassport Africa</div>
+        <div class="sig-name">${sig2Name}</div>
+        <div class="sig-title">${sig2Title}</div>
       </div>
     </div>
   </div>

@@ -60,7 +60,7 @@ You must be at least 18 years old to create an account.`
             },
             {
               title: '5. Subscription Plans and Payments',
-              content: `NursePassport Africa offers three subscription tiers: Grace (Free), Nurse, and Passport.
+              content: `NursePassport Africa offers four subscription tiers: Grace (Free), Student, Nurse, and Passport.
 
 Payments are processed by Paystack and are subject to Paystack's terms. By subscribing you authorise us to charge your payment method on a recurring basis.
 
