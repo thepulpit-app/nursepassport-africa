@@ -127,6 +127,8 @@ export default function StudentRegistration() {
         student_level: form.level,
         student_id_url: publicUrl,
         subscription_tier: 'student',
+        diagnostic_completed: true,
+        qualification: 'Nursing Student',
       }).eq('id', profile.id)
 
       toast.success('Student registration complete!')

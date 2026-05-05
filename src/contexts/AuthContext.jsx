@@ -73,7 +73,7 @@ export function AuthProvider({ children }) {
 
   const tier = profile?.subscription_tier || 'free'
   const isFoundingMember = profile?.is_founding_member || false
-  const needsOnboarding = user && profile && !profile.diagnostic_completed
+  const needsOnboarding = user && profile && !profile.diagnostic_completed && !profile.is_student
 
   return (
     <AuthContext.Provider value={{
