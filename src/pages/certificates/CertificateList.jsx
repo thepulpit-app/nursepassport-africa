@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
+import logoSrc from '/icons/icon-128.png'
 
 export default function CertificateList() {
   const { profile } = useAuth()
@@ -34,21 +35,7 @@ export default function CertificateList() {
       const sig2Name = platformSettings?.signatory2_name || 'NursePassport Africa'
       const sig2Title = platformSettings?.signatory2_title || '${sig2Title}'
       const sig2Url = platformSettings?.signatory2_signature_url || ''
-      // Fetch logo as base64 so it works inside blob HTML
-      let logoBase64 = ''
-      try {
-        const logoResp = await fetch('/icons/icon-128.png')
-        if (logoResp.ok) {
-          const logoBlob = await logoResp.blob()
-          logoBase64 = await new Promise((res) => {
-            const reader = new FileReader()
-            reader.onload = () => res(reader.result)
-            reader.readAsDataURL(logoBlob)
-          })
-        }
-      } catch (e) {
-        logoBase64 = ''
-      }
+      // Logo is imported directly — works in blob context
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
       const verifyUrl = `https://www.nursepassportafrica.com/verify/${cert.certificate_number}`
@@ -116,7 +103,7 @@ export default function CertificateList() {
   <div class="top">
     <div class="top-brand">
       <div class="logo-box">
-        ${logoBase64 ? `<img src="${logoBase64}" alt="NursePassport" style="width:48px;height:48px;object-fit:cover;" />` : `<div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:13px;font-family:Inter,sans-serif;letter-spacing:-0.5px;">NPA</div>`}
+        ${logoSrc ? `<img src="${logoSrc}" alt="NursePassport" style="width:48px;height:48px;object-fit:cover;" />` : `<div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:13px;font-family:Inter,sans-serif;letter-spacing:-0.5px;">NPA</div>`}
       </div>
       <div>
         <div class="brand-name">NursePassport Africa</div>
