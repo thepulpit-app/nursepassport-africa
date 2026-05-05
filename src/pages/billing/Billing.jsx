@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle, Lock } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-import { getPaymentUrl } from '../../lib/paystack'
+import { initializePaystackPayment } from '../../lib/paystack'
 import AppShell from '../../components/layout/AppShell'
 
 const PLAN_DETAILS = [
@@ -45,12 +45,23 @@ export default function Billing() {
   const { user, profile, tier } = useAuth()
   const navigate = useNavigate()
   const [billing, setBilling] = useState('monthly')
+  const [loading, setLoading] = useState(null)
 
   function handleUpgrade(plan) {
     const pageKey = billing === 'annual' && plan.annualPlan ? plan.annualPlan : plan.monthlyPlan
     if (!pageKey) return
-    const url = getPaymentUrl(pageKey, user.email, user.id)
-    if (url) window.location.href = url
+    setLoading(plan.key)
+    initializePaystackPayment({
+      email: user.email,
+      userId: user.id,
+      pageKey,
+      planName: plan.name,
+      onSuccess: () => {
+        setLoading(null)
+        window.location.reload()
+      },
+      onClose: () => setLoading(null),
+    })
   }
 
   const savings = {
@@ -161,8 +172,9 @@ export default function Billing() {
                 </div>
               ) : isUpgrade ? (
                 <button className="upgrade-btn" style={{ background: plan.gradient, color: 'white' }}
+                  disabled={loading === plan.key}
                   onClick={() => handleUpgrade(plan)}>
-                  Upgrade to {plan.name}
+                  {loading === plan.key ? 'Processing...' : 'Upgrade to ' + plan.name}
                 </button>
               ) : (
                 <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
