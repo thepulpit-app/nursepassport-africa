@@ -10,7 +10,7 @@ const PLAN_DETAILS = [
   {
     key: 'student', name: 'Student', emoji: '🎓',
     gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
-    monthlyPrice: 750, annualPrice: 7000,
+    monthlyPrice: 1750, annualPrice: 7000,
     student: true,
     features: ['All courses and modules', 'Module assessments', 'AMCC certificates', '50% student discount'],
     locked: ['ClinicalSim AI', 'Question Banks', 'OSCE prep', 'Placement portfolio'],
