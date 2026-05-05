@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
+import logoSrc from '../../assets/logo.png'
 
 
 export default function CertificateList() {
