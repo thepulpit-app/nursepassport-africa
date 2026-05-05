@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CheckCircle, Lock } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { PLANS, initializePaystackPayment } from '../../lib/paystack'
@@ -6,6 +7,14 @@ import AppShell from '../../components/layout/AppShell'
 import toast from 'react-hot-toast'
 
 const PLAN_DETAILS = [
+  {
+    key: 'student', name: 'Student', emoji: '🎓',
+    gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)',
+    monthlyPrice: 750, annualPrice: 7000,
+    student: true,
+    features: ['All courses and modules', 'Module assessments', 'AMCC certificates', '50% student discount'],
+    locked: ['ClinicalSim AI', 'Question Banks', 'OSCE prep', 'Placement portfolio'],
+  },
   {
     key: 'free', name: 'Grace', emoji: '🌱',
     gradient: 'linear-gradient(135deg, #64748B, #475569)',
@@ -34,6 +43,7 @@ const PLAN_DETAILS = [
 
 export default function Billing() {
   const { user, profile, tier } = useAuth()
+  const navigate = useNavigate()
   const [billing, setBilling] = useState('monthly')
   const [loading, setLoading] = useState(null)
 
@@ -145,6 +155,11 @@ export default function Billing() {
                 <div style={{ width: '100%', padding: '14px', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', color: '#94A3B8', fontWeight: '700', fontSize: '14px', textAlign: 'center' }}>
                   Your Current Plan
                 </div>
+              ) : plan.student ? (
+                <button className="upgrade-btn" style={{ background: plan.gradient, color: 'white' }}
+                  onClick={() => navigate('/student-registration')}>
+                  Register as Student
+                </button>
               ) : isUpgrade ? (
                 <button className="upgrade-btn" style={{ background: plan.gradient, color: 'white' }}
                   disabled={loading === plan.key}
