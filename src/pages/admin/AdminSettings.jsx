@@ -17,6 +17,7 @@ export default function AdminSettings() {
   const [saving, setSaving] = useState(false)
   const [sig1File, setSig1File] = useState(null)
   const [sig2File, setSig2File] = useState(null)
+  const [logoFile, setLogoFile] = useState(null)
 
   useEffect(() => { loadSettings() }, [])
 
@@ -40,6 +41,15 @@ export default function AdminSettings() {
     try {
       let updatedSettings = { ...settings }
 
+      if (logoFile) {
+        const ext = logoFile.name.split('.').pop()
+        const path = `logos/platform-logo.${ext}`
+        const { error } = await supabase.storage.from('certificates').upload(path, logoFile, { upsert: true })
+        if (!error) {
+          const { data: { publicUrl } } = supabase.storage.from('certificates').getPublicUrl(path)
+          updatedSettings.logo_url = publicUrl
+        }
+      }
       if (sig1File) {
         const url = await uploadSignature(sig1File, 1)
         updatedSettings.signatory1_signature_url = url
@@ -125,6 +135,23 @@ export default function AdminSettings() {
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '10px', border: '1.5px dashed #C7D2FE', background: '#EEF2FF', cursor: 'pointer', fontSize: '13px', fontWeight: '600', color: '#4F46E5', width: 'fit-content' }}>
                 <Upload size={14} /> {sig2File ? sig2File.name : 'Upload Signature (PNG/JPG)'}
                 <input type="file" accept="image/*" onChange={e => setSig2File(e.target.files[0])} style={{ display: 'none' }} />
+              </label>
+            </div>
+          </div>
+
+          {/* Logo Upload */}
+          <div style={{ background: 'white', borderRadius: '20px', border: '1px solid #F1F5F9', padding: '24px', marginBottom: '16px' }}>
+            <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#0A2540', margin: '0 0 16px' }}>Platform Logo</h2>
+            <div>
+              <label style={LABEL_STYLE}>Logo Image (used on certificates)</label>
+              {settings.logo_url && (
+                <div style={{ marginBottom: '8px', padding: '12px', background: '#0A2540', borderRadius: '10px', width: 'fit-content' }}>
+                  <img src={settings.logo_url} alt="Logo" style={{ maxHeight: '60px', objectFit: 'contain' }} />
+                </div>
+              )}
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '10px', border: '1.5px dashed #C7D2FE', background: '#EEF2FF', cursor: 'pointer', fontSize: '13px', fontWeight: '600', color: '#4F46E5', width: 'fit-content' }}>
+                <Upload size={14} /> {logoFile ? logoFile.name : 'Upload Logo (PNG/JPG)'}
+                <input type="file" accept="image/*" onChange={e => setLogoFile(e.target.files[0])} style={{ display: 'none' }} />
               </label>
             </div>
           </div>
