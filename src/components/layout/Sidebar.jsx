@@ -26,11 +26,11 @@ export default function Sidebar() {
   const navigate = useNavigate()
 
   const TIER_BADGE = {
-    free:     { label: 'Free',     bg: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' },
+    student:     { label: 'Student',     bg: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' },
     nurse:    { label: 'Nurse',    bg: theme.secondary, color: 'white' },
     passport: { label: 'Passport', bg: '#F4A300', color: '#0A2540' },
   }
-  const badge = TIER_BADGE[tier] || TIER_BADGE.free
+  const badge = TIER_BADGE[tier] || TIER_BADGE.student
 
   async function handleSignOut() {
     await signOut()
