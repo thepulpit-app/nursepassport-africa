@@ -34,7 +34,19 @@ export default function CertificateList() {
       const sig2Name = platformSettings?.signatory2_name || 'NursePassport Africa'
       const sig2Title = platformSettings?.signatory2_title || '${sig2Title}'
       const sig2Url = platformSettings?.signatory2_signature_url || ''
-      const logoUrl = window.location.origin + '/icons/icon-128.png'
+      // Fetch logo as base64 so it works inside blob HTML
+      let logoBase64 = ''
+      try {
+        const logoResp = await fetch('https://www.nursepassportafrica.com/icons/icon-128.png')
+        const logoBlob = await logoResp.blob()
+        logoBase64 = await new Promise((res) => {
+          const reader = new FileReader()
+          reader.onload = () => res(reader.result)
+          reader.readAsDataURL(logoBlob)
+        })
+      } catch (e) {
+        logoBase64 = ''
+      }
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
       const certHTML = `<!DOCTYPE html>
@@ -82,7 +94,7 @@ export default function CertificateList() {
   <div class="watermark">AMCC</div>
   <div class="top">
     <div class="logo-box">
-      <img src="https://www.nursepassportafrica.com/icons/icon-128.png" alt="NursePassport" style="width:52px;height:52px;object-fit:cover;" />
+      <img src="${logoBase64}" alt="NursePassport" style="width:52px;height:52px;object-fit:cover;" />
     </div>
     <div>
       <div class="brand-name">NursePassport Africa</div>
