@@ -49,6 +49,9 @@ export default function CertificateList() {
       }
       // Generate certificate HTML and open in new tab for printing
       const issueDate = new Date(cert.issued_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })
+      const verifyUrl = `https://www.nursepassportafrica.com/verify/${cert.certificate_number}`
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(verifyUrl)}`
+
       const certHTML = `<!DOCTYPE html>
 <html>
 <head>
@@ -57,33 +60,47 @@ export default function CertificateList() {
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600;700&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 297mm; height: 210mm; }
-  body { font-family: 'Inter', sans-serif; background: white; display: flex; align-items: center; justify-content: center; }
-  .cert { width: 297mm; height: 210mm; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 28px 56px 32px; background: white; }
+  body { font-family: 'Inter', sans-serif; background: white; }
+  .cert {
+    width: 297mm; height: 210mm; position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    padding: 32px 52px 28px;
+    background: white;
+    gap: 0;
+  }
   .border-outer { position: absolute; inset: 10px; border: 3px solid #0A2540; border-radius: 4px; pointer-events: none; }
   .border-inner { position: absolute; inset: 18px; border: 1px solid #00897B; border-radius: 2px; pointer-events: none; }
-  .watermark { position: absolute; opacity: 0.04; font-size: 200px; font-weight: 900; color: #0A2540; font-family: 'Playfair Display', serif; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; }
-  .top { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; padding-top: 8px; }
-  .logo-box { width: 52px; height: 52px; background: #0A2540; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-  .brand-name { font-size: 22px; font-weight: 800; color: #0A2540; }
-  .brand-sub { font-size: 11px; color: #64748B; margin-top: 2px; }
-  .divider { width: 80px; height: 3px; background: linear-gradient(90deg, #0A2540, #00897B); margin: 10px auto; border-radius: 99px; }
-  .middle { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .cert-label { font-size: 11px; color: #94A3B8; letter-spacing: 0.35em; text-transform: uppercase; margin-bottom: 10px; }
-  .certify-text { font-size: 14px; color: #64748B; margin-bottom: 8px; }
-  .nurse-name { font-family: 'Playfair Display', serif; font-size: 58px; color: #0A2540; font-style: italic; border-bottom: 2px solid #00897B; padding-bottom: 8px; margin-bottom: 12px; line-height: 1.1; }
-  .completed-text { font-size: 14px; color: #64748B; margin-bottom: 8px; }
-  .course-name { font-size: 26px; font-weight: 800; color: #0A2540; margin-bottom: 5px; }
-  .standards { font-size: 12px; color: #94A3B8; }
-  .footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; padding-bottom: 6px; }
-  .sig { text-align: center; min-width: 180px; }
-  .sig-img { height: 50px; object-fit: contain; margin-bottom: 4px; }
-  .sig-line { width: 180px; height: 1px; background: #0A2540; margin: 0 auto 6px; }
-  .sig-name { font-size: 13px; font-weight: 700; color: #0A2540; }
-  .sig-title { font-size: 11px; color: #64748B; margin-top: 2px; }
+  .watermark { position: absolute; opacity: 0.035; font-size: 190px; font-weight: 900; color: #0A2540; font-family: 'Playfair Display', serif; top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; z-index: 0; }
+  /* TOP */
+  .top { display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative; z-index: 1; }
+  .top-brand { display: flex; align-items: center; gap: 12px; }
+  .logo-box { width: 48px; height: 48px; background: #0A2540; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+  .brand-name { font-size: 20px; font-weight: 800; color: #0A2540; line-height: 1.2; }
+  .brand-sub { font-size: 10px; color: #94A3B8; margin-top: 1px; }
+  .cert-label-top { font-size: 10px; color: #94A3B8; letter-spacing: 0.3em; text-transform: uppercase; text-align: right; }
+  /* MIDDLE */
+  .middle { text-align: center; position: relative; z-index: 1; padding: 8px 0; }
+  .divider { width: 60px; height: 3px; background: linear-gradient(90deg, #0A2540, #00897B); margin: 0 auto 14px; border-radius: 99px; }
+  .certify-text { font-size: 13px; color: #64748B; margin-bottom: 6px; }
+  .nurse-name { font-family: 'Playfair Display', serif; font-size: 56px; color: #0A2540; font-style: italic; line-height: 1.1; padding-bottom: 6px; border-bottom: 2px solid #00897B; margin-bottom: 10px; display: inline-block; }
+  .completed-text { font-size: 13px; color: #64748B; margin-bottom: 6px; }
+  .course-name { font-size: 24px; font-weight: 800; color: #0A2540; margin-bottom: 4px; }
+  .standards { font-size: 11px; color: #94A3B8; }
+  /* FOOTER */
+  .footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; position: relative; z-index: 1; }
+  .sig { text-align: center; min-width: 160px; }
+  .sig-img { height: 44px; object-fit: contain; margin-bottom: 2px; display: block; margin-left: auto; margin-right: auto; }
+  .sig-line { width: 160px; height: 1px; background: #0A2540; margin: 0 auto 5px; }
+  .sig-name { font-size: 12px; font-weight: 700; color: #0A2540; }
+  .sig-title { font-size: 10px; color: #64748B; margin-top: 1px; }
   .cert-meta { text-align: center; }
-  .cert-num { font-family: monospace; font-size: 12px; font-weight: 700; color: #4F46E5; margin-bottom: 6px; }
-  .badge { background: #0A2540; color: white; padding: 5px 16px; border-radius: 99px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; display: inline-block; margin-bottom: 6px; }
-  .date { font-size: 11px; color: #94A3B8; }
+  .cert-num { font-family: monospace; font-size: 11px; font-weight: 700; color: #4F46E5; margin-bottom: 4px; }
+  .badge { background: #0A2540; color: white; padding: 4px 14px; border-radius: 99px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; display: inline-block; margin-bottom: 4px; }
+  .date { font-size: 10px; color: #94A3B8; margin-bottom: 6px; }
+  .qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .qr-label { font-size: 8px; color: #94A3B8; letter-spacing: 0.05em; text-transform: uppercase; }
   @media print { html, body { width: 297mm; height: 210mm; margin: 0; } @page { size: A4 landscape; margin: 0; } }
 </style>
 </head>
@@ -92,27 +109,35 @@ export default function CertificateList() {
   <div class="border-outer"></div>
   <div class="border-inner"></div>
   <div class="watermark">AMCC</div>
+
+  <!-- TOP -->
   <div class="top">
-    <div class="logo-box">
-      <img src="${logoBase64}" alt="NursePassport" style="width:52px;height:52px;object-fit:cover;" />
+    <div class="top-brand">
+      <div class="logo-box">
+        <img src="${logoBase64}" alt="NursePassport" style="width:48px;height:48px;object-fit:cover;" />
+      </div>
+      <div>
+        <div class="brand-name">NursePassport Africa</div>
+        <div class="brand-sub">Powered by AMCC · Advanced Medical Care Consultancy</div>
+      </div>
     </div>
-    <div>
-      <div class="brand-name">NursePassport Africa</div>
-      <div class="brand-sub">Powered by AMCC · Advanced Medical Care Consultancy</div>
-    </div>
+    <div class="cert-label-top">Certificate of Completion</div>
   </div>
+
+  <!-- MIDDLE -->
   <div class="middle">
     <div class="divider"></div>
-    <div class="cert-label">Certificate of Completion</div>
     <div class="certify-text">This is to certify that</div>
     <div class="nurse-name">${profile.full_name}</div>
     <div class="completed-text">has successfully completed</div>
     <div class="course-name">${cert.courses?.title || 'AMCC Course'}</div>
     <div class="standards">Aligned to NICE (2022) & RCOG Standards · With Distinction</div>
   </div>
+
+  <!-- FOOTER -->
   <div class="footer">
     <div class="sig">
-      ${sig1Url ? `<img src="${sig1Url}" class="sig-img" alt="signature" />` : ''}
+      ${sig1Url ? `<img src="${sig1Url}" class="sig-img" alt="signature" />` : '<div style="height:46px"></div>'}
       <div class="sig-line"></div>
       <div class="sig-name">${sig1Name}</div>
       <div class="sig-title">${sig1Title}</div>
@@ -121,9 +146,13 @@ export default function CertificateList() {
       <div class="cert-num">${cert.certificate_number}</div>
       <div class="badge">AMCC CERTIFIED</div>
       <div class="date">${issueDate}</div>
+      <div class="qr-wrap">
+        <img src="${qrUrl}" width="70" height="70" alt="QR" />
+        <div class="qr-label">Scan to verify</div>
+      </div>
     </div>
     <div class="sig">
-      ${sig2Url ? `<img src="${sig2Url}" class="sig-img" alt="signature" />` : ''}
+      ${sig2Url ? `<img src="${sig2Url}" class="sig-img" alt="signature" />` : '<div style="height:46px"></div>'}
       <div class="sig-line"></div>
       <div class="sig-name">${sig2Name}</div>
       <div class="sig-title">${sig2Title}</div>
