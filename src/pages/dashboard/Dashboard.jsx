@@ -72,7 +72,7 @@ export default function Dashboard() {
               {greeting}, {firstName}! {GOAL_FLAGS[profile?.career_goal] || '✨'}
             </h1>
             <p style={{ color: '#94A3B8', fontSize: '13px', margin: 0 }}>
-              {profile?.qualification || 'Nurse'}{profile?.career_goal ? ` · ${profile.career_goal} Track` : ''}
+              {tier === 'free' ? 'Grace Plan' : tier === 'student' ? 'Student Nurse' : tier === 'nurse' ? 'Nurse Plan' : tier === 'passport' ? 'Passport Plan' : 'NursePassport'}{profile?.career_goal ? ` · ${profile.career_goal} Track` : ''}
             </p>
           </div>
           {isFoundingMember && (
