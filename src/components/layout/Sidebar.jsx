@@ -106,7 +106,7 @@ export default function Sidebar() {
 
         {/* Admin link — only for admins */}
         {profile?.is_admin && (
-          <NavLink to="/admin" style={({ isActive }) => ({
+          <NavLink to="/admin/dashboard" style={({ isActive }) => ({
             ...navStyle(isActive),
             color: isActive ? 'white' : 'rgba(244,163,0,0.8)',
           })}>
