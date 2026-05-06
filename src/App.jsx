@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
+
 import Landing from './pages/Landing'
 import SignUp from './pages/auth/SignUp'
 import SignIn from './pages/auth/SignIn'
@@ -65,16 +66,11 @@ function PublicRoute({ children }) {
 }
 
 function AdminRoute({ children }) {
-  const [isAdmin, setIsAdmin] = useState(null)
-  useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session) { setIsAdmin(false); return }
-      const { data } = await supabase.from('profiles').select('is_admin').eq('id', session.user.id).single()
-      setIsAdmin(!!data?.is_admin)
-    })
-  }, [])
-  if (isAdmin === null) return <LoadingScreen />
-  if (!isAdmin) return <Navigate to="/admin" replace />
+  const { user, profile, loading } = useAuth()
+  if (loading) return <LoadingScreen />
+  if (!user) return <Navigate to="/admin" replace />
+  if (profile === null) return <LoadingScreen />
+  if (!profile?.is_admin) return <Navigate to="/dashboard" replace />
   return children
 }
 
