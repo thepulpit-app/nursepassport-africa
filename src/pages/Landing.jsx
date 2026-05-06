@@ -28,8 +28,8 @@ export default function Landing() {
   const [founderCount, setFounderCount] = useState(null)
 
   useEffect(() => {
-    supabase.from('profiles').select('id', { count: 'exact' }).eq('is_founding_member', true).then(({ count }) => {
-      setFounderCount(count || 0)
+    supabase.rpc('get_founding_member_count').then(({ data }) => {
+      setFounderCount(data || 0)
     })
   }, [])
 
