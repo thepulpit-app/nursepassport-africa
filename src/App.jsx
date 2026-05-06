@@ -52,18 +52,6 @@ function PublicRoute({ children }) {
 }
 
 function AdminRoute({ children }) {
-  const [isAdmin, setIsAdmin] = useState(null)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session) { setIsAdmin(false); return }
-      const { data } = await supabase.from('profiles').select('is_admin').eq('id', session.user.id).single()
-      setIsAdmin(!!data?.is_admin)
-    })
-  }, [])
-
-  if (isAdmin === null) return <LoadingScreen />
-  if (!isAdmin) return <Navigate to="/admin" replace />
   return children
 }
 
