@@ -51,7 +51,7 @@ export default function AdminSettings() {
         <h2 style={{ fontSize: '15px', fontWeight: '800', color: '#0A2540', margin: '0 0 16px' }}>Platform Logo</h2>
         {settings.logo_url && <div style={{ marginBottom: '12px', padding: '12px', background: '#0A2540', borderRadius: '10px', width: 'fit-content' }}><img src={settings.logo_url} style={{ height: '48px', objectFit: 'contain' }} alt="Logo" /></div>}
         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 16px', borderRadius: '10px', border: '1.5px dashed #C7D2FE', background: '#EEF2FF', cursor: 'pointer', fontSize: '13px', fontWeight: '600', color: '#4F46E5', width: 'fit-content' }}>
-          📤 {files.logo ? files.logo.name : 'Upload Logo'}
+          📤 {files.logo ? files.logo.name : settings.logo_url ? '✅ Logo uploaded — click to replace' : 'Upload Logo'}
           <input type="file" accept="image/*" onChange={e => setFiles(f => ({ ...f, logo: e.target.files[0] }))} style={{ display: 'none' }} />
         </label>
       </div>
