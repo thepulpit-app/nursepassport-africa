@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Plus, Edit2, Eye, EyeOff, ChevronDown, ChevronUp, Save, X } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
-import AdminShell from './AdminShell'
+
 import toast from 'react-hot-toast'
 
 export default function AdminCourses() {
@@ -52,7 +52,7 @@ export default function AdminCourses() {
   const TIER_COLORS = { free: '#22C55E', nurse: '#4F46E5', passport: '#F59E0B' }
 
   return (
-    <AdminShell>
+    <div>
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Courses</h1>
         <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>Manage course content and modules</p>
@@ -173,6 +173,6 @@ export default function AdminCourses() {
           </div>
         </div>
       )}
-    </AdminShell>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Plus, Edit2, Save, X, ChevronDown, ChevronUp } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
-import AdminShell from './AdminShell'
+
 import toast from 'react-hot-toast'
 
 export default function AdminQuizQuestions() {
@@ -65,7 +65,7 @@ export default function AdminQuizQuestions() {
   const CORRECT_OPTIONS = ['a', 'b', 'c', 'd']
 
   return (
-    <AdminShell>
+    <div>
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Quiz Questions</h1>
         <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>Add and manage quiz questions for each module</p>
@@ -184,6 +184,6 @@ export default function AdminQuizQuestions() {
           </div>
         </div>
       )}
-    </AdminShell>
+    </div>
   )
 }

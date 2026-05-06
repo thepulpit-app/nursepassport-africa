@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Save, Upload } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
-import AdminShell from './AdminShell'
+
 import toast from 'react-hot-toast'
 
 export default function AdminSettings() {
@@ -63,7 +63,7 @@ export default function AdminSettings() {
   const LABEL_STYLE = { display: 'block', fontSize: '11px', fontWeight: '700', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }
 
   return (
-    <AdminShell>
+    <div>
       <div style={{ marginBottom: '24px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Platform Settings</h1>
         <p style={{ color: '#94A3B8', fontSize: '14px', margin: 0 }}>Certificate signatories and platform configuration</p>
@@ -152,6 +152,6 @@ export default function AdminSettings() {
           </button>
         </>
       )}
-    </AdminShell>
+    </div>
   )
 }
