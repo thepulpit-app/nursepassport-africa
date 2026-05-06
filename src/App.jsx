@@ -4,7 +4,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
-
 import Landing from './pages/Landing'
 import SignUp from './pages/auth/SignUp'
 import SignIn from './pages/auth/SignIn'
@@ -29,6 +28,7 @@ import AdminCourses from './pages/admin/AdminCourses'
 import AdminScenarios from './pages/admin/AdminScenarios'
 import AdminCertificates from './pages/admin/AdminCertificates'
 import AdminQuizQuestions from './pages/admin/AdminQuizQuestions'
+import AdminSettings from './pages/admin/AdminSettings'
 import StudentRegistration from './pages/student/StudentRegistration'
 import QuestionBank from './pages/questions/QuestionBank'
 import MockExam from './pages/questions/MockExam'
@@ -111,6 +111,7 @@ function AppRoutes() {
       <Route path="/admin/scenarios" element={<AdminRoute><AdminScenarios /></AdminRoute>} />
       <Route path="/admin/certificates" element={<AdminRoute><AdminCertificates /></AdminRoute>} />
       <Route path="/admin/quiz-questions" element={<AdminRoute><AdminQuizQuestions /></AdminRoute>} />
+      <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
