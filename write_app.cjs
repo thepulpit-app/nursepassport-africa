@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+const fs = require('fs')
+
+const content = `import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -103,3 +105,7 @@ export default function App() {
     </ThemeProvider>
   )
 }
+`
+
+fs.writeFileSync('src/App.jsx', content)
+console.log('App.jsx written successfully')
