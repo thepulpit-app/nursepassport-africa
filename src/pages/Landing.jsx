@@ -17,7 +17,7 @@ const TESTIMONIALS = [
 ]
 
 const PLANS = [
-  { name: 'Student', emoji: '🎓', price: '₦1750', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'], student: true },
+  { name: 'Student', emoji: '🎓', price: '₦750', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', 'Module assessments', 'AMCC certificates', '50% student discount'], student: true },
   { name: 'Grace', emoji: '🌱', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking'] },
   { name: 'Nurse', emoji: '🩺', price: '₦4,500', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', '20 sim sessions/month', 'AMCC certificates', 'Progress analytics'], popular: true },
   { name: 'Passport', emoji: '✈️', price: '₦9,000', sub: '/month', gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)', features: ['Unlimited simulations', 'OSCE prep track', 'Placement portfolio', 'UK · UAE · USA · Canada'] },
@@ -96,6 +96,15 @@ export default function Landing() {
               I have an account
             </button>
           </div>
+          {/* Founding Member Counter */}
+          {founderCount !== null && spotsRemaining > 0 && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '99px', padding: '8px 16px', marginBottom: '20px' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22C55E', animation: 'pulse 2s infinite' }} />
+              <span style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>
+                {spotsRemaining} Founding Member {spotsRemaining === 1 ? 'spot' : 'spots'} remaining — 50% off for life
+              </span>
+            </div>
+          )}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
             {['Free tier available', 'NICE 2022 guidelines', 'AMCC certified', 'UK · UAE · USA · Canada'].map(t => (
               <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.6)', fontSize: '13px' }}>
