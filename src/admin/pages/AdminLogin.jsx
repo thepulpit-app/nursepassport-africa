@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Shield, Eye, EyeOff } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 
 export default function AdminLogin() {
-  const navigate = useNavigate()
-  const [form, setForm] = useState({ email: '', password: '' })
+    const [form, setForm] = useState({ email: '', password: '' })
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -22,7 +20,7 @@ export default function AdminLogin() {
       setLoading(false)
       return
     }
-    navigate('/admin/dashboard')
+    window.location.href = ('/admin/dashboard')
     setLoading(false)
   }
 
