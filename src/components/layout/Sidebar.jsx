@@ -8,6 +8,8 @@ const NAV = [
   { to: '/courses',      icon: BookOpen,         label: 'Courses' },
   { to: '/simulate',     icon: Activity,         label: 'ClinicalSim AI' },
   { to: '/certificates', icon: Award,            label: 'Certificates' },
+  { to: '/questions',    icon: ClipboardList,    label: 'Question Banks' },
+  { to: '/referral',     icon: Gift,             label: 'Refer and Earn' },
 ]
 
 const BOTTOM_NAV = [
