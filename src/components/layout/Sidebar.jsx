@@ -106,14 +106,12 @@ export default function Sidebar() {
 
         {/* Admin link — only for admins */}
         {profile?.is_admin && (
-          <NavLink to="/admin/dashboard" style={({ isActive }) => ({
-            ...navStyle(isActive),
-            color: isActive ? 'white' : 'rgba(244,163,0,0.8)',
-          })}>
-            <Settings size={17} />
-            Admin Portal
-          </NavLink>
-        )}
+  <button onClick={() => { window.location.href = '/admin/dashboard' }}
+    style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(244,163,0,0.8)', fontSize: '13px', fontWeight: '600' }}>
+    <Settings size={17} />
+    Admin Portal
+  </button>
+)}
 
         <button onClick={handleSignOut}
           style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '13px', fontWeight: '600' }}>
