@@ -2,12 +2,15 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { useEffect, useState } from 'react'
+import { supabase } from './lib/supabase'
 
 import Landing from './pages/Landing'
 import SignUp from './pages/auth/SignUp'
 import SignIn from './pages/auth/SignIn'
 import Onboarding from './pages/Onboarding'
 import ForgotPassword from './pages/auth/ForgotPassword'
+import ResetPassword from './pages/auth/ResetPassword'
 import Dashboard from './pages/dashboard/Dashboard'
 import CourseList from './pages/courses/CourseList'
 import CourseDetail from './pages/courses/CourseDetail'
@@ -63,6 +66,7 @@ function AppRoutes() {
       <Route path="/signin" element={<PublicRoute><SignIn /></PublicRoute>} />
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/courses" element={<ProtectedRoute><CourseList /></ProtectedRoute>} />
       <Route path="/courses/:slug" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
