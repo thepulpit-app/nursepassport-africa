@@ -106,6 +106,10 @@ function AdminSidebar() {
         ))}
       </nav>
       <div style={{ padding: '12px 8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+        <button onClick={() => window.location.href = '/'}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', fontSize: '13px', fontWeight: '600', marginBottom: '4px' }}>
+          ← Back to App
+        </button>
         <button onClick={handleSignOut}
           style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '13px', fontWeight: '600' }}>
           🚪 Sign Out

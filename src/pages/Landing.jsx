@@ -28,7 +28,7 @@ export default function Landing() {
   const [founderCount, setFounderCount] = useState(null)
 
   useEffect(() => {
-    supabase.from('profiles').select('id', { count: 'exact' }).then(({ count }) => {
+    supabase.from('profiles').select('id', { count: 'exact' }).eq('is_founding_member', true).then(({ count }) => {
       setFounderCount(count || 0)
     })
   }, [])
@@ -101,7 +101,7 @@ export default function Landing() {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '99px', padding: '8px 16px', marginBottom: '20px' }}>
               <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#22C55E', animation: 'pulse 2s infinite' }} />
               <span style={{ color: 'white', fontSize: '13px', fontWeight: '700' }}>
-                {spotsRemaining} Founding Member {spotsRemaining === 1 ? 'spot' : 'spots'} remaining — 50% off for life
+                {spotsRemaining} of 100 Founding Member {spotsRemaining === 1 ? 'spot' : 'spots'} remaining — 30% off for 3 months
               </span>
             </div>
           )}
