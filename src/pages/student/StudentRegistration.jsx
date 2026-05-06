@@ -149,7 +149,7 @@ export default function StudentRegistration() {
       {/* Student benefit card */}
       <div style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', borderRadius: '20px', padding: '20px', marginBottom: '20px', color: 'white' }}>
         <div style={{ fontSize: '28px', marginBottom: '8px' }}>🎓</div>
-        <h2 style={{ color: 'white', fontWeight: '800', fontSize: '18px', margin: '0 0 6px' }}>Student Plan — ₦1750/month</h2>
+        <h2 style={{ color: 'white', fontWeight: '800', fontSize: '18px', margin: '0 0 6px' }}>Student Plan — ₦1,750/month</h2>
         <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '13px', margin: '0 0 14px', lineHeight: '1.5' }}>
           50% off the Nurse plan. Access all courses and modules while you're still in school.
         </p>
