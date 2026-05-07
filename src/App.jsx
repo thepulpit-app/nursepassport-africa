@@ -21,6 +21,7 @@ import CertificateList from './pages/certificates/CertificateList'
 import Profile from './pages/profile/Profile'
 import Billing from './pages/billing/Billing'
 import Privacy from './pages/Privacy'
+import About from './pages/About'
 import VerifyCertificate from './pages/VerifyCertificate'
 import Terms from './pages/Terms'
 import StudentRegistration from './pages/student/StudentRegistration'
@@ -84,6 +85,7 @@ function AppRoutes() {
       <Route path="/referral" element={<ProtectedRoute><Referral /></ProtectedRoute>} />
       <Route path="/student-registration" element={<StudentRegistration />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/about" element={<About />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

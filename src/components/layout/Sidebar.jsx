@@ -15,6 +15,7 @@ const NAV = [
 const BOTTOM_NAV = [
   { to: '/profile', icon: User,       label: 'Profile' },
   { to: '/billing', icon: CreditCard, label: 'Billing' },
+  { to: '/about',   icon: Info,       label: 'About AMCC' },
 ]
 
 const DEFAULT_THEME = { secondary: "#00897B", gradient: "linear-gradient(135deg, #0A2540, #1E3A5F)" }
