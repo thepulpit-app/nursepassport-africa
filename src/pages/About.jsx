@@ -75,7 +75,7 @@ export default function About() {
                 Her career began at Lagos State General Hospital in Orile-Agege, where she spent eight formative years across Emergency, Paediatrics, Medical, Surgical, and Gynaecological & Obstetrics units. She then moved to the Gulf, working as a Registered Midwife at Saudi German Hospital Dubai — one of the leading private hospitals in the Middle East — specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has served as a Staff Nurse in the Medical, Surgical, Maternity Assessment and High Dependency (Gynae & Obstetrics) units at Tawam Hospital Al Ain — a 503-bed JCI Accredited facility in the UAE.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
-                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in both Nigeria and the United States (Texas State Board of Nursing), and holds an internationally recognised VisaScreen credential.
+                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in both Nigeria and the United States (Texas State Board of Nursing), and holds an internationally recognised VisaScreen credential. She also have experience with the UK NMC and Canada licensure processes and examinations.
               </p>
 
               {/* Credentials */}
