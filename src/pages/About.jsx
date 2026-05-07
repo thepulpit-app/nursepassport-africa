@@ -46,7 +46,7 @@ export default function About() {
             {/* Photo */}
             <div>
               <div style={{ width: '160px', height: '180px', borderRadius: '16px', overflow: 'hidden', border: '3px solid #EEF2FF', boxShadow: '0 8px 32px rgba(79,70,229,0.12)', float: 'left', marginRight: '16px', marginBottom: '12px' }}>
-                <img src="/dr-ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                <img src="/ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                   onError={e => {
                     e.target.parentElement.style.background = 'linear-gradient(135deg, #0A2540, #1E3A5F)'
                     e.target.style.display = 'none'
@@ -65,7 +65,7 @@ export default function About() {
               <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#0A2540', margin: '0 0 4px' }}>
                 Ibiwunmi Oluwayemisi Ajijola
               </h2>
-              <div style={{ fontSize: '13px', color: '#4F46E5', fontWeight: '700', marginBottom: '16px' }}>
+              <div style={{ fontSize: '13px', color: '#4F46E5', fontWeight: '700', marginBottom: '20px' }}>
                 RN · US RN · BSc Nursing (Edinburgh Napier) · MSc Healthcare Management (in view)
               </div>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 16px' }}>
