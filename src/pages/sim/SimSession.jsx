@@ -102,7 +102,7 @@ export default function SimSession() {
             rows={6}
             value={response}
             onChange={(e) => setResponse(e.target.value)}
-            placeholder="e.g. I would immediately call the registrar/consultant, classify this CTG as pathological due to the sinusoidal pattern, prepare for emergency C-section by notifying theatre, ensure IV access is patent, document the time of recognition and actions taken..."
+            placeholder="Describe your clinical assessment and the actions you would take..."
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
             <span style={{ fontSize: '12px', color: '#CBD5E1' }}>{response.length} chars · min 20</span>
