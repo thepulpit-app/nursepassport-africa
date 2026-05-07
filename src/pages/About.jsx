@@ -46,7 +46,7 @@ export default function About() {
             {/* Photo */}
             <div>
               <div style={{ width: '200px', height: '220px', borderRadius: '20px', overflow: 'hidden', border: '3px solid #EEF2FF', boxShadow: '0 8px 32px rgba(79,70,229,0.12)' }}>
-                <img src="/dr-ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                <img src="/ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                   onError={e => {
                     e.target.parentElement.style.background = 'linear-gradient(135deg, #0A2540, #1E3A5F)'
                     e.target.style.display = 'none'
