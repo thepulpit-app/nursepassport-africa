@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings, Info } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
