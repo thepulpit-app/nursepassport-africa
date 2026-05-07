@@ -80,7 +80,7 @@ export default function About() {
 
               {/* Credentials */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                {['BSc Nursing — Edinburgh Napier University', 'US RN — Texas BON 1077775', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
+                {['BSc Nursing — Edinburgh Napier University', 'US RN — Texas BON', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
                   <span key={c} style={{ fontSize: '11px', fontWeight: '600', padding: '5px 10px', borderRadius: '99px', background: '#F0FDF4', color: '#22C55E', border: '1px solid #BBF7D0' }}>{c}</span>
                 ))}
               </div>
