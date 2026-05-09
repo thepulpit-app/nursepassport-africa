@@ -8,7 +8,7 @@ export const PAYMENT_PAGES = {
 
 export const TIER_LIMITS = {
   free:     { sim_sessions: 3,        courses: true, question_banks: true },
-  student:  { sim_sessions: 0,        courses: true, question_banks: false },
+  student:  { sim_sessions: 3,        courses: true, question_banks: false },
   nurse:    { sim_sessions: 20,       courses: true, question_banks: true },
   passport: { sim_sessions: Infinity, courses: true, question_banks: true },
 }

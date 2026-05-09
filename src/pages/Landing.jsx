@@ -167,7 +167,7 @@ export default function Landing() {
               <p style={{ color: '#64748B', fontSize: '16px', lineHeight: '1.7', marginBottom: '24px' }}>
                 ClinicalSim AI presents real patient scenarios — CTG readings, obstetric emergencies, triage decisions. You respond as the nurse on duty. AI scores your clinical decision against NICE & RCOG guidelines.
               </p>
-              {['Scored against NICE (2022) & RCOG guidelines', 'Detailed feedback on every clinical decision', 'Designed by Dr. Ibiwunmi Ajijola — licensed RN in UK, UAE & USA', 'Escalating difficulty as you improve'].map(t => (
+              {['Scored against NICE (2022) & RCOG guidelines', 'Detailed feedback on every clinical decision', 'Designed by Ibiwunmi Ajijola RN — licensed in UAE, USA & Nigeria', 'Escalating difficulty as you improve'].map(t => (
                 <div key={t} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '10px' }}>
                   <CheckCircle size={16} color="#22C55E" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span style={{ color: '#0A2540', fontSize: '14px', fontWeight: '500' }}>{t}</span>

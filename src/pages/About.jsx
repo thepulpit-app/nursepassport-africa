@@ -46,7 +46,7 @@ export default function About() {
             {/* Photo */}
             <div>
               <div style={{ width: '160px', height: '180px', borderRadius: '16px', overflow: 'hidden', border: '3px solid #EEF2FF', boxShadow: '0 8px 32px rgba(79,70,229,0.12)', float: 'left', marginRight: '16px', marginBottom: '12px' }}>
-                <img src="/ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                <img src="/dr-ibiwunmi.jpg" alt="Dr. Ibiwunmi Ajijola" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                   onError={e => {
                     e.target.parentElement.style.background = 'linear-gradient(135deg, #0A2540, #1E3A5F)'
                     e.target.style.display = 'none'
@@ -65,52 +65,22 @@ export default function About() {
               <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#0A2540', margin: '0 0 4px' }}>
                 Ibiwunmi Oluwayemisi Ajijola
               </h2>
-              <div style={{ fontSize: '13px', color: '#4F46E5', fontWeight: '700', marginBottom: '20px' }}>
+              <div style={{ fontSize: '13px', color: '#4F46E5', fontWeight: '700', marginBottom: '16px' }}>
                 RN · US RN · BSc Nursing (Edinburgh Napier) · MSc Healthcare Management (in view)
               </div>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 16px' }}>
-                With over 24 years of clinical experience spanning Nigeria, the United Arab Emirates, licenced in both Dubai and Abu Dhabi, Ibiwunmi brings a rare combination of frontline bedside expertise and international clinical standards to every course she designs and delivers.
+                With over 24 years of clinical experience spanning Nigeria, the United Arab Emirates and the United Kingdom, Ibiwunmi brings a rare combination of frontline bedside expertise and international clinical standards to every course she designs and delivers.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
                 Her career began at Lagos State General Hospital in Orile-Agege, where she spent eight formative years across Emergency, Paediatrics, Medical, Surgical, and Gynaecological & Obstetrics units. She then moved to the Gulf, working as a Registered Midwife at Saudi German Hospital Dubai — one of the leading private hospitals in the Middle East — specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has served as a Staff Nurse in the Medical, Surgical, Maternity Assessment and High Dependency (Gynae & Obstetrics) units at Tawam Hospital Al Ain — a 503-bed JCI Accredited facility in the UAE.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
-                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in both Nigeria and the United States (Texas State Board of Nursing), and holds an internationally recognised VisaScreen credential. She has first-hand experience navigating the UK NMC registration pathway and Canadian nursing licensure requirements.
+                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in Nigeria, the United States (Texas State Board of Nursing, License No. 1077775), and the UAE, and holds an internationally recognised VisaScreen credential. She also has first-hand experience navigating the UK NMC registration pathway and the Canadian nursing licensure process, which gives her a unique ability to prepare nurses for international careers.
               </p>
 
               {/* Credentials */}
-              <div style={{ marginBottom: '20px' }}>
-  <div style={{ fontSize: '13px', fontWeight: '800', color: '#0A2540', marginBottom: '6px' }}>
-    Seminars & Continuing Professional Development
-  </div>
-  <p style={{ fontSize: '13px', color: '#64748B', lineHeight: 1.6, margin: '0 0 10px' }}>
-    At various stages of her career, Ibiwunmi has both attended and presented the following programmes as courses and seminars — reflecting her commitment to lifelong learning and clinical leadership:
-  </p>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-    {[
-      'IV Therapy Training Program',
-      'Basic ECG and Arrhythmia Recognition',
-      'Basic Life Support Training',
-      'Health Informatics Seminar',
-      'Infection Control Precautions',
-      'Workplace Violence in Healthcare Settings',
-      'Rehabilitation of Stroke Patients',
-      'Nursing Model of Care',
-      'Fire and Safety',
-      'Evidence-Based Nursing Practice',
-      'Epidural and Opioid Administration',
-      'UK NMC Registration Pathway',
-      'Canadian Nursing Licensure Process',
-    ].map(item => (
-      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569' }}>
-        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4F46E5', flexShrink: 0 }} />
-        {item}
-      </div>
-    ))}
-  </div>
-</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                {['BSc Nursing — Edinburgh Napier University', 'US RN — Texas BON', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
+                {['BSc Nursing — Edinburgh Napier University', 'US RN — Texas BON 1077775', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
                   <span key={c} style={{ fontSize: '11px', fontWeight: '600', padding: '5px 10px', borderRadius: '99px', background: '#F0FDF4', color: '#22C55E', border: '1px solid #BBF7D0' }}>{c}</span>
                 ))}
               </div>
