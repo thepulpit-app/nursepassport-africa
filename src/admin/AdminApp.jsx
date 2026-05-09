@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminUsers from './pages/AdminUsers'
 import AdminCourses from './pages/AdminCourses'
 import AdminSettings from './pages/AdminSettings'
+import AdminScenarios from './pages/AdminScenarios'
 import AdminQuizQuestions from './pages/AdminQuizQuestions'
 import AdminCertificates from './pages/AdminCertificates'
 
@@ -84,7 +85,8 @@ function AdminSidebar() {
     { key: 'courses', label: 'Courses', icon: '📚' },
     { key: 'certificates', label: 'Certificates', icon: '🏆' },
     { key: 'quiz-questions', label: 'Quiz Questions', icon: '❓' },
-    { key: 'settings', label: 'Settings', icon: '⚙️' },
+    { key: 'scenarios', label: 'ClinicalSim', icon: '🩺' },
+  { key: 'settings', label: 'Settings', icon: '⚙️' },
   ]
 
   return (
