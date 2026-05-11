@@ -1,7 +1,7 @@
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
 
-export default function AppShell({ children }) {
+export default function AppShell({ children, noPadding }) {
   return (
     <div style={{ minHeight: '100vh', background: '#F7F9FC', display: 'flex' }}>
       <Sidebar />
@@ -11,9 +11,10 @@ export default function AppShell({ children }) {
             .lg-main { margin-left: 256px !important; padding-bottom: 0 !important; }
           }
         `}</style>
-        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '24px 16px' }}>
-          {children}
-        </div>
+        {noPadding
+          ? children
+          : <div style={{ maxWidth: '900px', margin: '0 auto', padding: '24px 16px' }}>{children}</div>
+        }
       </main>
       <MobileNav />
     </div>
