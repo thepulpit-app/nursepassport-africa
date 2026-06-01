@@ -75,12 +75,12 @@ export default function About() {
                 Her career began at Lagos State General Hospital in Orile-Agege, where she spent eight formative years across Emergency, Paediatrics, Medical, Surgical, and Gynaecological & Obstetrics units. She then moved to the Gulf, working as a Registered Midwife at Saudi German Hospital Dubai — one of the leading private hospitals in the Middle East — specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has served as a Staff Nurse in the Medical, Surgical, Maternity Assessment and High Dependency (Gynae & Obstetrics) units at Tawam Hospital Al Ain — a 503-bed JCI Accredited facility in the UAE.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
-                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in Nigeria, the United States (Texas State Board of Nursing, License No. 1077775), and the UAE, and holds an internationally recognised VisaScreen credential. She also has first-hand experience navigating the UK NMC registration pathway and the Canadian nursing licensure process, which gives her a unique ability to prepare nurses for international careers.
+                Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in Nigeria, the United States, and the UAE, and holds an internationally recognised VisaScreen credential. She also has first-hand experience navigating the UK NMC registration pathway and the Canadian nursing licensure process, which gives her a unique ability to prepare nurses for international careers.
               </p>
 
               {/* Credentials */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                {['BSc Nursing — Edinburgh Napier University', 'US RN — Texas BON 1077775', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
+                {['BSc Nursing — Edinburgh Napier University', 'US RN — Licensed in USA', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
                   <span key={c} style={{ fontSize: '11px', fontWeight: '600', padding: '5px 10px', borderRadius: '99px', background: '#F0FDF4', color: '#22C55E', border: '1px solid #BBF7D0' }}>{c}</span>
                 ))}
               </div>
