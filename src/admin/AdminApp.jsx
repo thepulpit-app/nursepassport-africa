@@ -17,6 +17,7 @@ import AdminCertificates from './pages/AdminCertificates'
 
 const PAGES = {
   dashboard: AdminDashboard,
+  scenarios: AdminScenarios,
   users: AdminUsers,
   courses: AdminCourses,
   certificates: AdminCertificates,
