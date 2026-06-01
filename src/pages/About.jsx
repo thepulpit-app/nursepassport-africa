@@ -79,6 +79,34 @@ export default function About() {
               </p>
 
               {/* Credentials */}
+              
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '800', color: '#0A2540', marginBottom: '6px' }}>
+                  Seminars & Continuing Professional Development
+                </div>
+                <p style={{ fontSize: '13px', color: '#64748B', lineHeight: 1.6, margin: '0 0 10px' }}>
+                  At various stages of her career, Ibiwunmi has both attended and presented the following programmes as courses and seminars — reflecting her commitment to lifelong learning and clinical leadership:
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {[
+                    'IV Therapy Training Program',
+                    'Basic Life Support Training',
+                    'Infection Control Precautions',
+                    'Workplace Violence in Healthcare Settings',
+                    'Nursing Model of Care',
+                    'Fire and Safety',
+                    'Evidence-Based Nursing Practice',
+                    'Epidural and Opioid Administration',
+                    'UK NMC Registration Pathway',
+                    'Canadian Nursing Licensure Process',
+                  ].map(item => (
+                    <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#475569' }}>
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4F46E5', flexShrink: 0 }} />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
                 {['BSc Nursing — Edinburgh Napier University', 'US RN — Licensed in USA', 'K2 Perinatal Training', 'PROMPT Certified', 'BLS & Neonatal Resuscitation', 'VisaScreen 2022', 'Member, Nigerian Nurses Association'].map(c => (
                   <span key={c} style={{ fontSize: '11px', fontWeight: '600', padding: '5px 10px', borderRadius: '99px', background: '#F0FDF4', color: '#22C55E', border: '1px solid #BBF7D0' }}>{c}</span>
