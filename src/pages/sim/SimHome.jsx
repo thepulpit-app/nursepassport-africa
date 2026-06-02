@@ -112,7 +112,7 @@ export default function SimHome() {
 
       {/* Category tabs */}
       <div className="cat-scroll">
-        {CATEGORIES.filter(cat => counts[cat.key] > 0).map(cat => (
+        {CATEGORIES.map(cat => (
           <button key={cat.key} className="cat-btn"
             onClick={() => setActiveCategory(cat.key)}
             style={{
