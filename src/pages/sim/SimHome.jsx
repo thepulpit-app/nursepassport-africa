@@ -19,6 +19,8 @@ const CATEGORIES = [
   { key: 'bls',       label: 'BLS',        emoji: '💉' },
   { key: 'osce',      label: 'NMC OSCE',   emoji: '🎓' },
   { key: 'general',   label: 'General',    emoji: '🏥' },
+  { key: 'haad',      label: 'HAAD/DHA',   emoji: '🇦🇪' },
+  { key: 'nclex',     label: 'NCLEX-RN',   emoji: '🇺🇸' },
 ]
 
 export default function SimHome() {
