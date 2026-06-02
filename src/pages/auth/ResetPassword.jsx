@@ -4,7 +4,6 @@ import { supabase } from '../../lib/supabase'
 import { Eye, EyeOff } from 'lucide-react'
 import toast from 'react-hot-toast'
 
-const BG = { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', position: 'relative', overflow: 'hidden', fontFamily: 'system-ui, sans-serif' }
 const MESH = { position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #0A2540 0%, #1E3A5F 30%, #4F46E5 65%, #F43F5E 100%)' }
 const RADIAL = { position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(244,163,0,0.25) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(79,70,229,0.35) 0%, transparent 50%), radial-gradient(ellipse at 60% 80%, rgba(244,63,94,0.25) 0%, transparent 50%)' }
 const CARD = { position: 'relative', width: '100%', maxWidth: '400px', background: 'rgba(255,255,255,0.13)', backdropFilter: 'blur(28px)', WebkitBackdropFilter: 'blur(28px)', borderRadius: '28px', border: '1px solid rgba(255,255,255,0.22)', padding: '36px 32px', boxShadow: '0 8px 40px rgba(0,0,0,0.25)' }
@@ -41,6 +40,8 @@ export default function ResetPassword() {
     navigate('/dashboard')
   }
 
+  const BG = { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', position: 'relative', overflow: 'hidden', fontFamily: 'system-ui, sans-serif' }
+
   if (!ready) return (
     <div style={BG}>
       <div style={MESH} />
@@ -63,10 +64,8 @@ export default function ResetPassword() {
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px' }}>by AMCC</div>
           </div>
         </div>
-
         <h1 style={{ color: 'white', fontSize: '24px', fontWeight: '800', margin: '0 0 6px' }}>Set new password</h1>
         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', margin: '0 0 28px' }}>Choose a strong password for your account.</p>
-
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '16px' }}>
             <label style={LABEL}>New Password</label>
