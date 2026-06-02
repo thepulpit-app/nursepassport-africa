@@ -34,7 +34,7 @@ export default function AdminAnalytics() {
       supabase.from('profiles').select('id').gte('created_at', weekAgo),
       supabase.from('profiles').select('id').gte('created_at', monthAgo),
       supabase.from('sim_sessions').select('score, scenario_id, sim_scenarios(title)'),
-      supabase.from('certificates').select('id').count(),
+      supabase.from('certificates').select('id', { count: 'exact', head: true }),
       supabase.from('certificates').select('id').gte('issued_at', monthAgo),
       supabase.from('sim_sessions').select('scenario_id, score, sim_scenarios(title)'),
       supabase.from('user_progress').select('course_id, status, courses(title)'),
