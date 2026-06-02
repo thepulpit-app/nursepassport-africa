@@ -33,16 +33,18 @@ export default function AdminAnalytics() {
       supabase.from('profiles').select('subscription_tier, created_at'),
       supabase.from('profiles').select('id').gte('created_at', weekAgo),
       supabase.from('profiles').select('id').gte('created_at', monthAgo),
-      supabase.from('sim_sessions').select('score, scenario_id, sim_scenarios(title)'),
+      supabase.from('sim_sessions').select('score, scenario_id'),
       supabase.from('certificates').select('id', { count: 'exact', head: true }),
       supabase.from('certificates').select('id').gte('issued_at', monthAgo),
-      supabase.from('sim_sessions').select('scenario_id, score, sim_scenarios(title)'),
+      supabase.from('sim_scenarios').select('id, title'),
       supabase.from('user_progress').select('course_id, status, courses(title)'),
       supabase.from('referral_transactions').select('id'),
     ])
 
     const users = usersRes.data || []
     const sessions = sessionsRes.data || []
+    const scenarioMap = {}
+    ;(scenariosRes.data || []).forEach((s) => { scenarioMap[s.id] = s.title })
 
     // Tier breakdown
     const tierBreakdown = users.reduce((acc, u) => {
@@ -53,8 +55,8 @@ export default function AdminAnalytics() {
     // Top scenarios by attempt count
     const scenarioCounts = {}
     const scenarioScores = {}
-    ;(scenariosRes.data || []).forEach(s => {
-      const title = s.sim_scenarios?.title || s.scenario_id
+    ;(sessionsRes.data || []).forEach(s => {
+      const title = scenarioMap[s.scenario_id] || s.scenario_id
       scenarioCounts[title] = (scenarioCounts[title] || 0) + 1
       if (!scenarioScores[title]) scenarioScores[title] = []
       scenarioScores[title].push(s.score || 0)
