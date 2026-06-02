@@ -64,8 +64,8 @@ export default function SimHome() {
         .session-row { background: white; border-radius: 12px; border: 1px solid #F1F5F9; padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
         .pbar-bg { background: rgba(255,255,255,0.25); border-radius: 99px; height: 5px; overflow: hidden; margin: 10px 0; }
         .pbar-fill { background: white; height: 100%; border-radius: 99px; }
-        .cat-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: none; }
-        .cat-scroll::-webkit-scrollbar { display: none; }
+        .cat-scroll { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        
         .cat-btn { display: flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: 99px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; white-space: nowrap; flex-shrink: 0; transition: all 0.2s; }
       `}</style>
 
