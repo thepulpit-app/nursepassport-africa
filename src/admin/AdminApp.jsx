@@ -12,12 +12,14 @@ import AdminUsers from './pages/AdminUsers'
 import AdminCourses from './pages/AdminCourses'
 import AdminSettings from './pages/AdminSettings'
 import AdminScenarios from './pages/AdminScenarios'
+import AdminAnalytics from './pages/AdminAnalytics'
 import AdminQuizQuestions from './pages/AdminQuizQuestions'
 import AdminCertificates from './pages/AdminCertificates'
 
 const PAGES = {
   dashboard: AdminDashboard,
   scenarios: AdminScenarios,
+  analytics: AdminAnalytics,
   users: AdminUsers,
   courses: AdminCourses,
   certificates: AdminCertificates,
@@ -87,6 +89,7 @@ function AdminSidebar() {
     { key: 'certificates', label: 'Certificates', icon: '🏆' },
     { key: 'quiz-questions', label: 'Quiz Questions', icon: '❓' },
     { key: 'scenarios', label: 'ClinicalSim', icon: '🩺' },
+    { key: 'analytics', label: 'Analytics', icon: '📈' },
   { key: 'settings', label: 'Settings', icon: '⚙️' },
   ]
 
