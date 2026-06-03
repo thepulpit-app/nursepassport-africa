@@ -58,7 +58,7 @@ export default function CourseList() {
   async function loadCourses() {
     const { data: coursesData } = await supabase.from('courses').select('*, modules(id)').eq('is_published', true).order('sort_order')
     if (!coursesData || coursesData.length === 0) {
-      setCourses(SEED_COURSES)
+      setCourses([])
       setLoading(false)
       return
     }
