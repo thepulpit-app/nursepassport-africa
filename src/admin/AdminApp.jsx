@@ -12,6 +12,7 @@ import AdminUsers from './pages/AdminUsers'
 import AdminCourses from './pages/AdminCourses'
 import AdminSettings from './pages/AdminSettings'
 import AdminScenarios from './pages/AdminScenarios'
+import AdminNuggets from './pages/AdminNuggets'
 import AdminAnalytics from './pages/AdminAnalytics'
 import AdminQuizQuestions from './pages/AdminQuizQuestions'
 import AdminCertificates from './pages/AdminCertificates'
@@ -19,6 +20,7 @@ import AdminCertificates from './pages/AdminCertificates'
 const PAGES = {
   dashboard: AdminDashboard,
   scenarios: AdminScenarios,
+  nuggets: AdminNuggets,
   analytics: AdminAnalytics,
   users: AdminUsers,
   courses: AdminCourses,

@@ -1,3 +1,5 @@
+import PWAInstallPrompt from './components/PWAInstallPrompt'
+import PushNotificationManager from './components/PushNotificationManager'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
@@ -98,6 +100,8 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <AppRoutes />
+          <PWAInstallPrompt />
+          <PushNotificationManager />
           <Toaster position="top-center" toastOptions={{
             duration: 4000,
             style: { background: '#0A2540', color: '#fff', borderRadius: '12px', padding: '12px 16px', fontSize: '14px' },
