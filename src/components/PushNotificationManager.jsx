@@ -29,7 +29,7 @@ export default function PushNotificationManager() {
       const sub = await reg.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjZJgLQyj5Q3aqEVnXKZKJPEQILKY'
+          'BE9WWZXvL1WjO99GbNMocb6PnJTi7govagvCFr7b6FQrO5wQNhVRXqnqx8Wt4-2BEvV0Wl1Rj8VTblpWpvrVfBE'
         )
       })
       await supabase.from('push_subscriptions').upsert({

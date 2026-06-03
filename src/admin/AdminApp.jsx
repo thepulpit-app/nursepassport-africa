@@ -92,7 +92,8 @@ function AdminSidebar() {
     { key: 'quiz-questions', label: 'Quiz Questions', icon: '❓' },
     { key: 'scenarios', label: 'ClinicalSim', icon: '🩺' },
     { key: 'analytics', label: 'Analytics', icon: '📈' },
-  { key: 'settings', label: 'Settings', icon: '⚙️' },
+  { key: 'nuggets', label: 'Daily Nuggets', icon: '📚' },
+    { key: 'settings', label: 'Settings', icon: '⚙️' },
   ]
 
   return (
