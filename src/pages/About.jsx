@@ -72,7 +72,7 @@ export default function About() {
                 With over 24 years of clinical experience spanning Nigeria, the United Arab Emirates and the United Kingdom, Ibiwunmi brings a rare combination of frontline bedside expertise and international clinical standards to every course she designs and delivers.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
-                Her career began at Lagos State General Hospital in Orile-Agege, where she spent eight formative years across Emergency, Paediatrics, Medical, Surgical, and Gynaecological & Obstetrics units. She then moved to the Gulf, working as a Registered Midwife at Saudi German Hospital Dubai — one of the leading private hospitals in the Middle East — specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has served as a Staff Nurse in the Medical, Surgical, Maternity Assessment and High Dependency (Gynae & Obstetrics) units at Tawam Hospital Al Ain — a 503-bed JCI Accredited facility in the UAE.
+                Her career began in Lagos, Nigeria, where she spent eight formative years working across Emergency, Paediatrics, Medical, Surgical, and Gynaecological and Obstetrics units in a busy public hospital setting. She then moved to the Gulf, working as a Registered Midwife in one of Dubai's leading private hospitals, specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has been based in Abu Dhabi, UAE, serving across Medical, Surgical, Maternity Assessment and High Dependency Gynaecological and Obstetrics units in a JCI Accredited tertiary facility.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
                 Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in Nigeria, the United States, and the UAE, and holds an internationally recognised VisaScreen credential. She also has first-hand experience navigating the UK NMC registration pathway and the Canadian nursing licensure process, which gives her a unique ability to prepare nurses for international careers.
@@ -132,21 +132,21 @@ export default function About() {
               {
                 period: '2018 — Present',
                 role: 'Staff Nurse — Medical, Surgical, Maternity & High Dependency (Gynae & Obstetrics)',
-                org: 'Tawam Hospital, Al Ain, United Arab Emirates',
-                note: '503-bed JCI Accredited Hospital · 7 years',
+                org: 'JCI Accredited Tertiary Hospital, Al Ain, Abu Dhabi, United Arab Emirates, Tertiary level care', 
+                note: '503-bed JCI Accredited Hospital · Recipent of the 2025 Daisy Recognition Award. 7 years+',
                 color: '#4F46E5',
               },
               {
                 period: '2016 — 2018',
                 role: 'Registered Midwife — Labour & Delivery',
-                org: 'Saudi German Hospital, Dubai, UAE',
-                note: 'Leading private hospital in the Middle East · CTG monitoring & interpretation',
+                org: 'Leading Private Hospital, Dubai, UAE',
+                note: 'Multi-award winning care. CTG monitoring & interpretation',
                 color: '#22C55E',
               },
               {
                 period: '2007 — 2015',
                 role: 'Staff Nurse — Emergency, Paediatrics, Medical, Surgical & Gynaecological Units',
-                org: 'Lagos State General Hospital, Orile-Agege, Lagos, Nigeria',
+                org: 'General Hospital in Lagos State, Nigeria',
                 note: '8 years · Foundation of clinical practice',
                 color: '#F59E0B',
               },
