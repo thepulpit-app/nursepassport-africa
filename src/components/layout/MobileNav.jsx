@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, ClipboardList, Gift, User, CreditCard, Info, X, Menu, Shield, Trophy, Zap } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, ClipboardList, Gift, User, CreditCard, Info, X, Menu, Shield, Trophy, Zap, MessageCircle } from 'lucide-react'
 
 const MAIN_NAV = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Home' },
@@ -11,6 +11,7 @@ const MAIN_NAV = [
 ]
 
 const MORE_NAV = [
+  { to: '/community', icon: MessageCircle, label: 'Community' },
   { to: '/questions',   icon: ClipboardList, label: 'Question Banks' },
   { to: '/referral',    icon: Gift,          label: 'Refer & Earn' },
   { to: '/about',       icon: Info,          label: 'About AMCC' },

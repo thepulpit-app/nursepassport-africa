@@ -18,6 +18,7 @@ import CourseList from './pages/courses/CourseList'
 import CourseDetail from './pages/courses/CourseDetail'
 import ModulePlayer from './pages/courses/ModulePlayer'
 import Leaderboard from './pages/Leaderboard'
+import Community from './pages/Community'
 import WeeklyChallenge from './pages/WeeklyChallenge'
 import SimHome from './pages/sim/SimHome'
 import SimSession from './pages/sim/SimSession'
@@ -76,7 +77,8 @@ function AppRoutes() {
       <Route path="/courses" element={<ProtectedRoute><CourseList /></ProtectedRoute>} />
       <Route path="/courses/:slug" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
       <Route path="/courses/:slug/:moduleId" element={<ProtectedRoute><ModulePlayer /></ProtectedRoute>} />
-      <Route path="/leaderboard" element={<Leaderboard />} />
+      <Route path="/community" element={<Community />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/challenge" element={<WeeklyChallenge />} />
             <Route path="/simulate" element={<ProtectedRoute><SimHome /></ProtectedRoute>} />
       <Route path="/simulate/:scenarioId" element={<ProtectedRoute><SimSession /></ProtectedRoute>} />
