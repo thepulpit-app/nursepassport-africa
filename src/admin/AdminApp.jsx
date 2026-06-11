@@ -11,6 +11,7 @@ import AdminCourses from './pages/AdminCourses'
 import AdminSettings from './pages/AdminSettings'
 import AdminScenarios from './pages/AdminScenarios'
 import AdminNuggets from './pages/AdminNuggets'
+import AdminCommunity from './pages/AdminCommunity'
 import AdminAnalytics from './pages/AdminAnalytics'
 import AdminQuizQuestions from './pages/AdminQuizQuestions'
 import AdminCertificates from './pages/AdminCertificates'
@@ -19,6 +20,7 @@ const PAGES = {
   dashboard: AdminDashboard,
   scenarios: AdminScenarios,
   nuggets: AdminNuggets,
+  community: AdminCommunity,
   analytics: AdminAnalytics,
   users: AdminUsers,
   courses: AdminCourses,
@@ -36,6 +38,7 @@ const NAV = [
   { key: 'scenarios', label: 'ClinicalSim', icon: '🩺' },
   { key: 'analytics', label: 'Analytics', icon: '📈' },
   { key: 'nuggets', label: 'Daily Nuggets', icon: '📚' },
+    { key: 'community', label: 'Community', icon: '💬' },
   { key: 'settings', label: 'Settings', icon: '⚙️' },
 ]
 

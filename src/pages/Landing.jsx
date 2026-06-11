@@ -407,7 +407,7 @@ export default function Landing() {
             Create Your Free Account <ArrowRight size={18} />
           </button>
           <div style={{ marginTop: '20px', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
-            No credit card required · Free tier available forever
+            No credit card required · Free tier available forever · <a href="/community" style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", marginLeft: "8px" }}>See the community →</a>
           </div>
         </div>
       </section>
