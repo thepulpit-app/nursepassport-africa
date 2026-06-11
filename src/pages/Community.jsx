@@ -314,7 +314,7 @@ export default function Community() {
       <div style={{ minHeight: '100vh', background: '#F7F9FC', fontFamily: 'system-ui, sans-serif' }}>
         <div style={{ background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ fontSize: '22px' }}>🩺</div>
+            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: "28px", height: "28px", borderRadius: "8px" }} />
             <span style={{ color: 'white', fontWeight: '800', fontSize: '15px' }}>NursePassport Africa</span>
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
