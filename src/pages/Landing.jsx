@@ -274,7 +274,7 @@ export default function Landing() {
                 <Flame size={14} color="#F59E0B" />
                 <span style={{ color: '#FDE68A', fontSize: '13px', fontWeight: '700' }}>Built for consistency</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
+              <h2 style={{ color: '#F43F5E',fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
                 Stay consistent.<br />Stay competitive.
               </h2>
               <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: '1.7', marginBottom: '32px' }}>
