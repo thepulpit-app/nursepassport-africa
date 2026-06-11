@@ -60,7 +60,7 @@ export default function Landing() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #F1F5F9' }}>
         <div className="section" style={{ height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '34px', height: '34px', background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🩺</div>
+            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '34px', height: '34px', borderRadius: '10px' }} />
             <div>
               <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>NursePassport</span>
               <span style={{ fontWeight: '800', color: '#F43F5E', fontSize: '15px' }}> Africa</span>
@@ -416,7 +416,7 @@ export default function Landing() {
       <footer style={{ borderTop: '1px solid #F1F5F9', padding: '24px 20px', background: 'white' }}>
         <div className="section" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ width: '24px', height: '24px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>🩺</div>
+            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '24px', height: '24px', borderRadius: '6px' }} />
             <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '14px' }}>NursePassport Africa</span>
           </div>
           <div style={{ color: '#94A3B8', fontSize: '13px' }}>© 2026 AMCC · Advanced Medical Care Consultancy</div>
