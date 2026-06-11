@@ -90,7 +90,7 @@ export default function Landing() {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.4)', borderRadius: '99px', padding: '6px 16px', marginBottom: '24px' }}>
               <span style={{ width: '6px', height: '6px', background: '#F59E0B', borderRadius: '50%', display: 'inline-block', animation: 'pulse 2s infinite' }} />
               <span style={{ color: '#FDE68A', fontSize: '13px', fontWeight: '700' }}>
-                ⭐ {spotsRemaining} Founding Member spots left — 30% off for 3 months
+                ⭐ {spotsRemaining} Founding Member spots left — special founding rate
               </span>
             </div>
           )}
@@ -134,7 +134,7 @@ export default function Landing() {
       <section style={{ background: 'white', borderBottom: '1px solid #F1F5F9' }}>
         <div className="section stats-grid" style={{ padding: '32px 20px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', textAlign: 'center' }}>
           {[
-            { value: '32', label: 'Clinical sim scenarios' },
+            { value: '100+', label: 'Clinical sim scenarios and questions' },
             { value: '4', label: 'International exam tracks' },
             { value: '200K+', label: 'Nigerian nurses going global' },
             { value: '24yrs', label: 'Clinical expertise behind every course' },
@@ -277,7 +277,7 @@ export default function Landing() {
               <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
                 Stay consistent.<br />Stay competitive.
               </h2>
-              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '16px', lineHeight: '1.7', marginBottom: '32px' }}>
+              <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: '1.7', marginBottom: '32px' }}>
                 Passing international exams takes months of consistent preparation. NursePassport Africa keeps you coming back with features designed to build daily habits.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -353,7 +353,7 @@ export default function Landing() {
               <div style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: '99px', padding: '8px 18px' }}>
                 <span style={{ fontSize: '14px' }}>⭐</span>
                 <span style={{ color: '#92400E', fontSize: '13px', fontWeight: '700' }}>
-                  {spotsRemaining} Founding Member spots remaining — 30% off your first 3 months
+                  {spotsRemaining} Founding Member spots remaining — special founding rate locked in
                 </span>
               </div>
             )}
