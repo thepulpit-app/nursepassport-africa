@@ -18,14 +18,15 @@ export default function WeeklyChallenge() {
   async function loadChallenge() {
     // Get the start of the current week (Monday)
     const now = new Date()
-    const day = now.getDay()
+    // Calculate Monday in UTC
+    const day = now.getUTCDay()
     const monday = new Date(now)
-    monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1))
-    monday.setHours(0, 0, 0, 0)
+    monday.setUTCDate(now.getUTCDate() - (day === 0 ? 6 : day - 1))
+    monday.setUTCHours(0, 0, 0, 0)
 
     const sunday = new Date(monday)
-    sunday.setDate(monday.getDate() + 6)
-    sunday.setHours(23, 59, 59, 999)
+    sunday.setUTCDate(monday.getUTCDate() + 6)
+    sunday.setUTCHours(23, 59, 59, 999)
 
     // Days left in week
     const msLeft = sunday - now
