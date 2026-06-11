@@ -23,6 +23,7 @@ export default function MobileNav() {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const { profile } = useAuth()
+  const { isDark, toggleDarkMode } = require('../../contexts/ThemeContext').useTheme ? require('../../contexts/ThemeContext').useTheme() : { isDark: false, toggleDarkMode: () => {} }
 
   function goTo(path) {
     setOpen(false)

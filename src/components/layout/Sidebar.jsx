@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings, Info, MessageCircle, Trophy, Zap } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings, Info, MessageCircle, Trophy, Zap, Moon, Sun } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -25,7 +25,7 @@ const DEFAULT_THEME = { secondary: "#00897B", gradient: "linear-gradient(135deg,
 
 export default function Sidebar() {
   const { profile, tier, isFoundingMember, signOut } = useAuth()
-  const { theme: rawTheme } = useTheme()
+  const { theme: rawTheme, isDark, toggleDarkMode } = useTheme()
   const theme = rawTheme || DEFAULT_THEME
   const navigate = useNavigate()
 
@@ -106,6 +106,11 @@ export default function Sidebar() {
             Admin Portal
           </button>
         )}
+        <button onClick={toggleDarkMode}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.55)', fontSize: '13px', fontWeight: '600', marginBottom: '4px' }}>
+          {isDark ? <Sun size={17} /> : <Moon size={17} />}
+          {isDark ? 'Light Mode' : 'Dark Mode'}
+        </button>
         <button onClick={handleSignOut}
           style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '13px', fontWeight: '600' }}>
           <LogOut size={17} /> Sign Out
