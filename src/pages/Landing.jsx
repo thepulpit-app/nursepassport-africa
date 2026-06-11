@@ -114,10 +114,10 @@ export default function Landing() {
               style={{ padding: '16px 32px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
               Start Free — No Card Required <ArrowRight size={18} />
             </button>
-            <button className="landing-btn" onClick={() => navigate('/signin')}
-              style={{ padding: '16px 32px', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.15)' }}>
-              I already have an account
-            </button>
+           <button className="landing-btn" onClick={() => navigate('/try')}
+  style={{ padding: '16px 32px', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.15)' }}>
+  Can you pass this scenario? →
+</button>
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
