@@ -11,6 +11,7 @@ export default function WeeklyChallenge() {
   const [completed, setCompleted] = useState(false)
   const [loading, setLoading] = useState(true)
   const [daysLeft, setDaysLeft] = useState(0)
+  const [challengers, setChallengers] = useState([])
 
   useEffect(() => { loadChallenge() }, [profile])
 
@@ -51,6 +52,16 @@ export default function WeeklyChallenge() {
         .gte('created_at', monday.toISOString())
 
       setCompleted(sessions && sessions.length > 0)
+
+      // Load all completions this week for leaderboard
+      const { data: allSessions } = await supabase
+        .from('sim_sessions')
+        .select('user_id, score, created_at, profiles(full_name, career_goal)')
+        .eq('scenario_id', scenarios[index].id)
+        .gte('created_at', monday.toISOString())
+        .order('score', { ascending: false })
+        .limit(10)
+      setChallengers(allSessions || [])
     }
     setLoading(false)
   }
