@@ -13,7 +13,7 @@ export default function WeeklyChallenge() {
   const [daysLeft, setDaysLeft] = useState(0)
   const [challengers, setChallengers] = useState([])
 
-  useEffect(() => { loadChallenge() }, [profile])
+  useEffect(() => { if (profile) loadChallenge() }, [profile])
 
   async function loadChallenge() {
     // Get the start of the current week (Monday)
@@ -44,7 +44,8 @@ export default function WeeklyChallenge() {
       setChallenge(scenarios[index])
 
       // Check if user completed this challenge this week
-      const { data: sessions } = await supabase
+      if (!profile?.id) return
+    const { data: sessions } = await supabase
         .from('sim_sessions')
         .select('id, score')
         .eq('user_id', profile.id)
