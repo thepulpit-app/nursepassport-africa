@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings, Info } from 'lucide-react'
+import { LayoutDashboard, BookOpen, Activity, Award, User, CreditCard, LogOut, ClipboardList, Gift, Settings, Info, MessageCircle, Trophy, Zap } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
@@ -10,6 +10,9 @@ const NAV = [
   { to: '/certificates', icon: Award,            label: 'Certificates' },
   { to: '/questions',    icon: ClipboardList,    label: 'Question Banks' },
   { to: '/referral',     icon: Gift,             label: 'Refer & Earn' },
+  { to: '/community',    icon: MessageCircle,    label: 'Community' },
+  { to: '/leaderboard',  icon: Trophy,           label: 'Leaderboard' },
+  { to: '/challenge',    icon: Zap,              label: 'Weekly Challenge' },
 ]
 
 const BOTTOM_NAV = [
@@ -50,8 +53,6 @@ export default function Sidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 min-h-screen fixed left-0 top-0 z-30"
       style={{ background: theme.gradient }}>
-
-      {/* Logo */}
       <div style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '34px', height: '34px', borderRadius: '10px' }} />
@@ -61,8 +62,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
-      {/* User */}
       <div style={{ padding: '14px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{ width: '38px', height: '38px', borderRadius: '12px', background: theme.secondary, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '800', fontSize: '15px', flexShrink: 0 }}>
@@ -85,8 +84,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
-      {/* Main Nav */}
       <nav style={{ flex: 1, padding: '10px 8px', overflowY: 'auto' }}>
         {NAV.map(({ to, icon: Icon, label }) => (
           <NavLink key={to} to={to} style={({ isActive }) => navStyle(isActive)}>
@@ -95,8 +92,6 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
-
-      {/* Bottom Nav */}
       <div style={{ padding: '8px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
         {BOTTOM_NAV.map(({ to, icon: Icon, label }) => (
           <NavLink key={to} to={to} style={({ isActive }) => navStyle(isActive)}>
@@ -104,8 +99,6 @@ export default function Sidebar() {
             {label}
           </NavLink>
         ))}
-
-        {/* Admin link — only for admins */}
         {profile?.is_admin && (
           <button onClick={() => { window.location.href = '/admin' }}
             style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(244,163,0,0.8)', fontSize: '13px', fontWeight: '600' }}>
@@ -113,7 +106,6 @@ export default function Sidebar() {
             Admin Portal
           </button>
         )}
-
         <button onClick={handleSignOut}
           style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '13px', fontWeight: '600' }}>
           <LogOut size={17} /> Sign Out
