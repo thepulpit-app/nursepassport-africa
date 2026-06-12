@@ -60,7 +60,7 @@ export default function Landing() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #F1F5F9' }}>
         <div className="section" style={{ height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '34px', height: '34px', borderRadius: '10px' }} />
+            <div style={{ width: '34px', height: '34px', background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🩺</div>
             <div>
               <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '15px' }}>NursePassport</span>
               <span style={{ fontWeight: '800', color: '#F43F5E', fontSize: '15px' }}> Africa</span>
@@ -114,10 +114,10 @@ export default function Landing() {
               style={{ padding: '16px 32px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
               Start Free — No Card Required <ArrowRight size={18} />
             </button>
-           <button className="landing-btn" onClick={() => navigate('/try')}
-  style={{ padding: '16px 32px', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.15)' }}>
-  Can you pass this scenario? →
-</button>
+            <button className="landing-btn" onClick={() => navigate('/signin')}
+              style={{ padding: '16px 32px', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.15)' }}>
+              I already have an account
+            </button>
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
@@ -185,25 +185,57 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Journey Framework */}
       <section style={{ padding: '80px 20px', background: 'white' }}>
         <div className="section">
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#FFF1F2', border: '1px solid #FECDD3', borderRadius: '99px', padding: '6px 16px', marginBottom: '16px' }}>
+              <span style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '700' }}>🌍 Your Career Mobility Pathway</span>
+            </div>
             <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: '#0A2540', marginBottom: '12px' }}>
-              Everything you need. One platform.
+              From Lagos to wherever you're called.
             </h2>
-            <p style={{ color: '#94A3B8', fontSize: '16px' }}>Built by a nurse who has been through the international registration process herself.</p>
+            <p style={{ color: '#94A3B8', fontSize: '16px', maxWidth: '560px', margin: '0 auto' }}>
+              NursePassport Africa is more than a training platform — it's the complete pathway from where you are to where you're going.
+            </p>
           </div>
-          <div className="feature-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
-            {FEATURES.map((f, i) => (
-              <div key={i} style={{ background: '#F8FAFC', borderRadius: '20px', padding: '28px', border: '1px solid #F1F5F9' }}>
-                <div style={{ width: '52px', height: '52px', background: f.color, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '16px' }}>
-                  {f.emoji}
+
+          {/* Journey steps */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            {[
+              { num: '01', emoji: '📚', title: 'Learn', subtitle: 'Evidence-Based Courses', desc: 'CTG Interpretation, Obstetric Emergencies, BLS, NMC OSCE — built to NICE (2022) and RCOG standards by a clinician with 24 years of international experience.', color: '#6366F1', bg: '#EEF2FF' },
+              { num: '02', emoji: '🩺', title: 'Practice', subtitle: 'ClinicalSim AI', desc: 'Practice real patient scenarios and get instant clinical feedback scored against international guidelines. 62+ scenarios across 8 specialties — and growing toward 100+.', color: '#F43F5E', bg: '#FFF1F2' },
+              { num: '03', emoji: '🏆', title: 'Certify', subtitle: 'AMCC Certificates', desc: 'Complete a course, pass the assessment, and earn a verifiable AMCC-certified certificate with a unique QR code — ready for your CV and employer verification.', color: '#F59E0B', bg: '#FFFBEB' },
+              { num: '04', emoji: '🎯', title: 'Qualify', subtitle: 'NCLEX · CBT · DHA · HAAD · NMBN', desc: 'Dedicated question banks and exam-specific preparation for every major international nursing licence — practice exactly what your exam will test.', color: '#22C55E', bg: '#F0FDF4' },
+              { num: '05', emoji: '✈️', title: 'Go Global', subtitle: 'UK · UAE · USA · Canada', desc: 'Walk into your international registration exam prepared, confident, and certified. Your next destination is no longer a dream — it\'s a plan.', color: '#7C3AED', bg: '#F5F3FF' },
+            ].map((step, i) => (
+              <div key={i} style={{ display: 'flex', gap: '20px', position: 'relative' }}>
+                {/* Connector line */}
+                {i < 4 && (
+                  <div style={{ position: 'absolute', left: '27px', top: '64px', width: '2px', height: 'calc(100% - 20px)', background: 'linear-gradient(180deg, #E2E8F0, #F1F5F9)' }} />
+                )}
+                {/* Step number circle */}
+                <div style={{ flexShrink: 0, width: '56px', height: '56px', borderRadius: '50%', background: step.bg, border: `2px solid ${step.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', position: 'relative', zIndex: 1 }}>
+                  {step.emoji}
                 </div>
-                <h3 style={{ fontWeight: '800', color: '#0A2540', fontSize: '18px', marginBottom: '8px' }}>{f.title}</h3>
-                <p style={{ color: '#64748B', fontSize: '14px', lineHeight: '1.6' }}>{f.desc}</p>
+                {/* Step content */}
+                <div style={{ flex: 1, paddingBottom: i < 4 ? '36px' : '0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: '800', color: step.color, letterSpacing: '0.1em' }}>STEP {step.num}</span>
+                    <h3 style={{ fontWeight: '800', color: '#0A2540', fontSize: '20px', margin: 0 }}>{step.title}</h3>
+                  </div>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: step.color, marginBottom: '8px' }}>{step.subtitle}</div>
+                  <p style={{ color: '#64748B', fontSize: '14px', lineHeight: '1.7', margin: 0, maxWidth: '600px' }}>{step.desc}</p>
+                </div>
               </div>
             ))}
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '48px' }}>
+            <button className="landing-btn" onClick={() => navigate('/signup')}
+              style={{ padding: '16px 32px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
+              Start your journey — it's free <ArrowRight size={18} />
+            </button>
           </div>
         </div>
       </section>
@@ -274,7 +306,7 @@ export default function Landing() {
                 <Flame size={14} color="#F59E0B" />
                 <span style={{ color: '#FDE68A', fontSize: '13px', fontWeight: '700' }}>Built for consistency</span>
               </div>
-              <h2 style={{ color: '#F43F5E',fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
+              <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
                 Stay consistent.<br />Stay competitive.
               </h2>
               <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: '1.7', marginBottom: '32px' }}>
@@ -407,7 +439,7 @@ export default function Landing() {
             Create Your Free Account <ArrowRight size={18} />
           </button>
           <div style={{ marginTop: '20px', color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>
-            No credit card required · Free tier available forever · <a href="/community" style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", marginLeft: "8px" }}>See the community →</a>
+            No credit card required · Free tier available forever
           </div>
         </div>
       </section>
@@ -416,7 +448,7 @@ export default function Landing() {
       <footer style={{ borderTop: '1px solid #F1F5F9', padding: '24px 20px', background: 'white' }}>
         <div className="section" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <img src="/icons/icon-64.png" alt="NursePassport Africa" style={{ width: '24px', height: '24px', borderRadius: '6px' }} />
+            <div style={{ width: '24px', height: '24px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>🩺</div>
             <span style={{ fontWeight: '800', color: '#0A2540', fontSize: '14px' }}>NursePassport Africa</span>
           </div>
           <div style={{ color: '#94A3B8', fontSize: '13px' }}>© 2026 AMCC · Advanced Medical Care Consultancy</div>
