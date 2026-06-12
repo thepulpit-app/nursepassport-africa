@@ -20,6 +20,11 @@ import ModulePlayer from './pages/courses/ModulePlayer'
 import Leaderboard from './pages/Leaderboard'
 import Community from './pages/Community'
 import TryDemo from './pages/TryDemo'
+import NCLEXNigeria from './pages/seo/NCLEXNigeria'
+import NMCCBTNigeria from './pages/seo/NMCCBTNigeria'
+import HAADDubaiNigeria from './pages/seo/HAADDubaiNigeria'
+import OSCENigeria from './pages/seo/OSCENigeria'
+import CTGTrainingNigeria from './pages/seo/CTGTrainingNigeria'
 import WeeklyChallenge from './pages/WeeklyChallenge'
 import SimHome from './pages/sim/SimHome'
 import SimSession from './pages/sim/SimSession'
@@ -79,6 +84,11 @@ function AppRoutes() {
       <Route path="/courses/:slug" element={<ProtectedRoute><CourseDetail /></ProtectedRoute>} />
       <Route path="/courses/:slug/:moduleId" element={<ProtectedRoute><ModulePlayer /></ProtectedRoute>} />
       <Route path="/try" element={<TryDemo />} />
+            <Route path="/nclex-preparation-nigeria" element={<NCLEXNigeria />} />
+            <Route path="/nmc-cbt-preparation-nigeria" element={<NMCCBTNigeria />} />
+            <Route path="/haad-dha-exam-nigeria" element={<HAADDubaiNigeria />} />
+            <Route path="/nmc-osce-training-nigeria" element={<OSCENigeria />} />
+            <Route path="/ctg-training-nigeria" element={<CTGTrainingNigeria />} />
             <Route path="/community" element={<Community />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/challenge" element={<WeeklyChallenge />} />
