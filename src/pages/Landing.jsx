@@ -114,9 +114,9 @@ export default function Landing() {
               style={{ padding: '16px 32px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', fontSize: '16px' }}>
               Start Free — No Card Required <ArrowRight size={18} />
             </button>
-            <button className="landing-btn" onClick={() => navigate('/signin')}
+            <button className="landing-btn" onClick={() => navigate('/try')}
               style={{ padding: '16px 32px', background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '16px', border: '1.5px solid rgba(255,255,255,0.15)' }}>
-              I already have an account
+              Can you pass this scenario? →
             </button>
           </div>
 
@@ -193,7 +193,7 @@ export default function Landing() {
               <span style={{ color: '#F43F5E', fontSize: '13px', fontWeight: '700' }}>🌍 Your Career Mobility Pathway</span>
             </div>
             <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', color: '#0A2540', marginBottom: '12px' }}>
-              From Lagos to wherever you're called.
+              From wherever you are, to wherever you're called.
             </h2>
             <p style={{ color: '#94A3B8', fontSize: '16px', maxWidth: '560px', margin: '0 auto' }}>
               NursePassport Africa is more than a training platform — it's the complete pathway from where you are to where you're going.
@@ -306,8 +306,8 @@ export default function Landing() {
                 <Flame size={14} color="#F59E0B" />
                 <span style={{ color: '#FDE68A', fontSize: '13px', fontWeight: '700' }}>Built for consistency</span>
               </div>
-              <h2 style={{ fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
-                Stay consistent.<br />Stay competitive.
+              <h2 style={{ color: 'white', fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: '900', marginBottom: '16px', lineHeight: '1.2' }}>
+                Stay consistent.<br /><span style={{ color: '#F43F5E' }}>Stay competitive.</span>
               </h2>
               <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '16px', lineHeight: '1.7', marginBottom: '32px' }}>
                 Passing international exams takes months of consistent preparation. NursePassport Africa keeps you coming back with features designed to build daily habits.
