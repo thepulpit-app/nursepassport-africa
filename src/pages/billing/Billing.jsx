@@ -188,6 +188,7 @@ export default function Billing() {
 
       <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #F1F5F9', padding: '16px', textAlign: 'center' }}>
         <p style={{ color: '#94A3B8', fontSize: '13px', margin: '0 0 4px' }}>🔒 Payments secured by Paystack · Cancel anytime</p>
+        <p style={{ color: '#CBD5E1', fontSize: '11px', margin: 0 }}>Card payment processing fees from Paystack may apply at checkout.</p>
         <p style={{ color: '#94A3B8', fontSize: '12px', margin: 0 }}>
           Questions? <a href="mailto:hello@nursepassportafrica.com" style={{ color: '#6366F1', fontWeight: '600' }}>hello@nursepassportafrica.com</a>
         </p>
