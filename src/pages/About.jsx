@@ -131,7 +131,7 @@ export default function About() {
             {[
               {
                 period: '2018 — Present',
-                role: 'Staff Nurse — Medical, Surgical, Maternity & High Dependency (Gynae & Obstetrics)',
+                role: 'Charge Midwife/Nurse — Medical, Surgical, Maternity & High Dependency (Gynae & Obstetrics)',
                 org: 'JCI Accredited Tertiary Hospital, Al Ain, Abu Dhabi, United Arab Emirates, Tertiary level care', 
                 note: '503-bed JCI Accredited Hospital · Recipent of the 2025 Daisy Recognition Award. 7 years+',
                 color: '#4F46E5',
