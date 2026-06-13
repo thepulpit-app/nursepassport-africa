@@ -10,6 +10,8 @@ export default function AdminCourses() {
   const [editingCourse, setEditingCourse] = useState(null)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
+  const [pdfFile, setPdfFile] = useState(null)
+  const [uploadingPdf, setUploadingPdf] = useState(false)
 
   useEffect(() => { loadCourses() }, [])
 
@@ -67,7 +69,21 @@ export default function AdminCourses() {
     setCourses(c => c.filter(x => x.id !== courseId))
   }
 
+  async function uploadModulePdf(file, moduleId) {
+    setUploadingPdf(true)
+    const path = `module-pdfs/${moduleId || 'new-' + Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+    const { error } = await supabase.storage.from('certificates').upload(path, file, { upsert: true })
+    setUploadingPdf(false)
+    if (error) { setMsg('PDF upload failed: ' + error.message); return null }
+    const { data } = supabase.storage.from('certificates').getPublicUrl(path)
+    return data.publicUrl
+  }
+
   async function saveModule() {
+    if (pdfFile) {
+      const url = await uploadModulePdf(pdfFile, editingModule.id)
+      if (url) editingModule.pdf_url = url
+    }
     if (!editingModule.title) { setMsg('Module title is required'); return }
     setSaving(true)
     setMsg('')
@@ -78,6 +94,7 @@ export default function AdminCourses() {
           description: editingModule.description,
           reading_content: editingModule.reading_content,
           video_url: editingModule.video_url,
+          pdf_url: editingModule.pdf_url,
           estimated_minutes: editingModule.estimated_minutes,
           tier_required: editingModule.tier_required,
           sort_order: editingModule.sort_order,
@@ -92,6 +109,7 @@ export default function AdminCourses() {
           description: editingModule.description,
           reading_content: editingModule.reading_content,
           video_url: editingModule.video_url,
+          pdf_url: editingModule.pdf_url,
           estimated_minutes: editingModule.estimated_minutes,
           tier_required: editingModule.tier_required,
           sort_order: editingModule.sort_order,
@@ -146,7 +164,7 @@ export default function AdminCourses() {
             <div style={{ borderTop: '1px solid #F8FAFC', padding: '16px 20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700', color: '#64748B' }}>Modules ({(modules[course.id] || []).length})</span>
-                <button onClick={() => { setMsg(''); setEditingModule({ course_id: course.id, title: '', description: '', reading_content: '', video_url: '', estimated_minutes: 45, tier_required: 'nurse', sort_order: (modules[course.id]?.length || 0) + 1, is_published: false }) }}
+                <button onClick={() => { setMsg(''); setEditingModule({ course_id: course.id, title: '', description: '', reading_content: '', video_url: '', pdf_url: '', estimated_minutes: 45, tier_required: 'nurse', sort_order: (modules[course.id]?.length || 0) + 1, is_published: false }); setPdfFile(null) }}
                   style={{ padding: '6px 12px', background: '#EEF2FF', border: 'none', borderRadius: '8px', color: '#4F46E5', fontWeight: '700', fontSize: '12px', cursor: 'pointer' }}>
                   + Add Module
                 </button>
@@ -158,7 +176,7 @@ export default function AdminCourses() {
                     <div style={{ fontWeight: '600', color: '#0A2540', fontSize: '13px' }}>{mod.title}</div>
                     <div style={{ color: '#94A3B8', fontSize: '11px' }}>{mod.tier_required} · {mod.estimated_minutes}min · {mod.is_published ? '✅' : '⏸'}</div>
                   </div>
-                  <button onClick={() => { setMsg(''); setEditingModule({ ...mod }) }}
+                  <button onClick={() => { setMsg(''); setEditingModule({ ...mod }); setPdfFile(null) }}
                     style={{ padding: '6px 10px', background: 'white', border: '1px solid #E2E8F0', borderRadius: '8px', color: '#64748B', fontWeight: '600', fontSize: '12px', cursor: 'pointer' }}>Edit</button>
                 </div>
               ))}
@@ -239,6 +257,18 @@ export default function AdminCourses() {
               <div>
                 <label style={LABEL}>Video URL</label>
                 <input value={editingModule.video_url || ''} onChange={e => setEditingModule(x => ({ ...x, video_url: e.target.value }))} placeholder="https://youtube.com/embed/..." style={INPUT} />
+              </div>
+              <div>
+                <label style={LABEL}>Module PDF (optional)</label>
+                <input type="file" accept="application/pdf" onChange={e => setPdfFile(e.target.files[0])}
+                  style={{ ...INPUT, padding: '8px 12px' }} />
+                {pdfFile && <div style={{ fontSize: '12px', color: '#4F46E5', marginTop: '6px', fontWeight: '600' }}>📄 {pdfFile.name} — will upload on save</div>}
+                {!pdfFile && editingModule.pdf_url && (
+                  <div style={{ fontSize: '12px', color: '#22C55E', marginTop: '6px', fontWeight: '600' }}>
+                    ✅ PDF attached — <a href={editingModule.pdf_url} target="_blank" rel="noreferrer" style={{ color: '#4F46E5' }}>View current PDF</a>
+                  </div>
+                )}
+                {uploadingPdf && <div style={{ fontSize: '12px', color: '#94A3B8', marginTop: '6px' }}>Uploading PDF...</div>}
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                 <div>
