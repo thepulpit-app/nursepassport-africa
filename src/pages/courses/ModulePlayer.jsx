@@ -244,8 +244,14 @@ export default function ModulePlayer() {
           {activeStep === 'video' && (
             <div style={{ background: 'white', borderRadius: '20px', border: '1px solid #F1F5F9', overflow: 'hidden' }}>
               {module?.video_url ? (
-                <div style={{ aspectRatio: '16/9', background: '#000' }}>
-                  <video controls style={{ width: '100%', height: '100%' }} src={module.video_url} />
+                <div style={{ position: 'relative', paddingTop: '56.25%', background: '#000' }}>
+                  <iframe
+                    src={module.video_url}
+                    loading="lazy"
+                    style={{ border: 0, position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}
+                    allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;"
+                    allowFullScreen
+                  />
                 </div>
               ) : (
                 <div style={{ aspectRatio: '16/9', background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
