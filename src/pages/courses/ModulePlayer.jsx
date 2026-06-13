@@ -344,6 +344,7 @@ export default function ModulePlayer() {
                   <Trophy size={32} color="#F59E0B" style={{ marginBottom: '8px' }} />
                   <div style={{ color: 'white', fontWeight: '800', fontSize: '16px', marginBottom: '4px' }}>Module Complete! 🎉</div>
                   <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '13px' }}>You scored {quizScore}% — well done!</div>
+                    <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', marginTop: '8px' }}>Your AMCC certificate will be issued once all course modules are completed.</div>
                 </div>
               )}
 
