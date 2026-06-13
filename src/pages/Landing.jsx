@@ -18,7 +18,7 @@ const FEATURES = [
 ]
 
 const PLANS = [
-  { name: 'Grace', emoji: '🕊️', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['2 course modules', '3 sim sessions/month', 'Basic progress tracking', 'Daily clinical nuggets'] },
+  { name: 'Grace', emoji: '🕊️', price: 'Free', sub: 'Forever free', gradient: 'linear-gradient(135deg, #64748B, #475569)', features: ['Course previews', '1 beginner sim/month', 'Leaderboard & community access', 'Daily clinical nuggets'] },
   { name: 'Nurse', emoji: '🩺', price: '₦4,500', sub: '/month', gradient: 'linear-gradient(135deg, #4F46E5, #7C3AED)', features: ['All courses & modules', '20 sim sessions/month', 'All question banks', 'AMCC certificates', 'Streak & leaderboard'], popular: true },
   { name: 'Passport', emoji: '✈️', price: '₦9,000', sub: '/month', gradient: 'linear-gradient(135deg, #F43F5E, #EC4899)', features: ['Unlimited simulations', 'All 4 exam tracks', 'OSCE preparation', 'Priority support', 'UK · UAE · USA · Canada'] },
 ]
