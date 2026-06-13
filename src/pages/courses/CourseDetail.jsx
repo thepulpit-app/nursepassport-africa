@@ -5,7 +5,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../contexts/AuthContext'
 import AppShell from '../../components/layout/AppShell'
 
-const TIER_ORDER = { free: 0, nurse: 1, passport: 2 }
+const TIER_ORDER = { free: -1, student: 0, nurse: 1, passport: 2 }
 
 const CTG_MODULES = [
   { id: 'm1', sort_order: 1, title: 'CTG Fundamentals', description: 'The four features, NICE classification, and how to document findings', tier_required: 'free', estimated_minutes: 45 },

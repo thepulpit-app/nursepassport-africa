@@ -78,6 +78,30 @@ export default function WeeklyChallenge() {
 
   if (loading) return <AppShell><div style={{ color: '#94A3B8' }}>Loading challenge...</div></AppShell>
 
+  if (tier === 'free') {
+    return (
+      <AppShell>
+        <div style={{ marginBottom: '20px' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: '800', color: '#0A2540', margin: '0 0 4px' }}>Weekly Challenge</h1>
+          <p style={{ color: '#94A3B8', fontSize: '13px', margin: 0 }}>New challenge every Monday</p>
+        </div>
+        <div style={{ background: 'linear-gradient(135deg, #0A2540, #1E3A5F)', borderRadius: '20px', padding: '32px 24px', textAlign: 'center' }}>
+          <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏆</div>
+          <h2 style={{ color: 'white', fontWeight: '800', fontSize: '20px', margin: '0 0 8px' }}>
+            Upgrade to see how you rank
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', margin: '0 0 24px', lineHeight: 1.6, maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' }}>
+            Weekly clinical challenges and the live leaderboard are available on the Nurse and Passport plans. Compete with nurses across Africa every week.
+          </p>
+          <button onClick={() => navigate('/billing')}
+            style={{ padding: '14px 28px', background: 'linear-gradient(135deg, #F43F5E, #EC4899)', color: 'white', border: 'none', borderRadius: '12px', fontWeight: '800', fontSize: '15px', cursor: 'pointer' }}>
+            View Plans →
+          </button>
+        </div>
+      </AppShell>
+    )
+  }
+
   return (
     <AppShell>
       <div style={{ marginBottom: '20px' }}>
