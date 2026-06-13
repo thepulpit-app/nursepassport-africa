@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import AppShell from '../components/layout/AppShell'
 
 export default function WeeklyChallenge() {
-  const { profile } = useAuth()
+  const { profile, tier } = useAuth()
   const navigate = useNavigate()
   const [challenge, setChallenge] = useState(null)
   const [completed, setCompleted] = useState(false)
