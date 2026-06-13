@@ -138,7 +138,7 @@ export default function SimHome() {
       )) : filtered.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '40px 20px', color: '#94A3B8', fontSize: '13px' }}>No scenarios in this category yet</div>
       ) : filtered.map(scenario => {
-        const locked = remaining === 0 || (scenario.tier_required !== 'free' && tier === 'free')
+        const locked = remaining === 0 || (scenario.tier_required !== 'free' && tier === 'free') || (tier === 'free' && scenario.difficulty !== 'beginner')
         const diff = DIFFICULTY_STYLES[scenario.difficulty] || DIFFICULTY_STYLES.beginner
         const bestSession = sessions.find(s => s.scenario_id === scenario.id)
         const cat = CATEGORIES.find(c => c.key === scenario.category)
