@@ -26,7 +26,7 @@ export default function About() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
           {[
             { icon: '🎯', title: 'Our Mission', text: 'To improve clinical competence, patient safety and healthcare quality through evidence-based training that is accessible to every nurse, wherever they are.' },
-            { icon: '🌍', title: 'Our Reach', text: 'Designed for Nigerian nurses, built for the Gulf, recognised internationally. Our curriculum aligns to NICE, NMC, HAAD, and NMBN standards.' },
+            { icon: '🌍', title: 'Our Reach', text: 'Designed for Nigerian nurses, built for global healthcare systems. Our curriculum aligns to NICE, NMC, HAAD, and NMBN standards - preparing nurses for careers across the UK, UAE, USA, Canada and beyond.' },
             { icon: '📜', title: 'Registered in Nigeria', text: 'AMCC is a duly incorporated company under the Companies and Allied Matters Act (CAMA) 2020, certified by the Corporate Affairs Commission.' },
           ].map(item => (
             <div key={item.title} style={{ background: 'white', borderRadius: '20px', padding: '24px', border: '1px solid #F1F5F9' }}>
@@ -54,8 +54,8 @@ export default function About() {
                   }} />
               </div>
               <div style={{ marginTop: '16px' }}>
-                <div style={{ fontSize: '13px', fontWeight: '800', color: '#0A2540' }}>Ibiwunmi Ajijola</div>
-                <div style={{ fontSize: '12px', color: '#4F46E5', fontWeight: '600', marginTop: '2px' }}>RN · US RN</div>
+                <div style={{ fontSize: '13px', fontWeight: '800', color: '#0A2540' }}>Ibiwunmi Oluwayemisi Ajijola</div>
+                <div style={{ fontSize: '12px', color: '#4F46E5', fontWeight: '600', marginTop: '2px' }}>RN (US) · RM (UAE) · RN/RM (NG)</div>
                 <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '4px' }}>Clinical Director, AMCC</div>
               </div>
             </div>
@@ -66,13 +66,13 @@ export default function About() {
                 Ibiwunmi Oluwayemisi Ajijola
               </h2>
               <div style={{ fontSize: '13px', color: '#4F46E5', fontWeight: '700', marginBottom: '16px' }}>
-                RN · US RN · BSc Nursing (Edinburgh Napier) · MSc Healthcare Management (in view)
+                RN (US) · RM (UAE) · RN/RM (NG) · BSc Nursing (Edinburgh Napier) · MSc Healthcare Management (in view)
               </div>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 16px' }}>
-                With over 24 years of clinical experience spanning Nigeria, the United Arab Emirates and the United Kingdom, Ibiwunmi brings a rare combination of frontline bedside expertise and international clinical standards to every course she designs and delivers.
+                With over 24 years of clinical experience spanning Nigeria and the United Arab Emirates, and having met the registration requirements of the UK's Nursing and Midwifery Council, Ibiwunmi brings a rare combination of frontline bedside expertise and international clinical standards to every course she designs and delivers.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
-                Her career began in Lagos, Nigeria, where she spent eight formative years working across Emergency, Paediatrics, Medical, Surgical, and Gynaecological and Obstetrics units in a busy public hospital setting. She then moved to the Gulf, working as a Registered Midwife in one of Dubai's leading private hospitals, specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has been based in Abu Dhabi, UAE, serving across Medical, Surgical, Maternity Assessment and High Dependency Gynaecological and Obstetrics units in a JCI Accredited tertiary facility.
+                Her career began in Lagos, Nigeria, where she spent eight formative years working across Emergency, Paediatrics, Medical, Surgical, and Gynaecological and Obstetrics units in a busy public hospital setting. She then moved to the Gulf, working as a Registered Midwife in one of Dubai's leading private hospitals, specialising in Labour and Delivery, antenatal care, and CTG monitoring and interpretation. Since 2018, she has served as Charge Midwife/Nurse across Medical, Surgical, Maternity and High Dependency (Gynae & Obstetrics) units in a JCI Accredited tertiary facility in Abu Dhabi, UAE.
               </p>
               <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.75, margin: '0 0 20px' }}>
                 Academically, she holds a Bachelor of Science in Nursing from Edinburgh Napier University, Scotland, and is currently pursuing a Master of Science in Healthcare Management at Swiss Business School. She is a licensed Registered Nurse in Nigeria, the United States, and the UAE, and holds an internationally recognised VisaScreen credential. She also has first-hand experience navigating the UK NMC registration pathway and the Canadian nursing licensure process, which gives her a unique ability to prepare nurses for international careers.
@@ -182,6 +182,9 @@ export default function About() {
               </div>
             ))}
           </div>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textAlign: 'center', margin: '20px 0 0' }}>
+            More courses & certifications coming
+          </p>
         </div>
 
       </div>

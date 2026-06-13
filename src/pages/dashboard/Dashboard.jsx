@@ -176,8 +176,8 @@ export default function Dashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div className="hero-card" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', cursor: 'pointer' }} onClick={() => navigate('/courses')}>
               <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.65)', fontWeight: '700', textTransform: 'uppercase', marginBottom: '6px' }}>📚 Courses</div>
-              <h3 style={{ fontSize: '14px', marginBottom: '4px' }}>Courses Launching Soon</h3>
-              <p>CTG · Obstetrics · BLS · OSCE</p>
+              <h3 style={{ fontSize: '14px', marginBottom: '4px' }}>CTG Course Now Live</h3>
+              <p>CTG · Obstetrics · BLS · OSCE coming</p>
             </div>
             <div onClick={() => navigate('/certificates')} style={{ background: '#FFFBEB', border: '1.5px solid #FDE68A', borderRadius: '14px', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
               <div style={{ fontSize: '22px' }}>🏆</div>
