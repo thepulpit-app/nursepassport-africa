@@ -1,6 +1,6 @@
 import PWAInstallPrompt from './components/PWAInstallPrompt'
 import PushNotificationManager from './components/PushNotificationManager'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -68,6 +68,39 @@ function PublicRoute({ children }) {
   if (loading) return <LoadingScreen />
   if (user && !needsOnboarding) return <Navigate to="/dashboard" replace />
   return children
+}
+
+
+const PAGE_TITLES = {
+  '/': 'NursePassport Africa - Home',
+  '/signup': 'Sign Up - NursePassport Africa',
+  '/signin': 'Sign In - NursePassport Africa',
+  '/dashboard': 'Dashboard - NursePassport Africa',
+  '/courses': 'Courses - NursePassport Africa',
+  '/try': 'Free Demo - NursePassport Africa',
+  '/leaderboard': 'Leaderboard - NursePassport Africa',
+  '/community': 'Community - NursePassport Africa',
+  '/weekly-challenge': 'Weekly Challenge - NursePassport Africa',
+  '/question-banks': 'Question Banks - NursePassport Africa',
+  '/certificates': 'Certificates - NursePassport Africa',
+  '/profile': 'Profile - NursePassport Africa',
+  '/billing': 'Billing - NursePassport Africa',
+  '/about': 'About AMCC - NursePassport Africa',
+  '/refer': 'Refer & Earn - NursePassport Africa',
+  '/nclex-preparation-nigeria': 'NCLEX-RN Preparation Nigeria - NursePassport Africa',
+  '/nmc-cbt-preparation-nigeria': 'NMC CBT Preparation Nigeria - NursePassport Africa',
+  '/haad-dha-exam-nigeria': 'HAAD/DHA Exam Preparation Nigeria - NursePassport Africa',
+  '/nmc-osce-training-nigeria': 'NMC OSCE Training Nigeria - NursePassport Africa',
+  '/ctg-training-nigeria': 'CTG Training Nigeria - NursePassport Africa',
+}
+
+function getPageTitle(pathname) {
+  if (PAGE_TITLES[pathname]) return PAGE_TITLES[pathname]
+  if (pathname.startsWith('/courses/') && pathname.includes('/module/')) return 'Course Module - NursePassport Africa'
+  if (pathname.startsWith('/courses/')) return 'Course - NursePassport Africa'
+  if (pathname.startsWith('/simulate/')) return 'ClinicalSim Session - NursePassport Africa'
+  if (pathname.startsWith('/admin')) return 'Admin - NursePassport Africa'
+  return 'NursePassport Africa'
 }
 
 function AppRoutes() {
