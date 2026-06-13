@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './styles/darkmode.css'
 import { inject } from "@vercel/analytics"
 inject()
 import App from './App.jsx'
